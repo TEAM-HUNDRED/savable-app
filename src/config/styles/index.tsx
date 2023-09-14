@@ -10,6 +10,9 @@ const widthScaleRatio = standardWidth / 375;
 const scaleFont = memoize((dp: number) =>
   PixelRatio.roundToNearestPixel(dp * widthScaleRatio),
 );
+const scaleWidth = memoize((dp: number) =>
+  PixelRatio.roundToNearestPixel(dp * widthScaleRatio),
+);
 
 const color = {
   white: '#FFFFFF',
@@ -39,6 +42,7 @@ export default {
   height,
 
   scaleFont,
+  scaleWidth,
 
   typography,
 };
