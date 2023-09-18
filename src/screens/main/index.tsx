@@ -19,8 +19,13 @@ function MainStackScreen(): React.ReactElement {
   return (
     <MainStack.Navigator screenOptions={screenOptions}>
       <MainStack.Screen
-        name={ROUTER.LOGIN_SCREEN}
+        name={ROUTER.CHALLENGE_SCREEN}
         component={ChallengeScreen}
+        options={headerHideOptions}
+      />
+      <MainStack.Screen
+        name={ROUTER.LOGIN_SCREEN}
+        component={LoginScreen}
         options={headerHideOptions}
       />
     </MainStack.Navigator>
