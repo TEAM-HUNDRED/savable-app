@@ -35,9 +35,15 @@ const color = {
   mint05: '#36C9BB',
 };
 
-type TypographyName = 'headline01' | 'headline02' | 'body06';
+type TypographyName = 'logo' | 'headline01' | 'headline02' | 'body06';
 
 const typography: Record<TypographyName, TextStyle> = {
+  logo: {
+    fontFamily: 'Comfortaa-Bold',
+    fontSize: scaleFont(24),
+    lineHeight: scaleFont(26),
+    color: color.mint05,
+  },
   headline01: {
     fontFamily: 'NotoSansKR-Black',
     fontSize: scaleFont(32),

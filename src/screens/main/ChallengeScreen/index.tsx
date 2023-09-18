@@ -1,6 +1,8 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
+
 import ChallengeCard from '../../../components/card/ChallengeCard';
+import LogoHeader from '../../../components/header/LogoHeader';
 
 function ChallengeScreen(): React.ReactElement {
   const dummy = {
@@ -11,9 +13,10 @@ function ChallengeScreen(): React.ReactElement {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <LogoHeader />
       <ChallengeCard {...dummy} />
-    </View>
+    </ScrollView>
   );
 }
 
