@@ -6,6 +6,7 @@ import {
 
 import {MainScreenStackPropsList, ROUTER} from '../../config/router';
 import LoginScreen from './LoginScreen';
+import ChallengeScreen from './ChallengeScreen';
 
 const MainStack = createStackNavigator<MainScreenStackPropsList>();
 
@@ -19,7 +20,7 @@ function MainStackScreen(): React.ReactElement {
     <MainStack.Navigator screenOptions={screenOptions}>
       <MainStack.Screen
         name={ROUTER.LOGIN_SCREEN}
-        component={LoginScreen}
+        component={ChallengeScreen}
         options={headerHideOptions}
       />
     </MainStack.Navigator>
