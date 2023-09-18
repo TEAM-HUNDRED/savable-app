@@ -1,5 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
+
 import {AppStyles} from '../../../config';
 import SVText from '../../common/SVText';
 
@@ -20,11 +21,9 @@ function ChallengeCard({
       <SVText body06>{title}</SVText>
 
       <View>
-        <View style={styles.categoryContainer}>
-          <SVText body06 style={styles.category}>
-            {category}
-          </SVText>
-        </View>
+        <SVText caption01 style={styles.category}>
+          {category}
+        </SVText>
       </View>
     </View>
   );
@@ -40,19 +39,13 @@ const styles = StyleSheet.create({
     borderRadius: AppStyles.scaleWidth(10),
     marginBottom: AppStyles.scaleWidth(4),
   },
-  categoryContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    backgroundColor: AppStyles.color.lightGray02,
-    borderRadius: AppStyles.scaleWidth(4),
-    marginTop: AppStyles.scaleWidth(4),
-  },
   category: {
     backgroundColor: AppStyles.color.lightGray02,
     borderRadius: AppStyles.scaleWidth(4),
     paddingHorizontal: AppStyles.scaleWidth(6),
+    marginTop: AppStyles.scaleWidth(4),
     marginRight: AppStyles.scaleWidth(6),
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
   },
 });
 
