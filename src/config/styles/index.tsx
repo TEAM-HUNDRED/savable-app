@@ -45,4 +45,5 @@ export default {
   scaleWidth,
 
   typography,
+  color,
 };
