@@ -38,6 +38,8 @@ const PMText: React.FC<IProps> = ({
   headline01,
   headline02,
 
+  header01,
+
   body06,
 
   center,
@@ -52,10 +54,12 @@ const PMText: React.FC<IProps> = ({
     if (headline01) return AppStyles.typography.headline01;
     if (headline02) return AppStyles.typography.headline02;
 
+    if (header01) return AppStyles.typography.header01;
+
     if (body06) return AppStyles.typography.body06;
 
     return {};
-  }, [logo, headline01, headline02, body06]);
+  }, [logo, headline01, headline02, header01, body06]);
 
   const textAlightStyle: StyleProp<TextStyle> = useMemo(() => {
     if (left) return {textAlign: 'left'} as StyleProp<TextStyle>;
