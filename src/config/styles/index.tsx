@@ -18,6 +18,21 @@ const color = {
   white: '#FFFFFF',
 
   black: '#000000',
+
+  lightGray: '#FBFBFB',
+  lightGray02: '#EEEEEE',
+  deepGray: '#555555',
+
+  gray: '#6F6F6F',
+  gray02: '#CCCCCC',
+  gray03: '#B4B4B4',
+  gray04: '#999999',
+
+  mint01: '#A2EEED',
+  mint02: '#60EFDA',
+  mint03: '#00ECD8',
+  mint04: '#00E4D0',
+  mint05: '#36C9BB',
 };
 
 type TypographyName = 'headline01' | 'headline02' | 'body06';

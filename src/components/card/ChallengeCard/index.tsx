@@ -43,11 +43,11 @@ const styles = StyleSheet.create({
   categoryContainer: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#eeeeee',
+    backgroundColor: AppStyles.color.lightGray02,
     borderRadius: AppStyles.scaleWidth(4),
   },
   category: {
-    backgroundColor: '#eeeeee',
+    backgroundColor: AppStyles.color.lightGray02,
     borderRadius: AppStyles.scaleWidth(4),
     paddingHorizontal: AppStyles.scaleWidth(6),
     marginRight: AppStyles.scaleWidth(6),
