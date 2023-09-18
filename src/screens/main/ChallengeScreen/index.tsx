@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 
+import MainBanner from '../../../components/banner/MainBanner';
 import ChallengeCard from '../../../components/card/ChallengeCard';
 import LogoHeader from '../../../components/header/LogoHeader';
 
@@ -15,6 +16,7 @@ function ChallengeScreen(): React.ReactElement {
   return (
     <ScrollView style={styles.container}>
       <LogoHeader />
+      <MainBanner />
       <ChallengeCard {...dummy} />
     </ScrollView>
   );
