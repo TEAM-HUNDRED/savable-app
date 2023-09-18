@@ -1,4 +1,5 @@
 import axios, {AxiosInstance} from 'axios';
+import {API_URL} from '@env';
 
 import {ISvApi} from './ISvApi';
 
@@ -8,7 +9,7 @@ export default class MockApi implements ISvApi {
 
   private constructor() {
     this.axios = axios.create({
-      //   baseURL: publicRuntimeConfig.apiBaseURL,
+      baseURL: API_URL,
       //   headers: {'api-key': publicRuntimeConfig.apiAuthorizationKey},
     });
   }
