@@ -18,12 +18,11 @@ function ChallengeCard({
   return (
     <View style={styles.container}>
       <Image source={{uri: imageURI}} style={styles.image} />
-      <SVText body06>{title}</SVText>
-
-      <View>
-        <SVText caption01 style={styles.category}>
-          {category}
-        </SVText>
+      <SVText body06 style={styles.titleText}>
+        {title}
+      </SVText>
+      <View style={styles.category}>
+        <SVText caption01>{category}</SVText>
       </View>
     </View>
   );
@@ -37,13 +36,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: AppStyles.scaleWidth(104),
     borderRadius: AppStyles.scaleWidth(10),
-    marginBottom: AppStyles.scaleWidth(4),
+  },
+  titleText: {
+    marginVertical: AppStyles.scaleWidth(4),
   },
   category: {
     backgroundColor: AppStyles.color.lightGray02,
     borderRadius: AppStyles.scaleWidth(4),
     paddingHorizontal: AppStyles.scaleWidth(6),
-    marginTop: AppStyles.scaleWidth(4),
     marginRight: AppStyles.scaleWidth(6),
     alignSelf: 'flex-start',
   },

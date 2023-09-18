@@ -9,7 +9,7 @@ function ChallengeContainer(): React.ReactElement {
     imageURI:
       'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvELDx%2Fbtq6p7TgsZ5%2FeyuWSkOo6mY3P5hJlM1SRk%2Fimg.jpg',
     title: '챌린지',
-    category: '상시모집',
+    category: '상시 모집',
   };
 
   const list = [dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy];
