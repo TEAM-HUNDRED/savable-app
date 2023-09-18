@@ -20,19 +20,25 @@ const color = {
   black: '#000000',
 };
 
-type TypographyName = 'headline01' | 'headline02';
+type TypographyName = 'headline01' | 'headline02' | 'body06';
 
 const typography: Record<TypographyName, TextStyle> = {
   headline01: {
-    fontFamily: 'S-CoreDream-5Medium',
+    fontFamily: 'NotoSansKR-Black',
     fontSize: scaleFont(32),
     lineHeight: scaleFont(36),
     color: color.black,
   },
   headline02: {
-    fontFamily: 'S-CoreDream-3Light',
+    fontFamily: 'NotoSansKR-Black',
     fontSize: scaleFont(32),
     lineHeight: scaleFont(36),
+    color: color.black,
+  },
+  body06: {
+    fontFamily: 'NotoSansKR-Black',
+    fontSize: scaleFont(13),
+    lineHeight: scaleFont(15),
     color: color.black,
   },
 };

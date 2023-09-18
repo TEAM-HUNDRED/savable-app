@@ -17,11 +17,13 @@ function ChallengeCard({
   return (
     <View style={styles.container}>
       <Image source={{uri: imageURI}} style={styles.image} />
-      <SVText>{title}</SVText>
+      <SVText body06>{title}</SVText>
 
       <View>
         <View style={styles.categoryContainer}>
-          <SVText style={styles.category}>{category}</SVText>
+          <SVText body06 style={styles.category}>
+            {category}
+          </SVText>
         </View>
       </View>
     </View>
