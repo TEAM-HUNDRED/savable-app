@@ -1,4 +1,5 @@
 import axios, {AxiosInstance} from 'axios';
+import {API_URL} from '@env';
 
 import {ISvApi} from './ISvApi';
 
@@ -8,8 +9,7 @@ export default class MockApi implements ISvApi {
 
   private constructor() {
     this.axios = axios.create({
-      //   baseURL: publicRuntimeConfig.apiBaseURL,
-      //   headers: {'api-key': publicRuntimeConfig.apiAuthorizationKey},
+      baseURL: API_URL,
     });
   }
 
@@ -18,11 +18,13 @@ export default class MockApi implements ISvApi {
     return MockApi.instance;
   }
 
-  setAuthToken(accessToken: string) {
-    this.axios.defaults.headers['Authorization'] = 'Bearer ' + accessToken;
-  }
-
   setBaseUrl(baseURL: string) {
     this.axios.defaults.baseURL = baseURL;
   }
+
+  public getChallengeList = async () => {
+    const {data: challengeList} = await this.axios.get('challenges');
+
+    return challengeList;
+  };
 }

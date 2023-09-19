@@ -35,25 +35,49 @@ const color = {
   mint05: '#36C9BB',
 };
 
-type TypographyName = 'headline01' | 'headline02' | 'body06';
+type TypographyName =
+  | 'logo'
+  | 'headline01'
+  | 'headline02'
+  | 'header01'
+  | 'body06'
+  | 'caption01';
 
 const typography: Record<TypographyName, TextStyle> = {
+  logo: {
+    fontFamily: 'Comfortaa-Bold',
+    fontSize: scaleFont(24),
+    lineHeight: scaleFont(26),
+    color: color.mint05,
+  },
   headline01: {
-    fontFamily: 'NotoSansKR-Black',
+    fontFamily: 'NotoSansKR',
     fontSize: scaleFont(32),
     lineHeight: scaleFont(36),
     color: color.black,
   },
   headline02: {
-    fontFamily: 'NotoSansKR-Black',
+    fontFamily: 'NotoSansKR',
     fontSize: scaleFont(32),
     lineHeight: scaleFont(36),
     color: color.black,
   },
+  header01: {
+    fontFamily: 'NotoSansKR-Bold',
+    fontSize: scaleFont(18),
+    lineHeight: scaleFont(20),
+    color: color.black,
+  },
   body06: {
-    fontFamily: 'NotoSansKR-Black',
+    fontFamily: 'NotoSansKR',
     fontSize: scaleFont(13),
     lineHeight: scaleFont(15),
+    color: color.black,
+  },
+  caption01: {
+    fontFamily: 'NotoSansKR',
+    fontSize: scaleFont(10),
+    lineHeight: scaleFont(12),
     color: color.black,
   },
 };

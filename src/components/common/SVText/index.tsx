@@ -5,6 +5,7 @@ import {AppStyles} from '../../../config';
 
 interface IProps extends TextProps {
   children: string | string[] | number | number[] | JSX.Element[] | JSX.Element;
+  logo?: boolean;
   headline01?: boolean;
   headline02?: boolean;
   header01?: boolean;
@@ -32,10 +33,16 @@ interface IProps extends TextProps {
 
 const PMText: React.FC<IProps> = ({
   children,
+
+  logo,
   headline01,
   headline02,
 
+  header01,
+
   body06,
+
+  caption01,
 
   center,
   left,
@@ -45,13 +52,18 @@ const PMText: React.FC<IProps> = ({
   ...rest
 }) => {
   const textTypeStyle: StyleProp<TextStyle> = useMemo(() => {
+    if (logo) return AppStyles.typography.logo;
     if (headline01) return AppStyles.typography.headline01;
     if (headline02) return AppStyles.typography.headline02;
 
+    if (header01) return AppStyles.typography.header01;
+
     if (body06) return AppStyles.typography.body06;
 
+    if (caption01) return AppStyles.typography.caption01;
+
     return {};
-  }, [headline01, headline02, body06]);
+  }, [logo, headline01, headline02, header01, body06, caption01]);
 
   const textAlightStyle: StyleProp<TextStyle> = useMemo(() => {
     if (left) return {textAlign: 'left'} as StyleProp<TextStyle>;

@@ -1,19 +1,31 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import ChallengeCard from '../../../components/card/ChallengeCard';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, StyleSheet} from 'react-native';
+
+import MainBanner from '../../../components/banner/MainBanner';
+import LogoHeader from '../../../components/header/LogoHeader';
+import ChallengeContainer from '../../../container/ChallengeContainer';
+import Api from '../../../lib/api/Api';
+import {ChallengeViewType} from '../../../types/view/challenge';
 
 function ChallengeScreen(): React.ReactElement {
-  const dummy = {
-    imageURI:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvELDx%2Fbtq6p7TgsZ5%2FeyuWSkOo6mY3P5hJlM1SRk%2Fimg.jpg',
-    title: 'string',
-    category: 'string',
+  const [challengeList, setChallengeList] = useState<ChallengeViewType[]>([]);
+  const getChallengeList = async () => {
+    const response = await Api.shared.getChallengeList();
+    setChallengeList(response);
   };
 
+  useEffect(() => {
+    getChallengeList();
+  }, []);
+
+  if (challengeList.length === 0) return <></>;
+
   return (
-    <View style={styles.container}>
-      <ChallengeCard {...dummy} />
-    </View>
+    <ScrollView style={styles.container}>
+      <LogoHeader />
+      <MainBanner />
+      <ChallengeContainer challengeList={challengeList} />
+    </ScrollView>
   );
 }
 

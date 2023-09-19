@@ -1,5 +1,7 @@
-export interface ISvApi {
-  setAuthToken(accessToken: string): void;
+import {ChallengeListAPIResponse} from '../../types/api/challenge';
 
+export interface ISvApi {
   setBaseUrl(baseURL: string): void;
+
+  getChallengeList(): Promise<ChallengeListAPIResponse>;
 }
