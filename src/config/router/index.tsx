@@ -24,7 +24,7 @@ export type MainScreenKeyList = keyof MainScreenStackPropsList;
 
 export type MainScreenStackPropsList = RootScreenStackPropsList & {
   [ROUTER.HOME_SCREEN]: undefined;
-  [ROUTER.CHALLENGE_EXPLAIN_SCREEN]: undefined;
+  [ROUTER.CHALLENGE_EXPLAIN_SCREEN]: {challengeId: number};
   [ROUTER.CHALLENGE_APPLY_SCREEN]: undefined;
 };
 

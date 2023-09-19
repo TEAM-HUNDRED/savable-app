@@ -1,19 +1,34 @@
-import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import React, {useCallback} from 'react';
+import {Image, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-import {AppStyles} from '../../../config';
+import {AppStyles, ROUTER, MainScreenStackPropsList} from '../../../config';
 import {ChallengeViewType} from '../../../types/view/challenge';
 import SVText from '../../common/SVText';
 
 type PropsType = ChallengeViewType & {};
 
 function ChallengeCard({
+  challengeId,
   image,
   title,
   hasDeadline,
 }: PropsType): React.ReactElement {
+  const navigation =
+    useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+
+  const navigateToExplain = useCallback(() => {
+    navigation.navigate(ROUTER.CHALLENGE_EXPLAIN_SCREEN, {
+      challengeId: challengeId,
+    });
+  }, [challengeId, navigation]);
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={navigateToExplain}
+      activeOpacity={0.8}>
       <Image source={{uri: image}} style={styles.image} />
       <SVText body06 style={styles.titleText}>
         {title}
@@ -21,7 +36,7 @@ function ChallengeCard({
       <View style={styles.category}>
         <SVText caption01>{hasDeadline ? '' : '상시 모집'}</SVText>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
