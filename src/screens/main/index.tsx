@@ -1,9 +1,6 @@
 import React, {useCallback} from 'react';
 import {StyleSheet} from 'react-native';
-import {
-  BottomTabNavigationOptions,
-  createBottomTabNavigator,
-} from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {ROUTER} from '../../config/router';
 import LoginScreen from './LoginScreen';
