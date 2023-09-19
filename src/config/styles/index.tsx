@@ -1,5 +1,14 @@
+import {
+  Dimensions,
+  PixelRatio,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 import memoize from 'lodash/memoize';
-import {Dimensions, PixelRatio, TextStyle} from 'react-native';
+
+const statusBarHeight = getStatusBarHeight();
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -40,6 +49,7 @@ type TypographyName =
   | 'headline01'
   | 'headline02'
   | 'header01'
+  | 'body02'
   | 'body06'
   | 'caption01';
 
@@ -68,6 +78,12 @@ const typography: Record<TypographyName, TextStyle> = {
     lineHeight: scaleFont(20),
     color: color.black,
   },
+  body02: {
+    fontFamily: 'NotoSansKR',
+    fontSize: scaleFont(18),
+    lineHeight: scaleFont(20),
+    color: color.black,
+  },
   body06: {
     fontFamily: 'NotoSansKR',
     fontSize: scaleFont(13),
@@ -82,7 +98,23 @@ const typography: Record<TypographyName, TextStyle> = {
   },
 };
 
+const navBarHeight = statusBarHeight + scaleWidth(48);
+const navBarStyles = {
+  height: navBarHeight,
+  shadowColor: 'transparent',
+  shadowRadius: 0,
+  shadowOffset: {
+    height: 0,
+  },
+} as StyleProp<ViewStyle>;
+const headerTitleStyle = {
+  ...typography.body02,
+  color: color.black,
+} as StyleProp<TextStyle>;
+
 export default {
+  statusBarHeight,
+
   width,
   height,
 
@@ -91,4 +123,8 @@ export default {
 
   typography,
   color,
+
+  navBarHeight,
+  navBarStyles,
+  headerTitleStyle,
 };
