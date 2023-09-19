@@ -2,27 +2,24 @@ import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 
 import {AppStyles} from '../../../config';
+import {ChallengeViewType} from '../../../types/view/challenge';
 import SVText from '../../common/SVText';
 
-type PropsType = {
-  imageURI: string;
-  title: string;
-  category: string;
-};
+type PropsType = ChallengeViewType & {};
 
 function ChallengeCard({
-  imageURI,
+  image,
   title,
-  category,
+  hasDeadline,
 }: PropsType): React.ReactElement {
   return (
     <View style={styles.container}>
-      <Image source={{uri: imageURI}} style={styles.image} />
+      <Image source={{uri: image}} style={styles.image} />
       <SVText body06 style={styles.titleText}>
         {title}
       </SVText>
       <View style={styles.category}>
-        <SVText caption01>{category}</SVText>
+        <SVText caption01>{hasDeadline ? '' : '상시 모집'}</SVText>
       </View>
     </View>
   );

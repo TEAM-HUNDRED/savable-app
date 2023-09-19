@@ -1,26 +1,30 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 
 import MainBanner from '../../../components/banner/MainBanner';
 import LogoHeader from '../../../components/header/LogoHeader';
 import ChallengeContainer from '../../../container/ChallengeContainer';
 import Api from '../../../lib/api/Api';
+import {ChallengeViewType} from '../../../types/view/challenge';
 
 function ChallengeScreen(): React.ReactElement {
+  const [challengeList, setChallengeList] = useState<ChallengeViewType[]>([]);
   const getChallengeList = async () => {
     const response = await Api.shared.getChallengeList();
-    console.log(response);
+    setChallengeList(response);
   };
 
   useEffect(() => {
     getChallengeList();
   }, []);
 
+  if (challengeList.length === 0) return <></>;
+
   return (
     <ScrollView style={styles.container}>
       <LogoHeader />
       <MainBanner />
-      <ChallengeContainer />
+      <ChallengeContainer challengeList={challengeList} />
     </ScrollView>
   );
 }

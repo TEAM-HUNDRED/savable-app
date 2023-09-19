@@ -1,28 +1,27 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+
 import ChallengeCard from '../../components/card/ChallengeCard';
 import SVText from '../../components/common/SVText';
 import {AppStyles} from '../../config';
+import {ChallengeViewType} from '../../types/view/challenge';
 
-function ChallengeContainer(): React.ReactElement {
-  const dummy = {
-    imageURI:
-      'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvELDx%2Fbtq6p7TgsZ5%2FeyuWSkOo6mY3P5hJlM1SRk%2Fimg.jpg',
-    title: '챌린지',
-    category: '상시 모집',
-  };
+type PropsType = {
+  challengeList: Array<ChallengeViewType>;
+};
 
-  const list = [dummy, dummy, dummy, dummy, dummy, dummy, dummy, dummy];
-
+function ChallengeContainer({challengeList}: PropsType): React.ReactElement {
   const listArray = () => {
     const divider = 2;
-    const answer = [];
+    const array = [];
+    let index = 0;
 
-    while (list.length) {
-      answer.push(list.splice(0, divider));
+    while (challengeList.length > index) {
+      array.push(challengeList.slice(index, index + divider));
+      index = index + divider;
     }
 
-    return answer;
+    return array;
   };
 
   return (
