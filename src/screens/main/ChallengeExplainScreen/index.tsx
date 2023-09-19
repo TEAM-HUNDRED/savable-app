@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 
 import Api from '../../../lib/api/Api';
-import {MainScreenStackPropsList, ROUTER} from '../../../config';
+import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 import {ChallengeInfoViewType} from '../../../types/view';
 
 type PropsType = {
@@ -43,15 +43,24 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
   if (!challengeInfo) return <></>;
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <Image
+        source={{uri: challengeInfo.image}}
+        style={styles.challengeImage}
+      />
       <Text>1</Text>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: AppStyles.color.white,
+  },
+  challengeImage: {
+    width: '100%',
+    height: AppStyles.scaleWidth(226),
   },
 });
 
