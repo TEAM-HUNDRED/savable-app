@@ -4,10 +4,7 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 
 import Api from '../../../lib/api/Api';
 import {MainScreenStackPropsList, ROUTER} from '../../../config';
-import {
-  ChallengeGuideViewType,
-  ChallengeInfoViewType,
-} from '../../../types/view';
+import {ChallengeInfoViewType} from '../../../types/view';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CHALLENGE_EXPLAIN_SCREEN>;
@@ -17,9 +14,6 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
   const navigation = useNavigation();
 
   const [challengeInfo, setChallengeInfo] = useState<ChallengeInfoViewType>();
-  const [challengeGuide, setChallengeGuide] = useState<
-    ChallengeGuideViewType[]
-  >([]);
 
   const handleNavigationHeader = useCallback(
     (title: string) => {
@@ -32,8 +26,10 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
     async (challengeId: number) => {
       const response = await Api.shared.getChallengeDetail(challengeId);
 
-      setChallengeInfo(response.challenge);
-      setChallengeGuide(response.verificationGuide);
+      setChallengeInfo({
+        ...response.challenge,
+        guide: response.verificationGuide,
+      });
 
       handleNavigationHeader(response.challenge.title);
     },
@@ -44,7 +40,7 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
     getChallengeDetail(route.params.challengeId);
   }, [route, getChallengeDetail]);
 
-  if (!challengeInfo || !challengeGuide) return <></>;
+  if (!challengeInfo) return <></>;
 
   return (
     <View style={styles.container}>

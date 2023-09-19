@@ -17,6 +17,7 @@ export type ChallengeInfoViewType = {
   hasDeadline: boolean;
   startDate: string;
   endDate: string;
+  guide: ChallengeGuideViewType[];
 };
 
 export type ChallengeGuideViewType = {
