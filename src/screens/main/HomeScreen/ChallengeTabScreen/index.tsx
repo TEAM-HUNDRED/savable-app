@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 
-import MainBanner from '../../../components/banner/MainBanner';
-import LogoHeader from '../../../components/header/LogoHeader';
-import ChallengeContainer from '../../../container/ChallengeContainer';
-import Api from '../../../lib/api/Api';
-import {ChallengeViewType} from '../../../types/view/challenge';
+import MainBanner from '../../../../components/banner/MainBanner';
+import LogoHeader from '../../../../components/header/LogoHeader';
+import ChallengeContainer from '../../../../container/ChallengeContainer';
+import Api from '../../../../lib/api/Api';
+import {ChallengeViewType} from '../../../../types/view/challenge';
 
-function ChallengeScreen(): React.ReactElement {
+function ChallengeTabScreen(): React.ReactElement {
   const [challengeList, setChallengeList] = useState<ChallengeViewType[]>([]);
   const getChallengeList = async () => {
     const response = await Api.shared.getChallengeList();
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(ChallengeScreen);
+export default React.memo(ChallengeTabScreen);

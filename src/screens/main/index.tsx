@@ -1,88 +1,28 @@
-import React, {useCallback} from 'react';
-import {StyleSheet} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-import {ROUTER} from '../../config/router';
-import LoginScreen from './LoginScreen';
-import ChallengeScreen from './ChallengeScreen';
-import {AppStyles} from '../../config';
+import React from 'react';
 import {
-  ChallengeIcon,
-  HomeIcon,
-  PersonIcon,
-  StoreIcon,
-} from '../../assets/icons';
+  createStackNavigator,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
 
-const BottomTabNavigation = createBottomTabNavigator();
+import {ROUTER, MainScreenStackPropsList} from '../../config';
+import HomeScreen from './HomeScreen';
+
+const MainStack = createStackNavigator<MainScreenStackPropsList>();
 
 function MainStackScreen(): React.ReactElement {
-  const tabBarIcon = useCallback((routeName: string, color: string) => {
-    switch (routeName) {
-      case ROUTER.CHALLENGE_SCREEN:
-        return <HomeIcon color={color} style={styles.icon} />;
-
-      case ROUTER.PARTICIPATION_SCREEN:
-        return <ChallengeIcon color={color} style={styles.icon} />;
-
-      case ROUTER.STORE_SCREEN:
-        return <StoreIcon color={color} style={styles.icon} />;
-
-      case ROUTER.PROFILE_SCREEN:
-        return <PersonIcon color={color} style={styles.icon} />;
-      default:
-        return <HomeIcon color={color} style={styles.icon} />;
-    }
-  }, []);
-
-  const tabBarLabel: Record<string, string> = {
-    [ROUTER.CHALLENGE_SCREEN]: '홈',
-    [ROUTER.PARTICIPATION_SCREEN]: '인증',
-    [ROUTER.STORE_SCREEN]: '상점',
-    [ROUTER.PROFILE_SCREEN]: '마이페이지',
+  const headerHideOptions: StackNavigationOptions = {
+    headerShown: false,
   };
 
   return (
-    <BottomTabNavigation.Navigator
-      screenOptions={({route}) => ({
-        tabBarActiveTintColor: AppStyles.color.mint05,
-        headerShown: false,
-        tabBarIcon: ({color}) => tabBarIcon(route.name, color),
-        tabBarLabel: tabBarLabel[route.name],
-      })}>
-      <BottomTabNavigation.Screen
-        name={ROUTER.CHALLENGE_SCREEN}
-        component={ChallengeScreen}
+    <MainStack.Navigator>
+      <MainStack.Screen
+        name={ROUTER.HOME_SCREEN}
+        component={HomeScreen}
+        options={headerHideOptions}
       />
-      <BottomTabNavigation.Screen
-        name={ROUTER.PARTICIPATION_SCREEN}
-        component={LoginScreen}
-      />
-      <BottomTabNavigation.Screen
-        name={ROUTER.STORE_SCREEN}
-        component={LoginScreen}
-      />
-      <BottomTabNavigation.Screen
-        name={ROUTER.PROFILE_SCREEN}
-        component={LoginScreen}
-      />
-    </BottomTabNavigation.Navigator>
+    </MainStack.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  icon: {
-    width: AppStyles.scaleWidth(24),
-    height: AppStyles.scaleWidth(24),
-    marginTop: AppStyles.scaleWidth(4),
-  },
-  tabBarStyle: {
-    height: AppStyles.scaleWidth(50),
-  },
-  tabStyle: {
-    borderTopColor: AppStyles.color.lightGray,
-    borderTopWidth: AppStyles.scaleWidth(0.5),
-    height: AppStyles.scaleWidth(50),
-  },
-});
 
 export default MainStackScreen;
