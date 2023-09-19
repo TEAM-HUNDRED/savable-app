@@ -1,8 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {HomeIcon} from '../../../assets/icons';
 
-function LoginScreen(): React.ReactElement {
+function ShopTabScreen(): React.ReactElement {
   return (
     <View style={styles.container}>
       <Text>1</Text>
@@ -17,4 +16,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(LoginScreen);
+export default React.memo(ShopTabScreen);

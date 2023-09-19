@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {ROUTER} from '../../config/router';
-import LoginScreen from './LoginScreen';
+import ShopTabScreen from './ShopTabScreen';
 import ChallengeScreen from './ChallengeScreen';
 import {AppStyles} from '../../config';
 import {
@@ -55,15 +55,15 @@ function MainStackScreen(): React.ReactElement {
       />
       <BottomTabNavigation.Screen
         name={ROUTER.PARTICIPATION_SCREEN}
-        component={LoginScreen}
+        component={ShopTabScreen}
       />
       <BottomTabNavigation.Screen
         name={ROUTER.STORE_SCREEN}
-        component={LoginScreen}
+        component={ShopTabScreen}
       />
       <BottomTabNavigation.Screen
         name={ROUTER.PROFILE_SCREEN}
-        component={LoginScreen}
+        component={ShopTabScreen}
       />
     </BottomTabNavigation.Navigator>
   );
