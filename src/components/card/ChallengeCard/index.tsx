@@ -10,7 +10,7 @@ import SVText from '../../common/SVText';
 type PropsType = ChallengeViewType & {};
 
 function ChallengeCard({
-  challengeId,
+  id,
   image,
   title,
   hasDeadline,
@@ -20,9 +20,9 @@ function ChallengeCard({
 
   const navigateToExplain = useCallback(() => {
     navigation.navigate(ROUTER.CHALLENGE_EXPLAIN_SCREEN, {
-      challengeId: challengeId,
+      challengeId: id,
     });
-  }, [challengeId, navigation]);
+  }, [id, navigation]);
 
   return (
     <TouchableOpacity

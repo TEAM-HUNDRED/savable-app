@@ -27,4 +27,12 @@ export default class ProductionApi implements ISvApi {
 
     return challengeList.data;
   };
+
+  public getChallengeDetail = async (challengeId: number) => {
+    const {data: challengeDetail} = await this.axios.get(
+      `challenges/${challengeId}`,
+    );
+
+    return challengeDetail.data;
+  };
 }
