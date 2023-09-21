@@ -12,6 +12,7 @@ import SVDivider from '../../../components/common/SVDivider';
 import PointGuideCard from '../../../components/card/PointGuideCard';
 import ChallengeGuideCard from '../../../components/card/ChallengeGuideCard';
 import SVButton from '../../../components/common/SVButton';
+import VerificationGuideCard from '../../../components/card/VerificationGuideCard';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CHALLENGE_EXPLAIN_SCREEN>;
@@ -75,6 +76,10 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
       <SVDivider />
       <View style={styles.defaultHorizontal}>
         <ChallengeGuideCard {...CHALLENGE_GUIDE_CONFIG[0]} />
+      </View>
+      <SVDivider />
+      <View>
+        <VerificationGuideCard flatListData={challengeInfo.guide} />
       </View>
       <SVDivider />
       <View style={styles.defaultHorizontal}>

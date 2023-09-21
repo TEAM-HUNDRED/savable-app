@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    paddingHorizontal: AppStyles.scaleWidth(6),
     paddingVertical: AppStyles.scaleWidth(20),
   },
   titleText: {
