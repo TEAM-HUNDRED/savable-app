@@ -5,6 +5,7 @@ export {default as StoreIcon} from './ic_store.svg';
 
 const Icons = {
   leftArrow: require('./icon_left_arrow.png'),
+  point: require('./ic_point.png'),
 };
 
 export default Icons;

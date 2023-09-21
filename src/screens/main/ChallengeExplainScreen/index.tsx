@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Image, ScrollView, StyleSheet} from 'react-native';
+import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 
 import Api from '../../../lib/api/Api';
@@ -49,15 +49,17 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
         source={{uri: challengeInfo.image}}
         style={styles.challengeImage}
       />
-      <ChallengeInfoCard
-        title={challengeInfo.title}
-        explanation={challengeInfo.explanation}
-        verificationDescription={challengeInfo.verificationDescription}
-        reward={challengeInfo.reward}
-        hasDeadline={challengeInfo.hasDeadline}
-        startDate={challengeInfo.startDate}
-        endDate={challengeInfo.endDate}
-      />
+      <View style={styles.defaultHorizontal}>
+        <ChallengeInfoCard
+          title={challengeInfo.title}
+          explanation={challengeInfo.explanation}
+          verificationDescription={challengeInfo.verificationDescription}
+          reward={challengeInfo.reward}
+          hasDeadline={challengeInfo.hasDeadline}
+          startDate={challengeInfo.startDate}
+          endDate={challengeInfo.endDate}
+        />
+      </View>
     </ScrollView>
   );
 }
@@ -70,6 +72,9 @@ const styles = StyleSheet.create({
   challengeImage: {
     width: '100%',
     height: AppStyles.scaleWidth(226),
+  },
+  defaultHorizontal: {
+    marginHorizontal: AppStyles.scaleWidth(24),
   },
 });
 
