@@ -11,6 +11,7 @@ import ChallengeInfoCard from '../../../components/card/ChallengeInfoCard';
 import SVDivider from '../../../components/common/SVDivider';
 import PointGuideCard from '../../../components/card/PointGuideCard';
 import ChallengeGuideCard from '../../../components/card/ChallengeGuideCard';
+import SVButton from '../../../components/common/SVButton';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CHALLENGE_EXPLAIN_SCREEN>;
@@ -79,6 +80,9 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
       <View style={styles.defaultHorizontal}>
         <ChallengeGuideCard {...CHALLENGE_GUIDE_CONFIG[1]} />
       </View>
+      <View style={styles.buttonContainer}>
+        <SVButton borderRadius={AppStyles.scaleWidth(8)}>{'신청하기'}</SVButton>
+      </View>
     </ScrollView>
   );
 }
@@ -100,6 +104,12 @@ const styles = StyleSheet.create({
   },
   noticeContainer: {
     backgroundColor: AppStyles.color.gray,
+  },
+  buttonContainer: {
+    width: '100%',
+    height: AppStyles.scaleWidth(50),
+    marginTop: AppStyles.scaleWidth(24),
+    paddingHorizontal: AppStyles.scaleWidth(24),
   },
 });
 
