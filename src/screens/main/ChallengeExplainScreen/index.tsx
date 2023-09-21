@@ -4,11 +4,13 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 
 import Api from '../../../lib/api/Api';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
+import {CHALLENGE_GUIDE_CONFIG} from '../../../config/base';
 import {ChallengeInfoViewType} from '../../../types/view';
 
 import ChallengeInfoCard from '../../../components/card/ChallengeInfoCard';
 import SVDivider from '../../../components/common/SVDivider';
 import PointGuideCard from '../../../components/card/PointGuideCard';
+import ChallengeGuideCard from '../../../components/card/ChallengeGuideCard';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CHALLENGE_EXPLAIN_SCREEN>;
@@ -70,6 +72,13 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
         <PointGuideCard />
       </View>
       <SVDivider />
+      <View style={styles.defaultHorizontal}>
+        <ChallengeGuideCard {...CHALLENGE_GUIDE_CONFIG[0]} />
+      </View>
+      <SVDivider />
+      <View style={styles.defaultHorizontal}>
+        <ChallengeGuideCard {...CHALLENGE_GUIDE_CONFIG[1]} />
+      </View>
     </ScrollView>
   );
 }
@@ -88,6 +97,9 @@ const styles = StyleSheet.create({
   },
   defaultHorizontal: {
     marginHorizontal: AppStyles.scaleWidth(24),
+  },
+  noticeContainer: {
+    backgroundColor: AppStyles.color.gray,
   },
 });
 
