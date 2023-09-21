@@ -42,6 +42,8 @@ const color = {
   mint03: '#00ECD8',
   mint04: '#00E4D0',
   mint05: '#36C9BB',
+
+  point01: '#FFC502',
 };
 
 type TypographyName =
@@ -50,11 +52,13 @@ type TypographyName =
   | 'headline02'
   | 'header01'
   | 'body02'
+  | 'body04'
   | 'body05'
   | 'body06'
   | 'body07'
   | 'body08'
-  | 'caption01';
+  | 'caption01'
+  | 'caption02';
 
 const typography: Record<TypographyName, TextStyle> = {
   logo: {
@@ -87,6 +91,12 @@ const typography: Record<TypographyName, TextStyle> = {
     lineHeight: scaleFont(20),
     color: color.black,
   },
+  body04: {
+    fontFamily: 'NotoSansKR',
+    fontSize: scaleFont(16),
+    lineHeight: scaleFont(18),
+    color: color.black,
+  },
   body05: {
     fontFamily: 'NotoSansKR',
     fontSize: scaleFont(14),
@@ -114,6 +124,12 @@ const typography: Record<TypographyName, TextStyle> = {
   caption01: {
     fontFamily: 'NotoSansKR',
     fontSize: scaleFont(10),
+    lineHeight: scaleFont(12),
+    color: color.black,
+  },
+  caption02: {
+    fontFamily: 'NotoSansKR',
+    fontSize: scaleFont(9),
     lineHeight: scaleFont(12),
     color: color.black,
   },

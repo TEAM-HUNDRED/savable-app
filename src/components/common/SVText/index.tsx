@@ -40,12 +40,14 @@ const PMText: React.FC<IProps> = ({
 
   header01,
 
+  body04,
   body05,
   body06,
   body07,
   body08,
 
   caption01,
+  caption02,
 
   center,
   left,
@@ -61,12 +63,14 @@ const PMText: React.FC<IProps> = ({
 
     if (header01) return AppStyles.typography.header01;
 
+    if (body04) return AppStyles.typography.body04;
     if (body05) return AppStyles.typography.body05;
     if (body06) return AppStyles.typography.body06;
     if (body07) return AppStyles.typography.body07;
     if (body08) return AppStyles.typography.body08;
 
     if (caption01) return AppStyles.typography.caption01;
+    if (caption02) return AppStyles.typography.caption02;
 
     return {};
   }, [
@@ -74,11 +78,13 @@ const PMText: React.FC<IProps> = ({
     headline01,
     headline02,
     header01,
+    body04,
     body05,
     body06,
     body07,
     body08,
     caption01,
+    caption02,
   ]);
 
   const textAlightStyle: StyleProp<TextStyle> = useMemo(() => {

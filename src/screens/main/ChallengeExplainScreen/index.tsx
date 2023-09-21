@@ -8,6 +8,7 @@ import {ChallengeInfoViewType} from '../../../types/view';
 
 import ChallengeInfoCard from '../../../components/card/ChallengeInfoCard';
 import SVDivider from '../../../components/common/SVDivider';
+import PointGuideCard from '../../../components/card/PointGuideCard';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CHALLENGE_EXPLAIN_SCREEN>;
@@ -46,7 +47,9 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
   if (!challengeInfo) return <></>;
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}>
       <Image
         source={{uri: challengeInfo.image}}
         style={styles.challengeImage}
@@ -63,6 +66,10 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
         />
       </View>
       <SVDivider />
+      <View style={styles.defaultHorizontal}>
+        <PointGuideCard />
+      </View>
+      <SVDivider />
     </ScrollView>
   );
 }
@@ -71,6 +78,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: AppStyles.color.white,
+  },
+  contentContainer: {
+    paddingBottom: AppStyles.statusBarHeight,
   },
   challengeImage: {
     width: '100%',
