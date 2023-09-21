@@ -5,7 +5,9 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 import Api from '../../../lib/api/Api';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 import {ChallengeInfoViewType} from '../../../types/view';
+
 import ChallengeInfoCard from '../../../components/card/ChallengeInfoCard';
+import SVDivider from '../../../components/common/SVDivider';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CHALLENGE_EXPLAIN_SCREEN>;
@@ -60,6 +62,7 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
           endDate={challengeInfo.endDate}
         />
       </View>
+      <SVDivider />
     </ScrollView>
   );
 }
