@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  CardStyleInterpolators,
   createStackNavigator,
   StackNavigationOptions,
 } from '@react-navigation/stack';
@@ -21,10 +22,12 @@ function MainStackScreen(): React.ReactElement {
   const screenOptions: StackNavigationOptions = {
     headerTitleStyle: AppStyles.headerTitleStyle,
     headerTitleAlign: 'center',
+    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
     headerLeft: () => (
       <HeaderIconButton icon={Icons.leftArrow} onPress={navigation.goBack} />
     ),
   };
+
   const headerHideOptions: StackNavigationOptions = {
     headerShown: false,
   };
