@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {StyleProp, Text, TextProps, TextStyle} from 'react-native';
+import {StyleProp, StyleSheet, Text, TextProps, TextStyle} from 'react-native';
 
 import {AppStyles} from '../../../config';
 
@@ -97,10 +97,24 @@ const PMText: React.FC<IProps> = ({
   const textColor = useMemo(() => (color ? {color} : {}), [color]);
 
   return (
-    <Text style={[textTypeStyle, textAlightStyle, textColor, style]} {...rest}>
+    <Text
+      style={[
+        textTypeStyle,
+        textAlightStyle,
+        textColor,
+        styles.textDefaultStyle,
+        style,
+      ]}
+      {...rest}>
       {children}
     </Text>
   );
 };
+
+const styles = StyleSheet.create({
+  textDefaultStyle: {
+    paddingTop: AppStyles.scaleWidth(2),
+  },
+});
 
 export default React.memo(PMText);

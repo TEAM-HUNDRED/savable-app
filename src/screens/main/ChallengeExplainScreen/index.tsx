@@ -27,9 +27,9 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
 
   const navigateToApplyScreen = useCallback(() => {
     navigation.navigate(ROUTER.CHALLENGE_APPLY_SCREEN, {
-      challengeId: route.params.challengeId,
+      challengeInfo: challengeInfo,
     });
-  }, [navigation, route]);
+  }, [navigation, challengeInfo]);
 
   const handleNavigationHeader = useCallback(
     (title: string) => {

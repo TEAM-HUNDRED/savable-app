@@ -1,3 +1,5 @@
+import {ChallengeInfoViewType} from '../../types/view';
+
 export enum ROUTER {
   MAIN_SCREEN = 'MAIN_SCREEN',
   LOGIN_SCREEN = 'LOGIN_SCREEN',
@@ -25,7 +27,9 @@ export type MainScreenKeyList = keyof MainScreenStackPropsList;
 export type MainScreenStackPropsList = RootScreenStackPropsList & {
   [ROUTER.HOME_SCREEN]: undefined;
   [ROUTER.CHALLENGE_EXPLAIN_SCREEN]: {challengeId: number};
-  [ROUTER.CHALLENGE_APPLY_SCREEN]: {challengeId: number};
+  [ROUTER.CHALLENGE_APPLY_SCREEN]: {
+    challengeInfo: ChallengeInfoViewType | undefined;
+  };
 };
 
 // HomeScreen Navigator에 내부 Screen
