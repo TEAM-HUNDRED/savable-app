@@ -25,7 +25,7 @@ export type MainScreenKeyList = keyof MainScreenStackPropsList;
 export type MainScreenStackPropsList = RootScreenStackPropsList & {
   [ROUTER.HOME_SCREEN]: undefined;
   [ROUTER.CHALLENGE_EXPLAIN_SCREEN]: {challengeId: number};
-  [ROUTER.CHALLENGE_APPLY_SCREEN]: undefined;
+  [ROUTER.CHALLENGE_APPLY_SCREEN]: {challengeId: number};
 };
 
 // HomeScreen Navigator에 내부 Screen

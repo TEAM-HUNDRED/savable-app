@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import Api from '../../../lib/api/Api';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
@@ -19,9 +20,16 @@ type PropsType = {
 };
 
 function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
   const [challengeInfo, setChallengeInfo] = useState<ChallengeInfoViewType>();
+
+  const navigateToApplyScreen = useCallback(() => {
+    navigation.navigate(ROUTER.CHALLENGE_APPLY_SCREEN, {
+      challengeId: route.params.challengeId,
+    });
+  }, [navigation, route]);
 
   const handleNavigationHeader = useCallback(
     (title: string) => {
@@ -86,7 +94,11 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
         <ChallengeGuideCard {...CHALLENGE_GUIDE_CONFIG[1]} />
       </View>
       <View style={styles.buttonContainer}>
-        <SVButton borderRadius={AppStyles.scaleWidth(8)}>{'신청하기'}</SVButton>
+        <SVButton
+          borderRadius={AppStyles.scaleWidth(8)}
+          onPress={navigateToApplyScreen}>
+          {'신청하기'}
+        </SVButton>
       </View>
     </ScrollView>
   );
