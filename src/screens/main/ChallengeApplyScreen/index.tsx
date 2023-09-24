@@ -9,6 +9,7 @@ import SVText from '../../../components/common/SVText';
 import SVDivider from '../../../components/common/SVDivider';
 import SVButton from '../../../components/common/SVButton';
 import ChallengeApplyCard from '../../../components/card/ChallengeApplyCard';
+import {useToastProvider} from '../../../lib/context/ToastContext';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CHALLENGE_APPLY_SCREEN>;
@@ -16,6 +17,8 @@ type PropsType = {
 
 function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
   const navigation = useNavigation();
+  const {showToast} = useToastProvider();
+
   const challengeInfo: ChallengeInfoViewType | undefined =
     route.params.challengeInfo;
 
@@ -30,16 +33,33 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
 
   const handleDuration = (currentDuration: string) => {
     setDuration(currentDuration);
+    targetOfDuration(currentDuration);
   };
+
+  const targetOfDuration = (currentDuration: string) => {
+    const week = durationList.findIndex(item => item === currentDuration) + 1;
+
+    if (Number(target) < week * 1) {
+      setTarget(String(week * 1));
+    } else if (Number(target) > week * 7) {
+      setTarget(String(week * 7));
+    }
+  };
+
   const handleSaveTarget = (currentTarget: string) => {
-    if (Number(currentTarget) >= 1) {
+    const week = durationList.findIndex(item => item === duration) + 1;
+
+    if (Number(currentTarget) < week * 1) {
+      showToast({currentText: '일주일에 최소 1회 절약해야 합니다!'});
+    } else if (Number(currentTarget) > week * 7) {
+      showToast({currentText: '일주일에 최대 7회까지 절약가능 합니다!'});
+    } else {
       setTarget(currentTarget);
     }
   };
 
   useEffect(() => {
     handleNavigationHeader();
-    // getChallengeDetail(route.params.challengeId);
   }, [handleNavigationHeader]);
 
   if (!challengeInfo) return <></>;

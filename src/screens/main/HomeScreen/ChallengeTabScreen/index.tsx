@@ -10,8 +10,12 @@ import {ChallengeViewType} from '../../../../types/view/challenge';
 function ChallengeTabScreen(): React.ReactElement {
   const [challengeList, setChallengeList] = useState<ChallengeViewType[]>([]);
   const getChallengeList = async () => {
-    const response = await Api.shared.getChallengeList();
-    setChallengeList(response);
+    try {
+      const response = await Api.shared.getChallengeList();
+      setChallengeList(response);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
