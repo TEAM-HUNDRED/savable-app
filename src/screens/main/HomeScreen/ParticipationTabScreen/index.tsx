@@ -30,7 +30,9 @@ function ParticipationTabScreen(): React.ReactElement {
   if (participationList.length === 0) return <></>;
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}>
       <LogoHeader />
       <ParticipationChallengeContainer participationList={participationList} />
     </ScrollView>
@@ -39,8 +41,10 @@ function ParticipationTabScreen(): React.ReactElement {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: AppStyles.color.white,
+  },
+  contentContainer: {
+    flex: 1,
   },
 });
 
