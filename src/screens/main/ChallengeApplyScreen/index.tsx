@@ -10,6 +10,7 @@ import SVDivider from '../../../components/common/SVDivider';
 import SVButton from '../../../components/common/SVButton';
 import ChallengeApplyCard from '../../../components/card/ChallengeApplyCard';
 import {useToastProvider} from '../../../lib/context/ToastContext';
+import {usePopUpProvider} from '../../../lib/context/PopUpContext';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CHALLENGE_APPLY_SCREEN>;
@@ -18,6 +19,7 @@ type PropsType = {
 function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
   const navigation = useNavigation();
   const {showToast} = useToastProvider();
+  const {showPopUp} = usePopUpProvider();
 
   const challengeInfo: ChallengeInfoViewType | undefined =
     route.params.challengeInfo;
@@ -58,6 +60,38 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
     }
   };
 
+  const onPressApplyButton = () => {
+    showPopUp({
+      title: '챌린지 참여 완료!',
+      subButtonText: 'Savable과 함께 절약해요',
+      buttonText: '확인',
+      onPressButton: () => {},
+      cardChildren: (
+        <View>
+          <SVText body04 center>
+            {'챌린지 인증하면'}
+          </SVText>
+          <View style={styles.cardTextContainer}>
+            <SVText body04 center style={styles.highlightText}>
+              {'3,000원 '}
+            </SVText>
+            <SVText body04 center>
+              {'절약!'}
+            </SVText>
+          </View>
+          <View style={styles.cardTextContainer}>
+            <SVText body04 center style={styles.highlightText}>
+              {`${String(route.params.challengeInfo?.reward)} 포인트 `}
+            </SVText>
+            <SVText body04 center>
+              {'지급!'}
+            </SVText>
+          </View>
+        </View>
+      ),
+    });
+  };
+
   useEffect(() => {
     handleNavigationHeader();
   }, [handleNavigationHeader]);
@@ -90,7 +124,9 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <SVButton borderRadius={AppStyles.scaleWidth(8)} onPress={() => {}}>
+        <SVButton
+          borderRadius={AppStyles.scaleWidth(8)}
+          onPress={onPressApplyButton}>
           {'참여하기'}
         </SVButton>
       </View>
@@ -115,6 +151,16 @@ const styles = StyleSheet.create({
   },
   titleText: {
     marginVertical: AppStyles.scaleWidth(25),
+  },
+  highlightText: {
+    color: AppStyles.color.mint05,
+    fontWeight: 'bold',
+  },
+  cardTextContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonContainer: {
     position: 'absolute',
