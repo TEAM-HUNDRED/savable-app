@@ -5,6 +5,8 @@ import Api from '../../../../lib/api/Api';
 
 import LogoHeader from '../../../../components/header/LogoHeader';
 import {ParticipationViewPropsType} from '../../../../types/view';
+import ParticipationChallengeContainer from '../../../../container/ParticipationChallengeContainer';
+import {AppStyles} from '../../../../config';
 
 function ParticipationTabScreen(): React.ReactElement {
   const [participationList, setParticipationList] = useState<
@@ -27,9 +29,12 @@ function ParticipationTabScreen(): React.ReactElement {
 
   if (participationList.length === 0) return <></>;
 
+  console.log(participationList);
+
   return (
     <ScrollView style={styles.container}>
       <LogoHeader />
+      <ParticipationChallengeContainer participationList={participationList} />
     </ScrollView>
   );
 }
@@ -37,6 +42,7 @@ function ParticipationTabScreen(): React.ReactElement {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: AppStyles.color.white,
   },
 });
 
