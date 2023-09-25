@@ -29,8 +29,6 @@ function ParticipationTabScreen(): React.ReactElement {
 
   if (participationList.length === 0) return <></>;
 
-  console.log(participationList);
-
   return (
     <ScrollView style={styles.container}>
       <LogoHeader />
