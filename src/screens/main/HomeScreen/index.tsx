@@ -3,7 +3,6 @@ import {StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {ROUTER} from '../../../config/router';
-import ChallengeTabScreen from './ChallengeTabScreen';
 import {AppStyles} from '../../../config';
 import {
   ChallengeIcon,
@@ -11,6 +10,9 @@ import {
   PersonIcon,
   StoreIcon,
 } from '../../../assets/icons';
+
+import ChallengeTabScreen from './ChallengeTabScreen';
+import ParticipationTabScreen from './ParticipationTabScreen';
 
 const BottomTabNavigation = createBottomTabNavigator();
 
@@ -54,7 +56,7 @@ function HomeScreen(): React.ReactElement {
       />
       <BottomTabNavigation.Screen
         name={ROUTER.PARTICIPATION_SCREEN}
-        component={ChallengeTabScreen}
+        component={ParticipationTabScreen}
       />
       <BottomTabNavigation.Screen
         name={ROUTER.STORE_SCREEN}

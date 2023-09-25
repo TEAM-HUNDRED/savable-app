@@ -1,6 +1,7 @@
 import {
   ChallengeListAPIResponse,
   ChallengeDetailAPIResponse,
+  ParticipationChallengeListAPIResponse,
 } from '../../types/api';
 
 export interface ISvApi {
@@ -8,4 +9,6 @@ export interface ISvApi {
 
   getChallengeList(): Promise<ChallengeListAPIResponse>;
   getChallengeDetail(challengeId: number): Promise<ChallengeDetailAPIResponse>;
+
+  getParticipationChallengeList(): Promise<ParticipationChallengeListAPIResponse>;
 }
