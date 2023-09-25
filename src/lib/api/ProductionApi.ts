@@ -2,6 +2,7 @@ import axios, {AxiosInstance} from 'axios';
 import {API_URL} from '@env';
 
 import {ISvApi} from './ISvApi';
+import {ParticipationChallengeListAPIResponse} from '../../types/api';
 
 export default class ProductionApi implements ISvApi {
   static instance: ISvApi;
@@ -35,4 +36,11 @@ export default class ProductionApi implements ISvApi {
 
     return challengeDetail.data;
   };
+
+  public getParticipationChallengeList =
+    async (): Promise<ParticipationChallengeListAPIResponse> => {
+      const {data: data} = await this.axios.get('participations');
+
+      return data.data;
+    };
 }
