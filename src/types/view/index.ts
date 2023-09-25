@@ -1,1 +1,1 @@
-export * as challenge from './challenge';
+export * from './challenge';

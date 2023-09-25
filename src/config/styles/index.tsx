@@ -1,5 +1,14 @@
+import {
+  Dimensions,
+  PixelRatio,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 import memoize from 'lodash/memoize';
-import {Dimensions, PixelRatio, TextStyle} from 'react-native';
+
+const statusBarHeight = getStatusBarHeight();
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -33,6 +42,8 @@ const color = {
   mint03: '#00ECD8',
   mint04: '#00E4D0',
   mint05: '#36C9BB',
+
+  point01: '#FFC502',
 };
 
 type TypographyName =
@@ -40,8 +51,14 @@ type TypographyName =
   | 'headline01'
   | 'headline02'
   | 'header01'
+  | 'body02'
+  | 'body04'
+  | 'body05'
   | 'body06'
-  | 'caption01';
+  | 'body07'
+  | 'body08'
+  | 'caption01'
+  | 'caption02';
 
 const typography: Record<TypographyName, TextStyle> = {
   logo: {
@@ -68,10 +85,40 @@ const typography: Record<TypographyName, TextStyle> = {
     lineHeight: scaleFont(20),
     color: color.black,
   },
+  body02: {
+    fontFamily: 'NotoSansKR',
+    fontSize: scaleFont(18),
+    lineHeight: scaleFont(20),
+    color: color.black,
+  },
+  body04: {
+    fontFamily: 'NotoSansKR',
+    fontSize: scaleFont(16),
+    lineHeight: scaleFont(18),
+    color: color.black,
+  },
+  body05: {
+    fontFamily: 'NotoSansKR',
+    fontSize: scaleFont(14),
+    lineHeight: scaleFont(16),
+    color: color.black,
+  },
   body06: {
     fontFamily: 'NotoSansKR',
     fontSize: scaleFont(13),
     lineHeight: scaleFont(15),
+    color: color.black,
+  },
+  body07: {
+    fontFamily: 'NotoSansKR',
+    fontSize: scaleFont(12),
+    lineHeight: scaleFont(14),
+    color: color.black,
+  },
+  body08: {
+    fontFamily: 'NotoSansKR',
+    fontSize: scaleFont(11),
+    lineHeight: scaleFont(13),
     color: color.black,
   },
   caption01: {
@@ -80,9 +127,31 @@ const typography: Record<TypographyName, TextStyle> = {
     lineHeight: scaleFont(12),
     color: color.black,
   },
+  caption02: {
+    fontFamily: 'NotoSansKR',
+    fontSize: scaleFont(9),
+    lineHeight: scaleFont(12),
+    color: color.black,
+  },
 };
 
+const navBarHeight = statusBarHeight + scaleWidth(48);
+const navBarStyles = {
+  height: navBarHeight,
+  shadowColor: 'transparent',
+  shadowRadius: 0,
+  shadowOffset: {
+    height: 0,
+  },
+} as StyleProp<ViewStyle>;
+const headerTitleStyle = {
+  ...typography.body02,
+  color: color.black,
+} as StyleProp<TextStyle>;
+
 export default {
+  statusBarHeight,
+
   width,
   height,
 
@@ -91,4 +160,8 @@ export default {
 
   typography,
   color,
+
+  navBarHeight,
+  navBarStyles,
+  headerTitleStyle,
 };

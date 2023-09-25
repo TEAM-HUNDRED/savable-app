@@ -4,7 +4,8 @@ export {default as PersonIcon} from './ic_person.svg';
 export {default as StoreIcon} from './ic_store.svg';
 
 const Icons = {
-  home: require('./ic_home.png'),
+  leftArrow: require('./icon_left_arrow.png'),
+  point: require('./ic_point.png'),
 };
 
 export default Icons;
