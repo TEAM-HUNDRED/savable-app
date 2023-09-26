@@ -12,6 +12,7 @@ export enum ROUTER {
   CHALLENGE_APPLY_SCREEN = 'CHALLENGE_APPLY_SCREEN',
   PARTICIPATED_CHALLENGE_STATUS_SCREEN = 'PARTICIPATED_CHALLENGE_STATUS_SCREEN',
   CREATE_ORDER_PAGE = 'CREATE_ORDER_PAGE',
+  ORDER_SUCCESS_SCREEN = 'ORDER_SUCCESS_SCREEN',
 }
 
 // 최상단 RootScreen
@@ -43,6 +44,14 @@ export type MainScreenStackPropsList = RootScreenStackPropsList & {
     productName: string;
     price: number;
     brandName: string;
+  };
+  [ROUTER.ORDER_SUCCESS_SCREEN]: {
+    giftcardId: number;
+    image: string;
+    productName: string;
+    price: number;
+    brandName: string;
+    amount: number;
   };
 };
 
