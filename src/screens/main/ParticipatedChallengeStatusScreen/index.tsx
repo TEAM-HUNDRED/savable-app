@@ -78,11 +78,22 @@ function ParticipatedChallengeStatusScreen({
       </View>
       <SVDivider />
       <VerificationStatusCard {...verificationInfo} />
-      <View style={styles.buttonContainer}>
-        <SVButton borderRadius={AppStyles.scaleWidth(8)} onPress={() => {}}>
-          {'신청하기'}
-        </SVButton>
-      </View>
+      {route.params.isVerifiedToday ? (
+        <View style={styles.buttonContainer}>
+          <SVButton
+            borderRadius={AppStyles.scaleWidth(8)}
+            color={AppStyles.color.gray}
+            onPress={() => {}}>
+            {'인증 완료'}
+          </SVButton>
+        </View>
+      ) : (
+        <View style={styles.buttonContainer}>
+          <SVButton borderRadius={AppStyles.scaleWidth(8)} onPress={() => {}}>
+            {'인증하러 가기'}
+          </SVButton>
+        </View>
+      )}
     </ScrollView>
   );
 }
@@ -111,7 +122,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     height: AppStyles.scaleWidth(50),
-    marginTop: AppStyles.scaleWidth(24),
+    marginTop: AppStyles.scaleWidth(10),
     paddingHorizontal: AppStyles.scaleWidth(24),
   },
 });

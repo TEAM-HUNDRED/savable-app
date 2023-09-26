@@ -29,6 +29,7 @@ function ParticipationChallengeCard({
     navigation.navigate(ROUTER.PARTICIPATED_CHALLENGE_STATUS_SCREEN, {
       challengeId: participationChallengeId,
       challengeTitle: title,
+      isVerifiedToday: isVerifiedToday,
     });
   };
 

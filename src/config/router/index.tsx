@@ -34,6 +34,7 @@ export type MainScreenStackPropsList = RootScreenStackPropsList & {
   [ROUTER.PARTICIPATED_CHALLENGE_STATUS_SCREEN]: {
     challengeId: number;
     challengeTitle: string;
+    isVerifiedToday: boolean;
   };
 };
 
