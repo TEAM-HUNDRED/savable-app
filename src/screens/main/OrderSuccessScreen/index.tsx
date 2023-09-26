@@ -4,10 +4,11 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
-import GiftCard from '../../../components/card/GiftCard';
 import {CheckIcon} from '../../../assets/icons';
+
 import SVText from '../../../components/common/SVText';
 import SVDivider from '../../../components/common/SVDivider';
+import OrderHistoryCard from '../../../components/card/OrderHistoryCard';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.ORDER_SUCCESS_SCREEN>;
@@ -29,12 +30,13 @@ function OrderSuccessScreen({route}: PropsType) {
       </View>
       <SVDivider />
       <View style={styles.paddingContainer}>
-        <GiftCard
+        <OrderHistoryCard
           giftcardId={route.params.giftcardId}
           image={route.params.image}
           productName={route.params.productName}
           price={route.params.price}
           brandName={route.params.brandName}
+          amount={route.params.amount}
         />
       </View>
     </ScrollView>
