@@ -7,6 +7,7 @@ import GiftCard from '../../../components/card/GiftCard';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 import CreateOrderContainer from '../../../container/CreateOrderContainer';
 import {useToastProvider} from '../../../lib/context/ToastContext';
+import SVButton from '../../../components/common/SVButton';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CREATE_ORDER_PAGE>;
@@ -31,11 +32,23 @@ function CreateOrderPage({route}: PropsType) {
     challengeOpinion: '',
   });
 
-  console.log(inputData);
+  const validationInputData = useCallback(() => {
+    if (!inputData.negativePoint || !inputData.positivePoint) {
+      showToast({currentText: '필수 항목을 입력해주세요'});
+      return false;
+    } else return true;
+  }, [inputData, showToast]);
 
   const handleInputData = useCallback((currentInputData: InputPropsType) => {
     setInputData(currentInputData);
   }, []);
+
+  const navigateToPurchaseSuccessScreen = useCallback(() => {}, []);
+
+  const onPressPurchaseButton = useCallback(() => {
+    if (!validationInputData()) return;
+    else navigateToPurchaseSuccessScreen();
+  }, [validationInputData, navigateToPurchaseSuccessScreen]);
 
   useEffect(() => {
     navigation.setOptions({title: '기프티콘 구매'});
@@ -58,6 +71,13 @@ function CreateOrderPage({route}: PropsType) {
           handleInputData={handleInputData}
         />
       </View>
+      <View style={styles.buttonContainer}>
+        <SVButton
+          borderRadius={AppStyles.scaleWidth(8)}
+          onPress={onPressPurchaseButton}>
+          {'구매하기'}
+        </SVButton>
+      </View>
     </ScrollView>
   );
 }
@@ -71,6 +91,12 @@ const styles = StyleSheet.create({
     paddingVertical: AppStyles.scaleWidth(36),
   },
   paddingContainer: {
+    paddingHorizontal: AppStyles.scaleWidth(24),
+  },
+  buttonContainer: {
+    width: '100%',
+    height: AppStyles.scaleWidth(50),
+    marginTop: AppStyles.scaleWidth(24),
     paddingHorizontal: AppStyles.scaleWidth(24),
   },
 });
