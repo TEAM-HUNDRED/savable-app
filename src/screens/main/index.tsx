@@ -14,6 +14,7 @@ import HomeScreen from './HomeScreen';
 import ChallengeExplainScreen from './ChallengeExplainScreen';
 import ChallengeApplyScreen from './ChallengeApplyScreen';
 import ParticipatedChallengeStatusScreen from './ParticipatedChallengeStatusScreen';
+import CreateOrderPage from './CreateOrderPage';
 
 const MainStack = createStackNavigator<MainScreenStackPropsList>();
 
@@ -47,6 +48,10 @@ function MainStackScreen(): React.ReactElement {
       <MainStack.Screen
         name={ROUTER.CHALLENGE_APPLY_SCREEN}
         component={ChallengeApplyScreen}
+      />
+      <MainStack.Screen
+        name={ROUTER.CREATE_ORDER_PAGE}
+        component={CreateOrderPage}
       />
       <MainStack.Screen
         name={ROUTER.PARTICIPATED_CHALLENGE_STATUS_SCREEN}

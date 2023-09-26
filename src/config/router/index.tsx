@@ -11,6 +11,7 @@ export enum ROUTER {
   CHALLENGE_EXPLAIN_SCREEN = 'CHALLENGE_EXPLAIN_SCREEN',
   CHALLENGE_APPLY_SCREEN = 'CHALLENGE_APPLY_SCREEN',
   PARTICIPATED_CHALLENGE_STATUS_SCREEN = 'PARTICIPATED_CHALLENGE_STATUS_SCREEN',
+  CREATE_ORDER_PAGE = 'CREATE_ORDER_PAGE',
 }
 
 // 최상단 RootScreen
@@ -35,6 +36,13 @@ export type MainScreenStackPropsList = RootScreenStackPropsList & {
     challengeId: number;
     challengeTitle: string;
     isVerifiedToday: boolean;
+  };
+  [ROUTER.CREATE_ORDER_PAGE]: {
+    giftcardId: number;
+    image: string;
+    productName: string;
+    price: number;
+    brandName: string;
   };
 };
 

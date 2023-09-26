@@ -1,10 +1,13 @@
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {AppStyles} from '../../../config';
+import {useNavigation} from '@react-navigation/native';
 
-import {GiftCardPropsType} from '../../../types/view/shop';
 import Icons from '../../../assets/icons';
+import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
+import {GiftCardPropsType} from '../../../types/view/shop';
+
 import SVText from '../../common/SVText';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 type PropsType = GiftCardPropsType;
 
@@ -15,10 +18,26 @@ function GiftCard({
   price,
   brandName,
 }: PropsType) {
+  const navigation =
+    useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+
+  const navigateToOrder = () => {
+    navigation.navigate(ROUTER.CREATE_ORDER_PAGE, {
+      giftcardId: giftcardId,
+      image: image,
+      productName: productName,
+      price: price,
+      brandName: brandName,
+    });
+  };
+
+  const onPressCard = () => {
+    navigateToOrder();
+  };
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={() => {}}
+      onPress={onPressCard}
       style={styles.container}>
       <Image style={styles.image} source={{uri: image}} />
       <View style={styles.contentContainer}>
