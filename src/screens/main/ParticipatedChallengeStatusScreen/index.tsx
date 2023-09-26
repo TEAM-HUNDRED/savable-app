@@ -12,6 +12,8 @@ import {
 } from '../../../types/view';
 
 import SVButton from '../../../components/common/SVButton';
+import ParticipationChallengeInfoCard from '../../../components/card/ParticipationChallengeInfoCard';
+import SVDivider from '../../../components/common/SVDivider';
 
 type PropsType = {
   route: RouteProp<
@@ -64,7 +66,16 @@ function ParticipatedChallengeStatusScreen({
         source={{uri: challengeInfo.image}}
         style={styles.challengeImage}
       />
-
+      <View style={styles.paddingContainer}>
+        <ParticipationChallengeInfoCard
+          savings={challengeInfo.savings}
+          scheduledReward={challengeInfo.scheduledReward}
+          verificationGoal={challengeInfo.verificationGoal}
+          startDate={challengeInfo.startDate}
+          endDate={challengeInfo.endDate}
+        />
+      </View>
+      <SVDivider />
       <View style={styles.buttonContainer}>
         <SVButton borderRadius={AppStyles.scaleWidth(8)} onPress={() => {}}>
           {'신청하기'}
@@ -81,6 +92,9 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingBottom: AppStyles.statusBarHeight,
+  },
+  paddingContainer: {
+    paddingHorizontal: AppStyles.scaleWidth(24),
   },
   challengeImage: {
     width: '100%',
