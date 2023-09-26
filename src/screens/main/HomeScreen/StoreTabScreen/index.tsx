@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
+import GiftCard from '../../../../components/card/GiftCard';
 import ShopCategoryCard from '../../../../components/card/ShopCategoryCard';
 import {AppStyles} from '../../../../config';
 
@@ -28,6 +29,11 @@ function StoreTabScreen() {
       <View style={styles.paddingContainer}>
         <ShopCategoryCard setPrice={setPrice} price={price} />
       </View>
+      <View style={styles.paddingContainer}>
+        {giftCardList.map((item, idx) => {
+          return <GiftCard {...item} key={`${item.productName}-${idx}`} />;
+        })}
+      </View>
     </ScrollView>
   );
 }
@@ -35,6 +41,7 @@ function StoreTabScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: AppStyles.color.white,
   },
   profileContainer: {
     width: '100%',
