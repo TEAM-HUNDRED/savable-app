@@ -1,8 +1,10 @@
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import Icons from '../../../assets/icons';
-import {AppStyles} from '../../../config';
+import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 import {ParticipationViewPropsType} from '../../../types/view';
 
 import SVText from '../../common/SVText';
@@ -19,8 +21,17 @@ function ParticipationChallengeCard({
   savings,
   isVerifiedToday,
 }: PropsType) {
+  const navigation =
+    useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+
   const navigateToVerificationScreen = () => {};
-  const navigateToChallengeStatusScreen = () => {};
+  const navigateToChallengeStatusScreen = () => {
+    navigation.navigate(ROUTER.PARTICIPATED_CHALLENGE_STATUS_SCREEN, {
+      challengeId: participationChallengeId,
+      challengeTitle: title,
+      isVerifiedToday: isVerifiedToday,
+    });
+  };
 
   const onPressButton = () => {
     navigateToVerificationScreen();

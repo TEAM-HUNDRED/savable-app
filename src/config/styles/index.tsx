@@ -44,6 +44,8 @@ const color = {
   mint05: '#36C9BB',
 
   point01: '#FFC502',
+  point02: '#F58B91',
+  point03: '#53C1FF',
 };
 
 type TypographyName =

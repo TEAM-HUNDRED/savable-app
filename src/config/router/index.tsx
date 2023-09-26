@@ -10,6 +10,7 @@ export enum ROUTER {
   PROFILE_SCREEN = 'PROFILE_SCREEN',
   CHALLENGE_EXPLAIN_SCREEN = 'CHALLENGE_EXPLAIN_SCREEN',
   CHALLENGE_APPLY_SCREEN = 'CHALLENGE_APPLY_SCREEN',
+  PARTICIPATED_CHALLENGE_STATUS_SCREEN = 'PARTICIPATED_CHALLENGE_STATUS_SCREEN',
 }
 
 // 최상단 RootScreen
@@ -29,6 +30,11 @@ export type MainScreenStackPropsList = RootScreenStackPropsList & {
   [ROUTER.CHALLENGE_EXPLAIN_SCREEN]: {challengeId: number};
   [ROUTER.CHALLENGE_APPLY_SCREEN]: {
     challengeInfo: ChallengeInfoViewType | undefined;
+  };
+  [ROUTER.PARTICIPATED_CHALLENGE_STATUS_SCREEN]: {
+    challengeId: number;
+    challengeTitle: string;
+    isVerifiedToday: boolean;
   };
 };
 
