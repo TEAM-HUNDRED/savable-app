@@ -14,6 +14,7 @@ import {
 import SVButton from '../../../components/common/SVButton';
 import ParticipationChallengeInfoCard from '../../../components/card/ParticipationChallengeInfoCard';
 import SVDivider from '../../../components/common/SVDivider';
+import VerificationStatusCard from '../../../components/card/VerificationStatusCard';
 
 type PropsType = {
   route: RouteProp<
@@ -76,6 +77,7 @@ function ParticipatedChallengeStatusScreen({
         />
       </View>
       <SVDivider />
+      <VerificationStatusCard {...verificationInfo} />
       <View style={styles.buttonContainer}>
         <SVButton borderRadius={AppStyles.scaleWidth(8)} onPress={() => {}}>
           {'신청하기'}
