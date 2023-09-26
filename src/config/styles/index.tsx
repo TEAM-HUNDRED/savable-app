@@ -54,6 +54,7 @@ type TypographyName =
   | 'headline02'
   | 'header01'
   | 'body02'
+  | 'body03'
   | 'body04'
   | 'body05'
   | 'body06'
@@ -91,6 +92,12 @@ const typography: Record<TypographyName, TextStyle> = {
     fontFamily: 'NotoSansKR',
     fontSize: scaleFont(18),
     lineHeight: scaleFont(20),
+    color: color.black,
+  },
+  body03: {
+    fontFamily: 'NotoSansKR',
+    fontSize: scaleFont(17),
+    lineHeight: scaleFont(19),
     color: color.black,
   },
   body04: {

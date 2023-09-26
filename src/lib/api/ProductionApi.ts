@@ -2,7 +2,11 @@ import axios, {AxiosInstance} from 'axios';
 import {API_URL} from '@env';
 
 import {ISvApi} from './ISvApi';
-import {ParticipationChallengeListAPIResponse} from '../../types/api';
+import {
+  GiftCardListAPIResponse,
+  ParticipationChallengeListAPIResponse,
+  ParticipationChallengeStatusAPIResponse,
+} from '../../types/api';
 
 export default class ProductionApi implements ISvApi {
   static instance: ISvApi;
@@ -46,9 +50,17 @@ export default class ProductionApi implements ISvApi {
 
   public getParticipationChallengeStatus = async (
     challengeId: number,
-  ): Promise<ParticipationChallengeListAPIResponse> => {
+  ): Promise<ParticipationChallengeStatusAPIResponse> => {
     const {data} = await this.axios.get(`participation/${challengeId}`);
 
     return data.data;
   };
+
+  public async getGiftCardList(
+    price: number,
+  ): Promise<GiftCardListAPIResponse> {
+    const {data} = await this.axios.get(`shop/giftcard/${price}`);
+
+    return data.data;
+  }
 }
