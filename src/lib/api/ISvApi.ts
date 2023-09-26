@@ -3,6 +3,7 @@ import {
   ChallengeDetailAPIResponse,
   ParticipationChallengeListAPIResponse,
   ParticipationChallengeStatusAPIResponse,
+  GiftCardListAPIResponse,
 } from '../../types/api';
 
 export interface ISvApi {
@@ -15,4 +16,6 @@ export interface ISvApi {
   getParticipationChallengeStatus(
     challengeId: number,
   ): Promise<ParticipationChallengeStatusAPIResponse>;
+
+  getGiftCardList(price: number): Promise<GiftCardListAPIResponse>;
 }
