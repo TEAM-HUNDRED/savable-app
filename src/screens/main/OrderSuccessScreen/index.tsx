@@ -5,6 +5,9 @@ import {StackNavigationProp} from '@react-navigation/stack';
 
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 import GiftCard from '../../../components/card/GiftCard';
+import {CheckIcon} from '../../../assets/icons';
+import SVText from '../../../components/common/SVText';
+import SVDivider from '../../../components/common/SVDivider';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.ORDER_SUCCESS_SCREEN>;
@@ -19,9 +22,12 @@ function OrderSuccessScreen({route}: PropsType) {
   }, [navigation]);
 
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}>
+    <ScrollView style={styles.container}>
+      <View style={styles.imageContainer}>
+        <CheckIcon style={styles.image} />
+        <SVText body04>{'구매가 완료되었습니다'}</SVText>
+      </View>
+      <SVDivider />
       <View style={styles.paddingContainer}>
         <GiftCard
           giftcardId={route.params.giftcardId}
@@ -40,11 +46,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: AppStyles.color.white,
   },
-  contentContainer: {
-    paddingVertical: AppStyles.scaleWidth(36),
-  },
   paddingContainer: {
     paddingHorizontal: AppStyles.scaleWidth(24),
+  },
+  imageContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: AppStyles.scaleWidth(40),
+  },
+  image: {
+    width: AppStyles.scaleWidth(130),
+    height: AppStyles.scaleWidth(130),
+    marginBottom: AppStyles.scaleWidth(20),
   },
 });
 
