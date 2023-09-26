@@ -72,9 +72,7 @@ function VerificationStatusCard({
         </View>
         <Image source={{uri: item.image}} style={styles.image} />
         <View style={styles.verificationValueText}>
-          <SVText body08 style={styles.dateText}>
-            {date}
-          </SVText>
+          <SVText body08>{date}</SVText>
           {stateComponent(item.state)}
         </View>
       </View>
@@ -132,12 +130,10 @@ const styles = StyleSheet.create({
     marginVertical: AppStyles.scaleWidth(16),
     marginHorizontal: AppStyles.scaleWidth(24),
   },
-  infoCard: {},
   infoValueText: {
     marginTop: AppStyles.scaleWidth(4),
     fontWeight: 'bold',
   },
-  verificationListContainer: {},
   verificationCard: {
     width: AppStyles.scaleWidth(58),
     marginRight: AppStyles.scaleWidth(14),
@@ -170,7 +166,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
   },
-  dateText: {},
   stateText: {
     marginTop: AppStyles.scaleWidth(2),
     fontWeight: 'bold',
