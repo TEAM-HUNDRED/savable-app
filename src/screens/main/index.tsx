@@ -7,12 +7,13 @@ import {
 import {useNavigation} from '@react-navigation/native';
 
 import {ROUTER, MainScreenStackPropsList, AppStyles} from '../../config';
+import Icons from '../../assets/icons';
+import HeaderIconButton from '../../components/header/HeaderIconButton';
 
 import HomeScreen from './HomeScreen';
 import ChallengeExplainScreen from './ChallengeExplainScreen';
 import ChallengeApplyScreen from './ChallengeApplyScreen';
-import HeaderIconButton from '../../components/header/HeaderIconButton';
-import Icons from '../../assets/icons';
+import ParticipatedChallengeStatusScreen from './ParticipatedChallengeStatusScreen';
 
 const MainStack = createStackNavigator<MainScreenStackPropsList>();
 
@@ -46,6 +47,10 @@ function MainStackScreen(): React.ReactElement {
       <MainStack.Screen
         name={ROUTER.CHALLENGE_APPLY_SCREEN}
         component={ChallengeApplyScreen}
+      />
+      <MainStack.Screen
+        name={ROUTER.PARTICIPATED_CHALLENGE_STATUS_SCREEN}
+        component={ParticipatedChallengeStatusScreen}
       />
     </MainStack.Navigator>
   );
