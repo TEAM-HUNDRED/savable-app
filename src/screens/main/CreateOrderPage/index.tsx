@@ -43,7 +43,16 @@ function CreateOrderPage({route}: PropsType) {
     setInputData(currentInputData);
   }, []);
 
-  const navigateToPurchaseSuccessScreen = useCallback(() => {}, []);
+  const navigateToPurchaseSuccessScreen = useCallback(() => {
+    navigation.navigate(ROUTER.ORDER_SUCCESS_SCREEN, {
+      giftcardId: route.params.giftcardId,
+      image: route.params.image,
+      productName: route.params.productName,
+      price: route.params.price,
+      brandName: route.params.brandName,
+      amount: inputData.amount,
+    });
+  }, [navigation, route.params, inputData]);
 
   const onPressPurchaseButton = useCallback(() => {
     if (!validationInputData()) return;
