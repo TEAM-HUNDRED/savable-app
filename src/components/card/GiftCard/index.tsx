@@ -9,7 +9,9 @@ import {GiftCardPropsType} from '../../../types/view/shop';
 import SVText from '../../common/SVText';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-type PropsType = GiftCardPropsType;
+type PropsType = GiftCardPropsType & {
+  disabled?: boolean;
+};
 
 function GiftCard({
   giftcardId,
@@ -17,6 +19,7 @@ function GiftCard({
   productName,
   price,
   brandName,
+  disabled,
 }: PropsType) {
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
@@ -37,7 +40,7 @@ function GiftCard({
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={onPressCard}
+      onPress={disabled ? () => {} : onPressCard}
       style={styles.container}>
       <Image style={styles.image} source={{uri: image}} />
       <View style={styles.contentContainer}>

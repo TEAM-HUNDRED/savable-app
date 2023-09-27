@@ -31,6 +31,7 @@ function OrderHistoryCard({
           productName={productName}
           price={price}
           brandName={brandName}
+          disabled
         />
         <View style={styles.barContainer}>
           <SVText body04>{'사용 포인트'}</SVText>
