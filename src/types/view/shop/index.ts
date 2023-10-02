@@ -10,7 +10,8 @@ export type OrderHistoryPropsType = {
   date: string;
   image: string;
   productName: string;
-  price: number;
+  productPrice: number;
+  totalPrice: number;
   brandName: string;
   quantity: number;
   sendState: string;

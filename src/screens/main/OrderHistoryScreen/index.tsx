@@ -1,9 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 import {AppStyles, MainScreenStackPropsList} from '../../../config';
+import Icons from '../../../assets/icons';
 
 import Api from '../../../lib/api/Api';
 import {OrderHistoryPropsType} from '../../../types/view';
@@ -63,6 +70,51 @@ function OrderHistoryScreen({}: PropsType) {
         onPress={() => {}}>
         <SVText body06>{'문의하기'}</SVText>
       </TouchableOpacity>
+      {orderList.map((item, idx) => {
+        const year = new Date(item.date).getFullYear();
+        const month = new Date(item.date).getMonth();
+        const day = new Date(item.date).getDate();
+
+        const date = `${year}.${month}.${day}`;
+
+        return (
+          <View
+            style={styles.orderCardContainer}
+            key={`${item.productName}-${idx}`}>
+            <Image style={styles.image} source={{uri: item.image}} />
+            <View style={styles.orderContentContainer}>
+              <View style={styles.cardHeaderBar}>
+                <SVText body07>{date}</SVText>
+                <SVText
+                  body07
+                  style={
+                    item.sendState === '발송완료'
+                      ? styles.highlightStatusText
+                      : styles.statusText
+                  }>
+                  {item.sendState}
+                </SVText>
+              </View>
+              <SVText body05 style={styles.brandText}>
+                {item.brandName}
+              </SVText>
+              <SVText body05 style={styles.orderTitleText}>
+                {item.productName}
+              </SVText>
+              <View style={styles.priceContainer}>
+                <Image source={Icons.point} style={styles.icon} />
+                <SVText body05 style={styles.priceText}>
+                  {`${item.productPrice}포인트`}
+                </SVText>
+                <View style={styles.verticalDivider} />
+                <SVText body05 style={styles.priceText}>
+                  {`${item.quantity}개`}
+                </SVText>
+              </View>
+            </View>
+          </View>
+        );
+      })}
     </ScrollView>
   );
 }
@@ -104,6 +156,68 @@ const styles = StyleSheet.create({
     borderWidth: AppStyles.scaleWidth(1),
     paddingVertical: AppStyles.scaleWidth(8),
     marginBottom: AppStyles.scaleWidth(38),
+  },
+  orderCardContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: AppStyles.scaleWidth(36),
+    marginHorizontal: AppStyles.scaleWidth(12),
+  },
+  image: {
+    width: AppStyles.scaleWidth(80),
+    height: AppStyles.scaleWidth(80),
+    borderRadius: AppStyles.scaleWidth(8),
+    borderWidth: AppStyles.scaleWidth(1),
+    marginRight: AppStyles.scaleWidth(16),
+    borderColor: AppStyles.color.lightGray02,
+  },
+  cardHeaderBar: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  statusText: {
+    fontWeight: 'bold',
+    color: AppStyles.color.gray04,
+  },
+  highlightStatusText: {
+    fontWeight: 'bold',
+    color: AppStyles.color.mint05,
+  },
+  orderContentContainer: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  brandText: {
+    fontWeight: 'bold',
+    color: AppStyles.color.gray03,
+  },
+  orderTitleText: {
+    fontWeight: 'bold',
+    marginVertical: AppStyles.scaleWidth(2),
+  },
+  priceContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    width: AppStyles.scaleWidth(18),
+    height: AppStyles.scaleWidth(18),
+    marginRight: AppStyles.scaleWidth(5),
+  },
+  priceText: {
+    marginTop: AppStyles.scaleWidth(2),
+    textAlignVertical: 'bottom',
+  },
+  verticalDivider: {
+    height: AppStyles.scaleWidth(12),
+    width: AppStyles.scaleWidth(1),
+    marginTop: AppStyles.scaleWidth(1),
+    marginHorizontal: AppStyles.scaleWidth(10),
+    backgroundColor: AppStyles.color.gray04,
   },
 });
 
