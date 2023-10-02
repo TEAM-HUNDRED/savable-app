@@ -4,6 +4,7 @@ import {API_URL} from '@env';
 import {ISvApi} from './ISvApi';
 import {
   GiftCardListAPIResponse,
+  OrderHistoryAPIResponse,
   ParticipationChallengeListAPIResponse,
   ParticipationChallengeStatusAPIResponse,
   UserInfoAPIResponse,
@@ -67,6 +68,12 @@ export default class ProductionApi implements ISvApi {
 
   public async getUserInfo(): Promise<UserInfoAPIResponse> {
     const {data} = await this.axios.get('my-page');
+
+    return data.data;
+  }
+
+  public async getOrderHistoryList(): Promise<OrderHistoryAPIResponse> {
+    const {data} = await this.axios.get('shop/histories');
 
     return data.data;
   }

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -79,7 +79,9 @@ function ProfileTabScreen({}: PropsType) {
   const navigationBarList = [
     {
       title: '기프티콘 구매 내역',
-      onPress: () => {},
+      onPress: () => {
+        navigation.navigate(ROUTER.ORDER_HISTORY_SCREEN);
+      },
     },
     {
       title: '문의하기',

@@ -16,6 +16,7 @@ import ChallengeApplyScreen from './ChallengeApplyScreen';
 import ParticipatedChallengeStatusScreen from './ParticipatedChallengeStatusScreen';
 import CreateOrderPage from './CreateOrderPage';
 import OrderSuccessScreen from './OrderSuccessScreen';
+import OrderHistoryScreen from './OrderHistoryScreen';
 
 const MainStack = createStackNavigator<MainScreenStackPropsList>();
 
@@ -61,6 +62,10 @@ function MainStackScreen(): React.ReactElement {
       <MainStack.Screen
         name={ROUTER.ORDER_SUCCESS_SCREEN}
         component={OrderSuccessScreen}
+      />
+      <MainStack.Screen
+        name={ROUTER.ORDER_HISTORY_SCREEN}
+        component={OrderHistoryScreen}
       />
     </MainStack.Navigator>
   );
