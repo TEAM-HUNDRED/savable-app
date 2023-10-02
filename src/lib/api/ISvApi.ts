@@ -4,6 +4,7 @@ import {
   ParticipationChallengeListAPIResponse,
   ParticipationChallengeStatusAPIResponse,
   GiftCardListAPIResponse,
+  UserInfoAPIResponse,
 } from '../../types/api';
 
 export interface ISvApi {
@@ -18,4 +19,6 @@ export interface ISvApi {
   ): Promise<ParticipationChallengeStatusAPIResponse>;
 
   getGiftCardList(price: number): Promise<GiftCardListAPIResponse>;
+
+  getUserInfo(): Promise<UserInfoAPIResponse>;
 }
