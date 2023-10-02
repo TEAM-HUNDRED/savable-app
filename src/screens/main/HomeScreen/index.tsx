@@ -14,6 +14,7 @@ import {
 import ChallengeTabScreen from './ChallengeTabScreen';
 import ParticipationTabScreen from './ParticipationTabScreen';
 import StoreTabScreen from './StoreTabScreen';
+import ProfileTabScreen from './ProfileTabScreen';
 
 const BottomTabNavigation = createBottomTabNavigator();
 
@@ -65,7 +66,7 @@ function HomeScreen(): React.ReactElement {
       />
       <BottomTabNavigation.Screen
         name={ROUTER.PROFILE_SCREEN}
-        component={ChallengeTabScreen}
+        component={ProfileTabScreen}
       />
     </BottomTabNavigation.Navigator>
   );

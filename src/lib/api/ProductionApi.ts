@@ -6,6 +6,7 @@ import {
   GiftCardListAPIResponse,
   ParticipationChallengeListAPIResponse,
   ParticipationChallengeStatusAPIResponse,
+  UserInfoAPIResponse,
 } from '../../types/api';
 
 export default class ProductionApi implements ISvApi {
@@ -60,6 +61,12 @@ export default class ProductionApi implements ISvApi {
     price: number,
   ): Promise<GiftCardListAPIResponse> {
     const {data} = await this.axios.get(`shop/giftcard/${price}`);
+
+    return data.data;
+  }
+
+  public async getUserInfo(): Promise<UserInfoAPIResponse> {
+    const {data} = await this.axios.get('my-page');
 
     return data.data;
   }
