@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
@@ -57,6 +57,12 @@ function OrderHistoryScreen({}: PropsType) {
           </SVText>
         </View>
       </View>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        style={styles.buttonContainer}
+        onPress={() => {}}>
+        <SVText body06>{'문의하기'}</SVText>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -89,6 +95,15 @@ const styles = StyleSheet.create({
   noticeContentContainer: {
     flexWrap: 'wrap',
     flexDirection: 'row',
+  },
+  buttonContainer: {
+    width: '100%',
+    alignItems: 'center',
+    borderColor: AppStyles.color.gray02,
+    borderRadius: AppStyles.scaleWidth(8),
+    borderWidth: AppStyles.scaleWidth(1),
+    paddingVertical: AppStyles.scaleWidth(8),
+    marginBottom: AppStyles.scaleWidth(38),
   },
 });
 
