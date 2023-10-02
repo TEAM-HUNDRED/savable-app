@@ -14,6 +14,7 @@ export enum ROUTER {
   CREATE_ORDER_PAGE = 'CREATE_ORDER_PAGE',
   ORDER_SUCCESS_SCREEN = 'ORDER_SUCCESS_SCREEN',
   ORDER_HISTORY_SCREEN = 'ORDER_HISTORY_SCREEN',
+  VERIFICATION_SCREEN = 'VERIFICATION_SCREEN',
 }
 
 // 최상단 RootScreen
@@ -31,6 +32,7 @@ export type MainScreenKeyList = keyof MainScreenStackPropsList;
 export type MainScreenStackPropsList = RootScreenStackPropsList & {
   [ROUTER.HOME_SCREEN]: undefined;
   [ROUTER.ORDER_HISTORY_SCREEN]: undefined;
+  [ROUTER.VERIFICATION_SCREEN]: undefined;
   [ROUTER.CHALLENGE_EXPLAIN_SCREEN]: {challengeId: number};
   [ROUTER.CHALLENGE_APPLY_SCREEN]: {
     challengeInfo: ChallengeInfoViewType | undefined;
