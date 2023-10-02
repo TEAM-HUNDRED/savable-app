@@ -44,7 +44,9 @@ function ProfileTabScreen({}: PropsType) {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.paddingContainer}></View>
+      <View style={styles.paddingContainer}>
+        <View style={styles.profileContainer}></View>
+      </View>
     </ScrollView>
   );
 }
@@ -56,6 +58,11 @@ const styles = StyleSheet.create({
   },
   paddingContainer: {
     paddingHorizontal: AppStyles.scaleWidth(24),
+    paddingVertical: AppStyles.scaleWidth(36),
+  },
+  profileContainer: {
+    height: AppStyles.scaleWidth(64),
+    backgroundColor: AppStyles.color.lightGray02,
   },
 });
 
