@@ -11,6 +11,7 @@ import {
 } from '../../../../types/view';
 
 import SVText from '../../../../components/common/SVText';
+import SVDivider from '../../../../components/common/SVDivider';
 
 type PropsType = {};
 
@@ -19,7 +20,7 @@ function ProfileTabScreen({}: PropsType) {
     {} as UserRewardInfoPropsType,
   );
   const [userChallengeInfo, setUserChallengeInfo] =
-    useState<UserChallengeInfoPropsType>();
+    useState<UserChallengeInfoPropsType>({} as UserChallengeInfoPropsType);
 
   const getUserInfo = async () => {
     try {
@@ -49,12 +50,29 @@ function ProfileTabScreen({}: PropsType) {
     },
   ];
 
+  const userChallengeInfoList = [
+    {
+      index: '진행중',
+      value: `${userChallengeInfo.participation}`,
+    },
+    {
+      index: '성공',
+      value: `${userChallengeInfo.success}`,
+    },
+    {
+      index: '완료',
+      value: `${userChallengeInfo.completion}`,
+    },
+  ];
+
   useEffect(() => {
     getUserInfo();
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}>
       <View style={styles.paddingContainer}>
         <View style={styles.profileContainer}></View>
         <View style={styles.statusContainer}>
@@ -86,7 +104,26 @@ function ProfileTabScreen({}: PropsType) {
             );
           })}
         </View>
+        <SVText body03 style={styles.titleText}>
+          {'챌린지 현황'}
+        </SVText>
+        <View style={styles.challengeStatusContainer}>
+          {userChallengeInfoList.map((item, idx) => {
+            const isLastItem = idx === userChallengeInfoList.length - 1;
+
+            return (
+              <>
+                <View style={styles.challengeBarContainer}>
+                  <SVText body06>{item.index}</SVText>
+                  <SVText header01>{item.value}</SVText>
+                </View>
+                {!isLastItem && <View style={styles.verticalDivider} />}
+              </>
+            );
+          })}
+        </View>
       </View>
+      <SVDivider />
     </ScrollView>
   );
 }
@@ -96,9 +133,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: AppStyles.color.white,
   },
+  contentContainer: {
+    paddingVertical: AppStyles.scaleWidth(36),
+  },
   paddingContainer: {
     paddingHorizontal: AppStyles.scaleWidth(24),
-    paddingVertical: AppStyles.scaleWidth(36),
   },
   profileContainer: {
     height: AppStyles.scaleWidth(64),
@@ -141,6 +180,41 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     color: AppStyles.color.gray03,
+  },
+  titleText: {
+    fontWeight: 'bold',
+  },
+  challengeStatusContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: AppStyles.scaleWidth(16),
+    marginBottom: AppStyles.scaleWidth(30),
+    borderWidth: AppStyles.scaleWidth(1),
+    borderRadius: AppStyles.scaleWidth(8),
+    borderColor: AppStyles.color.lightGray02,
+  },
+  challengeBarContainer: {
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    marginVertical: AppStyles.scaleWidth(10),
+  },
+  verticalDivider: {
+    width: AppStyles.scaleWidth(1),
+    height: '100%',
+    backgroundColor: AppStyles.color.lightGray02,
+  },
+  valueText: {
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+  indexText: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
   },
 });
 
