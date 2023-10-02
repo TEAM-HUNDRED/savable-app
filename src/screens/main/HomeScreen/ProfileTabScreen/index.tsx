@@ -1,7 +1,15 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
-import {AppStyles} from '../../../../config';
+import {AppStyles, HomeScreenStackPropsList, ROUTER} from '../../../../config';
 import Icons from '../../../../assets/icons';
 
 import Api from '../../../../lib/api/Api';
@@ -16,6 +24,9 @@ import SVDivider from '../../../../components/common/SVDivider';
 type PropsType = {};
 
 function ProfileTabScreen({}: PropsType) {
+  const navigation =
+    useNavigation<StackNavigationProp<HomeScreenStackPropsList>>();
+
   const [userInfo, setUserInfo] = useState<UserRewardInfoPropsType>(
     {} as UserRewardInfoPropsType,
   );
@@ -65,6 +76,25 @@ function ProfileTabScreen({}: PropsType) {
     },
   ];
 
+  const navigationBarList = [
+    {
+      title: '기프티콘 구매 내역',
+      onPress: () => {},
+    },
+    {
+      title: '문의하기',
+      onPress: () => {},
+    },
+    {
+      title: '로그아웃',
+      onPress: () => {},
+    },
+    {
+      title: '탈퇴하기',
+      onPress: () => {},
+    },
+  ];
+
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -74,7 +104,7 @@ function ProfileTabScreen({}: PropsType) {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
       <View style={styles.paddingContainer}>
-        <View style={styles.profileContainer}></View>
+        <View style={styles.profileContainer} />
         <View style={styles.statusContainer}>
           {userRewardInfoList.map((item, idx) => {
             const isLastItem = idx === userRewardInfoList.length - 1;
@@ -124,6 +154,22 @@ function ProfileTabScreen({}: PropsType) {
         </View>
       </View>
       <SVDivider />
+      {navigationBarList.map((item, idx) => {
+        const isLastItem = idx === navigationBarList.length - 1;
+        return (
+          <>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.navigateBarContainer}
+              onPress={item.onPress}>
+              <SVText body04 style={styles.barText}>
+                {item.title}
+              </SVText>
+            </TouchableOpacity>
+            {!isLastItem && <View style={styles.divider} />}
+          </>
+        );
+      })}
     </ScrollView>
   );
 }
@@ -215,6 +261,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
+  },
+  navigateBarContainer: {
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    paddingVertical: AppStyles.scaleWidth(14),
+    paddingHorizontal: AppStyles.scaleWidth(28),
+  },
+  barText: {
+    marginTop: AppStyles.scaleWidth(2),
   },
 });
 
