@@ -35,6 +35,10 @@ function OrderSuccessScreen({route}: PropsType) {
     homeNavigation.navigate(ROUTER.STORE_SCREEN);
   }, [homeNavigation]);
 
+  const navigateToHistory = useCallback(() => {
+    navigation.navigate(ROUTER.ORDER_HISTORY_SCREEN);
+  }, [navigation]);
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.imageContainer}>
@@ -79,7 +83,8 @@ function OrderSuccessScreen({route}: PropsType) {
             <SVButton
               borderRadius={AppStyles.scaleWidth(8)}
               color={AppStyles.color.mint01}
-              textColor={AppStyles.color.mint05}>
+              textColor={AppStyles.color.mint05}
+              onPress={navigateToHistory}>
               {'구매 내역'}
             </SVButton>
           </View>
