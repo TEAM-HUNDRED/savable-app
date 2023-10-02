@@ -1,9 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
+import {
+  AppStyles,
+  HomeScreenStackPropsList,
+  MainScreenStackPropsList,
+  ROUTER,
+} from '../../../config';
 import {CheckIcon} from '../../../assets/icons';
 
 import SVText from '../../../components/common/SVText';
@@ -19,9 +24,16 @@ function OrderSuccessScreen({route}: PropsType) {
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
+  const homeNavigation =
+    useNavigation<StackNavigationProp<HomeScreenStackPropsList>>();
+
   useEffect(() => {
     navigation.setOptions({title: '구매 완료'});
   }, [navigation]);
+
+  const navigateToStore = useCallback(() => {
+    homeNavigation.navigate(ROUTER.STORE_SCREEN);
+  }, [homeNavigation]);
 
   return (
     <ScrollView style={styles.container}>
@@ -56,7 +68,11 @@ function OrderSuccessScreen({route}: PropsType) {
         </View>
         <View style={styles.buttonContainer}>
           <View style={styles.buttonStyle}>
-            <SVButton borderRadius={AppStyles.scaleWidth(8)}>{'확인'}</SVButton>
+            <SVButton
+              borderRadius={AppStyles.scaleWidth(8)}
+              onPress={navigateToStore}>
+              {'확인'}
+            </SVButton>
           </View>
           <View style={styles.buttonDivider} />
           <View style={styles.buttonStyle}>
