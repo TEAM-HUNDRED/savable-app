@@ -1,15 +1,20 @@
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useEffect, useRef} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   Camera,
   useCameraDevice,
   useCameraPermission,
 } from 'react-native-vision-camera';
+
 import {LeftArrowIcon} from '../../../assets/icons';
-import SVText from '../../../components/common/SVText';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
+
+import SVText from '../../../components/common/SVText';
+import VerificationGuideContainer from '../../../container/VerificationGuideContainer';
+import {ChallengeInfoViewType} from '../../../types/view';
+import Api from '../../../lib/api/Api';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.VERIFICATION_SCREEN>;
@@ -24,6 +29,8 @@ function VerificationScreen({route}: PropsType) {
   const device = useCameraDevice('back');
   const {hasPermission, requestPermission} = useCameraPermission();
 
+  const [challengeInfo, setChallengeInfo] = useState<ChallengeInfoViewType>();
+
   const takePhoto = async () => {
     if (cameraRef.current) {
       const result = await cameraRef.current.takePhoto();
@@ -33,6 +40,19 @@ function VerificationScreen({route}: PropsType) {
       console.log(data);
     }
   };
+
+  const getChallengeDetail = useCallback(async (challengeId: number) => {
+    const response = await Api.shared.getChallengeDetail(challengeId);
+
+    setChallengeInfo({
+      ...response.challenge,
+      guide: response.verificationGuide,
+    });
+  }, []);
+
+  useEffect(() => {
+    getChallengeDetail(route.params.challengeId);
+  }, [route, getChallengeDetail]);
 
   useEffect(() => {
     requestPermission();
@@ -55,7 +75,7 @@ function VerificationScreen({route}: PropsType) {
           <LeftArrowIcon style={styles.icon} />
         </TouchableOpacity>
         <SVText body02 style={styles.headerText}>
-          {route.params.challengeTitle}
+          {route.params?.challengeTitle}
         </SVText>
         <View style={styles.icon} />
       </View>
@@ -73,6 +93,9 @@ function VerificationScreen({route}: PropsType) {
         }}>
         <View style={styles.circle} />
       </TouchableOpacity>
+      <VerificationGuideContainer
+        challengeGuideInfo={challengeInfo ? challengeInfo.guide : []}
+      />
     </View>
   );
 }
@@ -109,7 +132,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: AppStyles.scaleWidth(40),
+    bottom: AppStyles.scaleWidth(90),
     width: AppStyles.scaleWidth(80),
     height: AppStyles.scaleWidth(80),
     borderRadius: AppStyles.scaleWidth(40),

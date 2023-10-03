@@ -8,9 +8,10 @@ import SVText from '../../common/SVText';
 
 type PropsType = {
   flatListData: ChallengeGuideViewType[];
+  titleShown?: boolean;
 };
 
-function VerificationGuideCard({flatListData}: PropsType) {
+function VerificationGuideCard({flatListData, titleShown = true}: PropsType) {
   const FlatListItem = ({
     isPass,
     explanation,
@@ -33,9 +34,11 @@ function VerificationGuideCard({flatListData}: PropsType) {
 
   return (
     <View style={styles.container}>
-      <SVText body04 style={styles.titleText}>
-        {'인증 방법'}
-      </SVText>
+      {titleShown && (
+        <SVText body04 style={styles.titleText}>
+          {'인증 방법'}
+        </SVText>
+      )}
       <SVText body06 style={styles.descriptionText}>
         {
           '챌린지 신청이후 다음과 같은 인증 조건을 달성해야만 인증 수락이 이루어집니다. 해당 부분 참고 하여 챌린지 인증을 해주시면 됩니다.'
@@ -63,11 +66,10 @@ const styles = StyleSheet.create({
   titleText: {
     fontWeight: 'bold',
     textAlignVertical: 'center',
-    paddingBottom: AppStyles.scaleWidth(10),
+    paddingBottom: AppStyles.scaleWidth(14),
     paddingHorizontal: AppStyles.scaleWidth(24),
   },
   descriptionText: {
-    marginTop: AppStyles.scaleWidth(4),
     paddingHorizontal: AppStyles.scaleWidth(24),
   },
   flatList: {
