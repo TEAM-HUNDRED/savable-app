@@ -52,6 +52,10 @@ function ParticipatedChallengeStatusScreen({
     [navigation],
   );
 
+  const navigateToVerificationScreen = () => {
+    navigation.navigate(ROUTER.VERIFICATION_SCREEN);
+  };
+
   useEffect(() => {
     handleNavigationHeader(route.params.challengeTitle);
     getParticipationChallengeStatus(route.params.challengeId);
@@ -82,14 +86,15 @@ function ParticipatedChallengeStatusScreen({
         <View style={styles.buttonContainer}>
           <SVButton
             borderRadius={AppStyles.scaleWidth(8)}
-            color={AppStyles.color.gray}
-            onPress={() => {}}>
+            color={AppStyles.color.gray}>
             {'인증 완료'}
           </SVButton>
         </View>
       ) : (
         <View style={styles.buttonContainer}>
-          <SVButton borderRadius={AppStyles.scaleWidth(8)} onPress={() => {}}>
+          <SVButton
+            borderRadius={AppStyles.scaleWidth(8)}
+            onPress={navigateToVerificationScreen}>
             {'인증하러 가기'}
           </SVButton>
         </View>
