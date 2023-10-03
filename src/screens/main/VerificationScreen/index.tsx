@@ -1,15 +1,20 @@
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useRef} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   Camera,
   useCameraDevice,
-  useCameraFormat,
   useCameraPermission,
 } from 'react-native-vision-camera';
-import {AppStyles} from '../../../config';
+import {AppStyles, MainScreenStackPropsList} from '../../../config';
 
 function VerificationScreen() {
   const cameraRef = useRef<Camera>(null);
+
+  const navigation =
+    useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+
   const device = useCameraDevice('back');
   const {hasPermission, requestPermission} = useCameraPermission();
 
@@ -23,13 +28,12 @@ function VerificationScreen() {
     }
   };
 
-  const format = useCameraFormat(device, [
-    {videoResolution: {width: 1, height: 1}},
-    {photoResolution: {width: 1, height: 1}},
-  ]);
-
   useEffect(() => {
     requestPermission();
+  }, []);
+
+  useEffect(() => {
+    navigation.setOptions({headerShown: false});
   }, []);
 
   if (device == null) return <View />;
