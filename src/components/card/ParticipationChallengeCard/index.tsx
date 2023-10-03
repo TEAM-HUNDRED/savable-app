@@ -25,7 +25,10 @@ function ParticipationChallengeCard({
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
   const navigateToVerificationScreen = () => {
-    navigation.navigate(ROUTER.VERIFICATION_SCREEN);
+    navigation.navigate(ROUTER.VERIFICATION_SCREEN, {
+      challengeId: participationChallengeId,
+      challengeTitle: title,
+    });
   };
 
   const navigateToChallengeStatusScreen = () => {

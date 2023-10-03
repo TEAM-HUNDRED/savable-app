@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useRef} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
@@ -7,9 +7,15 @@ import {
   useCameraDevice,
   useCameraPermission,
 } from 'react-native-vision-camera';
-import {AppStyles, MainScreenStackPropsList} from '../../../config';
+import {LeftArrowIcon} from '../../../assets/icons';
+import SVText from '../../../components/common/SVText';
+import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 
-function VerificationScreen() {
+type PropsType = {
+  route: RouteProp<MainScreenStackPropsList, ROUTER.VERIFICATION_SCREEN>;
+};
+
+function VerificationScreen({route}: PropsType) {
   const cameraRef = useRef<Camera>(null);
 
   const navigation =
@@ -41,6 +47,18 @@ function VerificationScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={navigation.goBack}
+          hitSlop={10}>
+          <LeftArrowIcon style={styles.icon} />
+        </TouchableOpacity>
+        <SVText body02 style={styles.headerText}>
+          {route.params.challengeTitle}
+        </SVText>
+        <View style={styles.icon} />
+      </View>
       <Camera
         ref={cameraRef}
         style={StyleSheet.absoluteFill}
@@ -60,6 +78,26 @@ function VerificationScreen() {
 }
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    top: AppStyles.scaleWidth(0),
+    height: AppStyles.scaleWidth(70),
+    paddingHorizontal: AppStyles.scaleWidth(30),
+    zIndex: 1,
+  },
+  icon: {
+    width: AppStyles.scaleWidth(10),
+    height: AppStyles.scaleWidth(20),
+    color: AppStyles.color.white,
+  },
+  headerText: {
+    color: AppStyles.color.white,
+    fontWeight: 'bold',
+  },
   container: {
     flex: 1,
     display: 'flex',
