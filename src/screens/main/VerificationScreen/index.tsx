@@ -1,8 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
+import {
+  Camera,
+  useCameraDevice,
+  useCameraPermission,
+} from 'react-native-vision-camera';
 
 function VerificationScreen() {
-  return <View style={styles.container}></View>;
+  const device = useCameraDevice('back');
+  const {hasPermission, requestPermission} = useCameraPermission();
+
+  useEffect(() => {
+    requestPermission();
+  }, []);
+
+  if (device == null) return <View />;
+  // <NoCameraErrorView />;
+
+  return (
+    <Camera style={StyleSheet.absoluteFill} device={device} isActive={true} />
+  );
 }
 
 const styles = StyleSheet.create({
