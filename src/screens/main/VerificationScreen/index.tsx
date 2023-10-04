@@ -30,6 +30,14 @@ function VerificationScreen({route}: PropsType) {
   const {hasPermission, requestPermission} = useCameraPermission();
 
   const [challengeInfo, setChallengeInfo] = useState<ChallengeInfoViewType>();
+  const [isActive, setIsActive] = useState<boolean>(true);
+
+  const navigateToFinishScreen = () => {
+    navigation.navigate(ROUTER.FINISH_VERIFICATION_SCREEN, {
+      challengeId: route.params.challengeId,
+      challengeTitle: route.params.challengeTitle,
+    });
+  };
 
   const takePhoto = async () => {
     if (cameraRef.current) {
@@ -37,6 +45,8 @@ function VerificationScreen({route}: PropsType) {
       const fetchResult = await fetch(`file://${result.path}`);
       const data = await fetchResult.blob();
 
+      setIsActive(false);
+      navigateToFinishScreen();
       console.log(data);
     }
   };
@@ -83,7 +93,7 @@ function VerificationScreen({route}: PropsType) {
         ref={cameraRef}
         style={StyleSheet.absoluteFill}
         device={device}
-        isActive
+        isActive={isActive}
         photo
       />
       <TouchableOpacity

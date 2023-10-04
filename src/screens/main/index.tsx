@@ -18,6 +18,7 @@ import CreateOrderPage from './CreateOrderPage';
 import OrderSuccessScreen from './OrderSuccessScreen';
 import OrderHistoryScreen from './OrderHistoryScreen';
 import VerificationScreen from './VerificationScreen';
+import FinishVerificationScreen from './FinishVerificationScreen';
 
 const MainStack = createStackNavigator<MainScreenStackPropsList>();
 
@@ -71,6 +72,10 @@ function MainStackScreen(): React.ReactElement {
       <MainStack.Screen
         name={ROUTER.VERIFICATION_SCREEN}
         component={VerificationScreen}
+      />
+      <MainStack.Screen
+        name={ROUTER.FINISH_VERIFICATION_SCREEN}
+        component={FinishVerificationScreen}
       />
     </MainStack.Navigator>
   );
