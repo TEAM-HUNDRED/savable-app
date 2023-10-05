@@ -4,7 +4,12 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 import Api from '../../../lib/api/Api';
-import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
+import {
+  AppStyles,
+  HomeScreenStackPropsList,
+  MainScreenStackPropsList,
+  ROUTER,
+} from '../../../config';
 import {VerificationDetailPropsType} from '../../../types/view';
 import SVText from '../../../components/common/SVText';
 import Icons from '../../../assets/icons';
@@ -17,6 +22,8 @@ type PropsType = {
 function FinishVerificationScreen({route}: PropsType) {
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+  const homeNavigation =
+    useNavigation<StackNavigationProp<HomeScreenStackPropsList>>();
 
   const [verificationData, setVerificationDate] =
     useState<VerificationDetailPropsType>();
@@ -31,6 +38,10 @@ function FinishVerificationScreen({route}: PropsType) {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const navigateToChallengeScreen = () => {
+    homeNavigation.navigate(ROUTER.PARTICIPATION_SCREEN);
   };
 
   useEffect(() => {
@@ -111,7 +122,11 @@ function FinishVerificationScreen({route}: PropsType) {
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <SVButton borderRadius={AppStyles.scaleWidth(8)}>{'완료'}</SVButton>
+          <SVButton
+            borderRadius={AppStyles.scaleWidth(8)}
+            onPress={navigateToChallengeScreen}>
+            {'완료'}
+          </SVButton>
         </View>
       </View>
     </ScrollView>
