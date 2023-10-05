@@ -31,3 +31,14 @@ export type ChallengeVerificationInfoPropsType = {
     dateTime: string;
   }>;
 };
+
+export type VerificationDetailPropsType = {
+  image: string;
+  title: string;
+  percentage: number;
+  currentCount: number;
+  goalsCount: number;
+  scheduledReward: number;
+  additionalReward: number;
+  savings: number;
+};

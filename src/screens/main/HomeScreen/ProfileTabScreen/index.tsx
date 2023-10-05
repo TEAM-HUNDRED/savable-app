@@ -147,7 +147,7 @@ function ProfileTabScreen({}: PropsType) {
               <>
                 <View style={styles.challengeBarContainer}>
                   <SVText body06>{item.index}</SVText>
-                  <SVText header01>{item.value}</SVText>
+                  <SVText body01>{item.value}</SVText>
                 </View>
                 {!isLastItem && <View style={styles.verticalDivider} />}
               </>

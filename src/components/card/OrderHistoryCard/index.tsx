@@ -22,7 +22,7 @@ function OrderHistoryCard({
   const phoneNumber = '010-0000-0000';
   return (
     <View style={styles.container}>
-      <SVText header01>{'구매 내역'}</SVText>
+      <SVText body01>{'구매 내역'}</SVText>
       <View style={styles.divider} />
       <View style={styles.cardContainer}>
         <GiftCard

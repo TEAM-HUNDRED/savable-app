@@ -54,7 +54,7 @@ function ParticipationChallengeContainer({
 
   return (
     <View style={styles.container}>
-      <SVText header01>참여 중인 챌린지</SVText>
+      <SVText body01>참여 중인 챌린지</SVText>
       <View style={styles.toggleContainer}>
         {toggleList.map((item, idx) => {
           const isHighlight = idx === toggleIndex;
