@@ -19,6 +19,7 @@ import OrderSuccessScreen from './OrderSuccessScreen';
 import OrderHistoryScreen from './OrderHistoryScreen';
 import VerificationScreen from './VerificationScreen';
 import FinishVerificationScreen from './FinishVerificationScreen';
+import LoginScreen from './LoginScreen';
 
 const MainStack = createStackNavigator<MainScreenStackPropsList>();
 
@@ -40,6 +41,11 @@ function MainStackScreen(): React.ReactElement {
 
   return (
     <MainStack.Navigator screenOptions={screenOptions}>
+      <MainStack.Screen
+        name={ROUTER.LOGIN_SCREEN}
+        component={LoginScreen}
+        options={{headerShown: false}}
+      />
       <MainStack.Screen
         name={ROUTER.HOME_SCREEN}
         component={HomeScreen}

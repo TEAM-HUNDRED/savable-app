@@ -7,10 +7,13 @@ export {default as LeftArrowIcon} from './ic_left_arrow.svg';
 export {default as CloseIcon} from './ic_close.svg';
 
 const Icons = {
-  leftArrow: require('./icon_left_arrow.png'),
+  leftArrow: require('./ic_left_arrow.png'),
   point: require('./ic_point.png'),
   check: require('./ic_check.png'),
   celebrate: require('./celebrate.png'),
+  oauth: {
+    kakao: require('./ic_oauth_kakao.png'),
+  },
 };
 
 export default Icons;
