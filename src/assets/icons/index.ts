@@ -10,6 +10,7 @@ const Icons = {
   leftArrow: require('./icon_left_arrow.png'),
   point: require('./ic_point.png'),
   check: require('./ic_check.png'),
+  celebrate: require('./celebrate.png'),
 };
 
 export default Icons;

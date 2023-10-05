@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
@@ -58,6 +64,12 @@ function FinishVerificationScreen({route}: PropsType) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.contentContainer}>
+        {verificationData.percentage === 100 && (
+          <ImageBackground
+            source={Icons.celebrate}
+            style={styles.backgroundImage}
+          />
+        )}
         <Image source={{uri: verificationData.image}} style={styles.image} />
         <View style={styles.titleContainer}>
           <SVText header01>{'절약 목표의 '}</SVText>
@@ -67,7 +79,9 @@ function FinishVerificationScreen({route}: PropsType) {
           <SVText header01>{' 달성'}</SVText>
         </View>
         <SVText body03 style={styles.subText}>
-          {'잘하고 있어요!'}
+          {verificationData.percentage === 100
+            ? '고생 많으셨어요!'
+            : '잘하고 있어요!'}
         </SVText>
         <View style={styles.statusBarContainer}>
           <View
@@ -82,16 +96,18 @@ function FinishVerificationScreen({route}: PropsType) {
             body07
             style={{
               marginLeft: AppStyles.scaleWidth(
-                2.38 * verificationData.percentage - 14,
+                2.38 * verificationData.percentage,
               ),
             }}>
             {`${verificationData.percentage}%`}
           </SVText>
         </View>
         <SVText body02 style={styles.currentText}>
-          {`지금까지 ${verificationData.currentCount}회 인증 성공\n앞으로  ${
-            verificationData.goalsCount - verificationData.currentCount
-          }회 남았어요!`}
+          {verificationData.percentage === 100
+            ? '사진 확인까지 1시간 가량 소요돼요!'
+            : `지금까지 ${verificationData.currentCount}회 인증 성공\n앞으로  ${
+                verificationData.goalsCount - verificationData.currentCount
+              }회 남았어요!`}
         </SVText>
       </View>
       <View style={styles.rewardContainer}>
@@ -142,8 +158,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: AppStyles.scaleWidth(36),
+    paddingTop: AppStyles.scaleWidth(36),
     marginBottom: AppStyles.scaleWidth(12),
+  },
+  backgroundImage: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+    zIndex: 0,
   },
   image: {
     width: AppStyles.scaleWidth(238),
@@ -175,7 +198,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.color.mint02,
   },
   percentContainer: {
-    width: AppStyles.scaleWidth(238),
+    width: AppStyles.scaleWidth(270),
     marginTop: AppStyles.scaleWidth(4),
   },
   currentText: {

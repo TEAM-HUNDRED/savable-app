@@ -97,7 +97,7 @@ export const dummyVerificationChallenge = {
   image:
     'https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/advices/166557187466942347.jpg?gif=1&w=1440',
   title: '집밥 먹기 챌린지',
-  percentage: 30,
+  percentage: 100,
   currentCount: 5,
   goalsCount: 15,
   scheduledReward: 400,
