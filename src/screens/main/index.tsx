@@ -20,6 +20,7 @@ import OrderHistoryScreen from './OrderHistoryScreen';
 import VerificationScreen from './VerificationScreen';
 import FinishVerificationScreen from './FinishVerificationScreen';
 import LoginScreen from './LoginScreen';
+import UpdateProfileScreen from './UpdateProfileScreen';
 
 const MainStack = createStackNavigator<MainScreenStackPropsList>();
 
@@ -45,6 +46,11 @@ function MainStackScreen(): React.ReactElement {
         name={ROUTER.LOGIN_SCREEN}
         component={LoginScreen}
         options={{headerShown: false}}
+      />
+      <MainStack.Screen
+        name={ROUTER.UPDATE_PROFILE_SCREEN}
+        component={UpdateProfileScreen}
+        options={{headerTitle: '회원 가입'}}
       />
       <MainStack.Screen
         name={ROUTER.HOME_SCREEN}
