@@ -6,18 +6,56 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import KakaoLogins, {login, getProfile} from '@react-native-seoul/kakao-login';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import Images from '../../../assets/images';
 import Icon from '../../../assets/icons';
-import {AppStyles} from '../../../config';
+import {AppStyles, MainScreenStackPropsList} from '../../../config';
 import SVText from '../../../components/common/SVText';
 
 function LoginScreen(): React.ReactElement {
+  const navigation =
+    useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+
+  const signInWithKakao: () => Promise<KakaoLogins.KakaoOAuthToken> =
+    async () => {
+      return await login()
+        .then(result => {
+          return result;
+        })
+        .catch(error => {
+          throw error;
+        });
+    };
+
+  const getKakaoProfile: () => Promise<KakaoLogins.KakaoProfile> = async () => {
+    return await getProfile()
+      .then(result => {
+        return result;
+      })
+      .catch(error => {
+        throw error;
+      });
+  };
+
+  const navigateToUpdateProfileScreen = () => {};
+
+  const onPressKakaoLogin = async () => {
+    const response = await signInWithKakao();
+
+    console.log(response.scopes);
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground source={Images.splash} style={styles.container} />
       <View style={styles.LoginContainer}>
-        <TouchableOpacity style={styles.kakaoLogin} activeOpacity={1}>
+        <TouchableOpacity
+          style={styles.kakaoLogin}
+          activeOpacity={1}
+          onPress={onPressKakaoLogin}>
           <Image source={Icon.oauth.kakao} style={styles.icon} />
           <SVText body05 style={styles.buttonText}>
             {'카카오로 시작하기'}
