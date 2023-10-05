@@ -26,7 +26,7 @@ function ChallengeContainer({challengeList}: PropsType): React.ReactElement {
 
   return (
     <View style={styles.container}>
-      <SVText header01>참여 가능한 챌린지</SVText>
+      <SVText body01>참여 가능한 챌린지</SVText>
       {listArray().map((itemList, idx) => {
         return (
           <View key={idx} style={styles.content}>

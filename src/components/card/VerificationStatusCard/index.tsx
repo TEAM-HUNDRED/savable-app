@@ -92,7 +92,7 @@ function VerificationStatusCard({
                 <SVText center body06>
                   {item.index}
                 </SVText>
-                <SVText header01 center style={styles.infoValueText}>
+                <SVText body01 center style={styles.infoValueText}>
                   {item.value}
                 </SVText>
               </View>

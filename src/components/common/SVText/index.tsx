@@ -40,6 +40,7 @@ const PMText: React.FC<IProps> = ({
 
   header01,
 
+  body01,
   body02,
   body03,
   body04,
@@ -65,6 +66,7 @@ const PMText: React.FC<IProps> = ({
 
     if (header01) return AppStyles.typography.header01;
 
+    if (body01) return AppStyles.typography.body01;
     if (body02) return AppStyles.typography.body02;
     if (body03) return AppStyles.typography.body03;
     if (body04) return AppStyles.typography.body04;
@@ -82,6 +84,7 @@ const PMText: React.FC<IProps> = ({
     headline01,
     headline02,
     header01,
+    body01,
     body02,
     body03,
     body04,

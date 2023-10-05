@@ -65,7 +65,7 @@ function SVButton({
   return (
     <TouchableOpacity onPress={onPress} disabled={disabled} activeOpacity={0.8}>
       <View style={[styles.defaultContainer, buttonContainerColor]}>
-        <SVText header01 color={_textColor}>
+        <SVText body01 color={_textColor}>
           {children}
         </SVText>
       </View>
