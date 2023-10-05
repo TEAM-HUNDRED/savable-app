@@ -31,6 +31,7 @@ function UpdateProfileScreen(): React.ReactElement {
   const [isValidatedNumber, setIsValidatedNumber] = useState<boolean>(true);
   const [isValidatedPhoneNumber, setIsValidatedPhoneNumber] =
     useState<boolean>(true);
+  const [checked, setChecked] = useState<boolean>(true);
   const [sentMessage, setSentMessage] = useState<boolean>(false);
 
   const [isTermChecked, setIsTermChecked] = useState<boolean>(false);
@@ -59,6 +60,12 @@ function UpdateProfileScreen(): React.ReactElement {
     return validationNumber === verificationNumber;
   };
 
+  const validateTotalCheck = () => {
+    setChecked(isPrivacyChecked && isTermChecked);
+
+    return isPrivacyChecked && isTermChecked;
+  };
+
   const sendSMS = async () => {
     const response = await Api.shared.sendSMS(phoneNumber);
 
@@ -67,12 +74,15 @@ function UpdateProfileScreen(): React.ReactElement {
   };
 
   const navigateToHomeScreen = () => {
-    navigation.navigate(ROUTER.HOME_SCREEN);
+    navigation.reset({routes: [{name: ROUTER.HOME_SCREEN}]});
   };
 
   const onPressFinishButton = () => {
     const canFinish =
-      validateNickName() && validateNumber() && validatePhoneNumber();
+      validateNickName() &&
+      validateNumber() &&
+      validatePhoneNumber() &&
+      validateTotalCheck();
 
     if (canFinish) {
       navigateToHomeScreen();
@@ -222,6 +232,11 @@ function UpdateProfileScreen(): React.ReactElement {
             onPress={() => setIsPrivacyChecked(prev => !prev)}
           />
         </View>
+        {!checked && (
+          <SVText body05 style={styles.errorText}>
+            {'해당 사항에 모두 동의하셔야 합니다. '}
+          </SVText>
+        )}
         <TouchableOpacity
           activeOpacity={0.8}
           style={styles.finishButtonContainer}
