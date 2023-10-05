@@ -11,3 +11,7 @@ export type UserInfoAPIResponse = {
     participation: number;
   };
 };
+
+export type SMSAPIResponse = {
+  number: number;
+};

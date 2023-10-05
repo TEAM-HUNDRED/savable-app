@@ -11,3 +11,7 @@ export const dummyUserInfo = {
     participation: 3,
   },
 };
+
+export const dummyVerificationNumber = {
+  number: 585540,
+};

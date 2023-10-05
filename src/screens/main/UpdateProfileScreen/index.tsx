@@ -8,12 +8,13 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-
 import KakaoLogins, {getProfile} from '@react-native-seoul/kakao-login';
 
-import {AppStyles, MainScreenStackPropsList} from '../../../config';
-import SVText from '../../../components/common/SVText';
+import Api from '../../../lib/api/Api';
 import {SquareCheckIcon} from '../../../assets/icons';
+import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
+
+import SVText from '../../../components/common/SVText';
 
 function UpdateProfileScreen(): React.ReactElement {
   const navigation =
@@ -24,6 +25,7 @@ function UpdateProfileScreen(): React.ReactElement {
   const [nickName, setNickName] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [verificationNumber, setVerificationNumber] = useState<string>('');
+  const [validationNumber, setValidationNumber] = useState<string>('');
 
   const [isValidatedNickName, setIsValidatedNickName] = useState<boolean>(true);
   const [isValidatedNumber, setIsValidatedNumber] = useState<boolean>(true);
@@ -35,24 +37,46 @@ function UpdateProfileScreen(): React.ReactElement {
   const [isPrivacyChecked, setIsPrivacyChecked] = useState<boolean>(false);
 
   const nameCheck = /^([가-힣]|[0-9]|[a-z]){2,10}$/;
-  const phoneCheck = /^010[0-9]{3,4}\d{4}$/;
+  const phoneCheck = /^[0][1][0][0-9]{3,4}\d{4}$/;
 
   const validateNickName = () => {
     const nameValidation = nameCheck.test(nickName);
 
     setIsValidatedNickName(nameValidation);
+    return nameValidation;
   };
 
   const validatePhoneNumber = () => {
     const phoneValidation = phoneCheck.test(phoneNumber);
 
     setIsValidatedPhoneNumber(phoneValidation);
+    return phoneValidation;
   };
 
   const validateNumber = () => {
-    const phoneValidation = phoneCheck.test(verificationNumber);
+    setIsValidatedNumber(validationNumber === verificationNumber);
 
-    return phoneValidation;
+    return validationNumber === verificationNumber;
+  };
+
+  const sendSMS = async () => {
+    const response = await Api.shared.sendSMS(phoneNumber);
+
+    setSentMessage(true);
+    setValidationNumber(String(response.number));
+  };
+
+  const navigateToHomeScreen = () => {
+    navigation.navigate(ROUTER.HOME_SCREEN);
+  };
+
+  const onPressFinishButton = () => {
+    const canFinish =
+      validateNickName() && validateNumber() && validatePhoneNumber();
+
+    if (canFinish) {
+      navigateToHomeScreen();
+    }
   };
 
   const getKakaoProfile: () => Promise<KakaoLogins.KakaoProfile> = async () => {
@@ -119,7 +143,8 @@ function UpdateProfileScreen(): React.ReactElement {
                 style={[
                   styles.buttonContainer,
                   {backgroundColor: AppStyles.color.lightGray02},
-                ]}>
+                ]}
+                onPress={sendSMS}>
                 <SVText
                   body03
                   style={[
@@ -132,7 +157,8 @@ function UpdateProfileScreen(): React.ReactElement {
             ) : (
               <TouchableOpacity
                 activeOpacity={0.8}
-                style={styles.buttonContainer}>
+                style={styles.buttonContainer}
+                onPress={sendSMS}>
                 <SVText body03 style={styles.buttonText}>
                   {'발송'}
                 </SVText>
@@ -153,7 +179,6 @@ function UpdateProfileScreen(): React.ReactElement {
             placeholder={'인증 번호를 입력해주세요'}
             style={styles.input}
             onChangeText={setVerificationNumber}
-            onBlur={validateNumber}
             value={verificationNumber}
             inputMode={'numeric'}
           />
@@ -199,7 +224,8 @@ function UpdateProfileScreen(): React.ReactElement {
         </View>
         <TouchableOpacity
           activeOpacity={0.8}
-          style={styles.finishButtonContainer}>
+          style={styles.finishButtonContainer}
+          onPress={onPressFinishButton}>
           <SVText body03 style={styles.buttonText}>
             {'완료'}
           </SVText>
