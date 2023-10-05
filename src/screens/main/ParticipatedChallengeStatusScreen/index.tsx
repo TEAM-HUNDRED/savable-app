@@ -53,7 +53,10 @@ function ParticipatedChallengeStatusScreen({
   );
 
   const navigateToVerificationScreen = () => {
-    navigation.navigate(ROUTER.VERIFICATION_SCREEN);
+    navigation.navigate(ROUTER.VERIFICATION_SCREEN, {
+      challengeId: route.params.challengeId,
+      challengeTitle: route.params.challengeTitle,
+    });
   };
 
   useEffect(() => {

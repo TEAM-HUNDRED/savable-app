@@ -3,11 +3,13 @@ import {API_URL} from '@env';
 
 import {ISvApi} from './ISvApi';
 import {
+  CreateVerificationAPIResponse,
   GiftCardListAPIResponse,
   OrderHistoryAPIResponse,
   ParticipationChallengeListAPIResponse,
   ParticipationChallengeStatusAPIResponse,
   UserInfoAPIResponse,
+  VerificationDetailAPIResponse,
 } from '../../types/api';
 import {
   dummyChallengeDetail,
@@ -17,6 +19,7 @@ import {
   dummyParticipationList,
   dummyParticipationStatus,
   dummyUserInfo,
+  dummyVerificationChallenge,
 } from '../../mock';
 
 export default class MockApi implements ISvApi {
@@ -69,5 +72,18 @@ export default class MockApi implements ISvApi {
 
   public async getOrderHistoryList(): Promise<OrderHistoryAPIResponse> {
     return dummyOrderHistory;
+  }
+
+  public async createVerification(
+    participationChallengeId: string,
+    image: FormData,
+  ): Promise<CreateVerificationAPIResponse> {
+    return 'success';
+  }
+
+  public async getVerificationDetail(
+    participationChallengeId: string,
+  ): Promise<VerificationDetailAPIResponse> {
+    return dummyVerificationChallenge;
   }
 }

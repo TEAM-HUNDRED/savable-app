@@ -6,6 +6,8 @@ import {
   GiftCardListAPIResponse,
   UserInfoAPIResponse,
   OrderHistoryAPIResponse,
+  CreateVerificationAPIResponse,
+  VerificationDetailAPIResponse,
 } from '../../types/api';
 
 export interface ISvApi {
@@ -23,4 +25,13 @@ export interface ISvApi {
   getOrderHistoryList(): Promise<OrderHistoryAPIResponse>;
 
   getUserInfo(): Promise<UserInfoAPIResponse>;
+
+  createVerification(
+    participationChallengeId: string,
+    image: FormData,
+  ): Promise<CreateVerificationAPIResponse>;
+
+  getVerificationDetail(
+    participationChallengeId: string,
+  ): Promise<VerificationDetailAPIResponse>;
 }

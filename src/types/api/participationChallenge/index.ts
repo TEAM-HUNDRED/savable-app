@@ -32,3 +32,15 @@ export type ParticipationChallengeStatusAPIResponse = {
     }>;
   };
 };
+
+export type CreateVerificationAPIResponse = {};
+export type VerificationDetailAPIResponse = {
+  image: string;
+  title: string;
+  percentage: number;
+  currentCount: number;
+  goalsCount: number;
+  scheduledReward: number;
+  additionalReward: number;
+  savings: number;
+};

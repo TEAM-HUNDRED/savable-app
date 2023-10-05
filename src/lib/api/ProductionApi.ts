@@ -3,11 +3,13 @@ import {API_URL} from '@env';
 
 import {ISvApi} from './ISvApi';
 import {
+  CreateVerificationAPIResponse,
   GiftCardListAPIResponse,
   OrderHistoryAPIResponse,
   ParticipationChallengeListAPIResponse,
   ParticipationChallengeStatusAPIResponse,
   UserInfoAPIResponse,
+  VerificationDetailAPIResponse,
 } from '../../types/api';
 
 export default class ProductionApi implements ISvApi {
@@ -74,6 +76,28 @@ export default class ProductionApi implements ISvApi {
 
   public async getOrderHistoryList(): Promise<OrderHistoryAPIResponse> {
     const {data} = await this.axios.get('shop/histories');
+
+    return data.data;
+  }
+
+  public async createVerification(
+    participationChallengeId: string,
+    image: FormData,
+  ): Promise<CreateVerificationAPIResponse> {
+    const {data} = await this.axios.post(
+      `participation/${participationChallengeId}/verification/`,
+      {image: image},
+    );
+
+    return data;
+  }
+
+  public async getVerificationDetail(
+    participationChallengeId: string,
+  ): Promise<VerificationDetailAPIResponse> {
+    const {data} = await this.axios.get(
+      `participation/${participationChallengeId}/verification/`,
+    );
 
     return data.data;
   }
