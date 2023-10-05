@@ -8,6 +8,7 @@ import {
   OrderHistoryAPIResponse,
   ParticipationChallengeListAPIResponse,
   ParticipationChallengeStatusAPIResponse,
+  SMSAPIResponse,
   UserInfoAPIResponse,
   VerificationDetailAPIResponse,
 } from '../../types/api';
@@ -20,6 +21,7 @@ import {
   dummyParticipationStatus,
   dummyUserInfo,
   dummyVerificationChallenge,
+  dummyVerificationNumber,
 } from '../../mock';
 
 export default class MockApi implements ISvApi {
@@ -85,5 +87,9 @@ export default class MockApi implements ISvApi {
     participationChallengeId: string,
   ): Promise<VerificationDetailAPIResponse> {
     return dummyVerificationChallenge;
+  }
+
+  public async sendSMS(phoneNumber: string): Promise<SMSAPIResponse> {
+    return dummyVerificationNumber;
   }
 }

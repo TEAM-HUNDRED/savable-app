@@ -12,7 +12,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 
 import Images from '../../../assets/images';
 import Icon from '../../../assets/icons';
-import {AppStyles, MainScreenStackPropsList} from '../../../config';
+import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 import SVText from '../../../components/common/SVText';
 
 function LoginScreen(): React.ReactElement {
@@ -40,18 +40,23 @@ function LoginScreen(): React.ReactElement {
       });
   };
 
-  const navigateToUpdateProfileScreen = () => {};
+  const navigateToUpdateProfileScreen = () => {
+    navigation.navigate(ROUTER.UPDATE_PROFILE_SCREEN);
+  };
 
   const onPressKakaoLogin = async () => {
     const response = await signInWithKakao();
+    const profile = await getKakaoProfile();
 
-    console.log(response.scopes);
+    console.log(response, profile);
+
+    navigateToUpdateProfileScreen();
   };
 
   return (
     <View style={styles.container}>
       <ImageBackground source={Images.splash} style={styles.container} />
-      <View style={styles.LoginContainer}>
+      <View style={styles.loginContainer}>
         <TouchableOpacity
           style={styles.kakaoLogin}
           activeOpacity={1}
@@ -70,7 +75,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  LoginContainer: {
+  loginContainer: {
     display: 'flex',
     flexDirection: 'column',
     position: 'absolute',

@@ -5,6 +5,7 @@ export {default as StoreIcon} from './ic_store.svg';
 export {default as CheckIcon} from './ic_check.svg';
 export {default as LeftArrowIcon} from './ic_left_arrow.svg';
 export {default as CloseIcon} from './ic_close.svg';
+export {default as SquareCheckIcon} from './ic_square_check.svg';
 
 const Icons = {
   leftArrow: require('./ic_left_arrow.png'),

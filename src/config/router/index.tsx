@@ -16,6 +16,7 @@ export enum ROUTER {
   ORDER_HISTORY_SCREEN = 'ORDER_HISTORY_SCREEN',
   VERIFICATION_SCREEN = 'VERIFICATION_SCREEN',
   FINISH_VERIFICATION_SCREEN = 'FINISH_VERIFICATION_SCREEN',
+  UPDATE_PROFILE_SCREEN = 'UPDATE_PROFILE_SCREEN',
 }
 
 // 최상단 RootScreen
@@ -23,7 +24,6 @@ export type RootScreenKeyList = keyof RootScreenStackPropsList;
 
 export type RootScreenStackPropsList = {
   [ROUTER.MAIN_SCREEN]: undefined;
-  [ROUTER.LOGIN_SCREEN]: undefined;
 };
 
 // MainScreen을 Navigator에 내부 Screen
@@ -32,6 +32,8 @@ export type MainScreenKeyList = keyof MainScreenStackPropsList;
 
 export type MainScreenStackPropsList = RootScreenStackPropsList & {
   [ROUTER.HOME_SCREEN]: undefined;
+  [ROUTER.LOGIN_SCREEN]: undefined;
+  [ROUTER.UPDATE_PROFILE_SCREEN]: undefined;
   [ROUTER.ORDER_HISTORY_SCREEN]: undefined;
   [ROUTER.VERIFICATION_SCREEN]: {challengeId: number; challengeTitle: string};
   [ROUTER.FINISH_VERIFICATION_SCREEN]: {

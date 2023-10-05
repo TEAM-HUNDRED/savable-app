@@ -8,6 +8,7 @@ import {
   OrderHistoryAPIResponse,
   ParticipationChallengeListAPIResponse,
   ParticipationChallengeStatusAPIResponse,
+  SMSAPIResponse,
   UserInfoAPIResponse,
   VerificationDetailAPIResponse,
 } from '../../types/api';
@@ -98,6 +99,12 @@ export default class ProductionApi implements ISvApi {
     const {data} = await this.axios.get(
       `participation/${participationChallengeId}/verification/`,
     );
+
+    return data.data;
+  }
+
+  public async sendSMS(phoneNumber: string): Promise<SMSAPIResponse> {
+    const {data} = await this.axios.post('send-sms', phoneNumber);
 
     return data.data;
   }
