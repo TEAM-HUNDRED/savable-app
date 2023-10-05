@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<dict>
+	  <key>CFBundleTypeRole</key>
+	  <string>Editor</string>
+	  <key>CFBundleURLSchemes</key>
+	  <array>
+	    <string>kakaoce3815b515b4c90de02f08ce9cc4bb50</string>
+	  </array>
+	</dict>
+	<key>KAKAO_APP_KEY</key>
+	<string>ce3815b515b4c90de02f08ce9cc4bb50</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakaoce3815b515b4c90de02f08ce9cc4bb50</string>
+		<string>kakaolink</string>
+		<string>kakaokompassauth</string>
+	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs access to your Camera.</string>
 	<key>CFBundleDevelopmentRegion</key>
