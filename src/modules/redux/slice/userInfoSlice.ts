@@ -2,19 +2,20 @@ import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 
 export interface UserInfoSlicePropsType {
-  userInfo: {
-    userName: '';
-    userPhoneNumber: '';
-    userProfileImageUrl: '';
-    userTotalReward: 0;
+  value: {
+    userName: string;
+    userPhoneNumber: string;
+    userProfileImageUrl: string;
+    userTotalReward: number;
   };
 }
 
 const initialState: UserInfoSlicePropsType = {
-  userInfo: {
-    userName: '',
-    userPhoneNumber: '',
-    userProfileImageUrl: '',
+  value: {
+    userName: '당아7',
+    userPhoneNumber: '01000000000',
+    userProfileImageUrl:
+      'https://chatbot-budket.s3.ap-northeast-2.amazonaws.com/profile/member_29_2023-10-04%2003%3A28%3A27.369476.jpg',
     userTotalReward: 0,
   },
 };
@@ -28,10 +29,10 @@ export const userInfoSlice = createSlice({
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      state.userInfo = action.payload.userInfo;
+      state.value = action.payload.value;
     },
     initUserInfo: state => {
-      state.userInfo = initialState.userInfo;
+      state.value = initialState.value;
     },
   },
 });
