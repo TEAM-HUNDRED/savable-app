@@ -13,10 +13,7 @@ import {AppStyles, HomeScreenStackPropsList, ROUTER} from '../../../../config';
 import Icons from '../../../../assets/icons';
 
 import Api from '../../../../lib/api/Api';
-import {
-  UserChallengeInfoPropsType,
-  UserRewardInfoPropsType,
-} from '../../../../types/view';
+import {UserInfoPropsType} from '../../../../types/view';
 
 import SVText from '../../../../components/common/SVText';
 import SVDivider from '../../../../components/common/SVDivider';
@@ -27,18 +24,15 @@ function ProfileTabScreen({}: PropsType) {
   const navigation =
     useNavigation<StackNavigationProp<HomeScreenStackPropsList>>();
 
-  const [userInfo, setUserInfo] = useState<UserRewardInfoPropsType>(
-    {} as UserRewardInfoPropsType,
+  const [userInfo, setUserInfo] = useState<UserInfoPropsType>(
+    {} as UserInfoPropsType,
   );
-  const [userChallengeInfo, setUserChallengeInfo] =
-    useState<UserChallengeInfoPropsType>({} as UserChallengeInfoPropsType);
 
   const getUserInfo = async () => {
     try {
       const response = await Api.shared.getUserInfo();
 
-      setUserChallengeInfo(response.challenge);
-      setUserInfo(response.information);
+      setUserInfo(response);
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +43,7 @@ function ProfileTabScreen({}: PropsType) {
       index: '포인트',
       value: `${userInfo.totalReward}포인트`,
       icon: Icons.point,
-      description: `${userInfo.scheduledReward}포인트`,
+      description: `${userInfo.scheduledReward.toLocaleString()}포인트`,
     },
     {
       index: '총 절약 금액',
@@ -64,15 +58,15 @@ function ProfileTabScreen({}: PropsType) {
   const userChallengeInfoList = [
     {
       index: '진행중',
-      value: `${userChallengeInfo.participation}`,
+      value: `${userInfo.challengeInfo.currentParticipationCount}`,
     },
     {
       index: '성공',
-      value: `${userChallengeInfo.success}`,
+      value: `${userInfo.challengeInfo.successChallengeCount}`,
     },
     {
       index: '완료',
-      value: `${userChallengeInfo.completion}`,
+      value: `${userInfo.challengeInfo.completeChallengeCount}`,
     },
   ];
 
@@ -113,7 +107,7 @@ function ProfileTabScreen({}: PropsType) {
 
             return (
               <>
-                <View style={styles.barContainer}>
+                <View style={styles.barContainer} key={`${item.value}-${idx}`}>
                   <SVText body08>{item.index}</SVText>
                   <View>
                     <View style={styles.valueContainer}>
@@ -145,7 +139,9 @@ function ProfileTabScreen({}: PropsType) {
 
             return (
               <>
-                <View style={styles.challengeBarContainer}>
+                <View
+                  style={styles.challengeBarContainer}
+                  key={`${item.value}-${idx}`}>
                   <SVText body06>{item.index}</SVText>
                   <SVText body01>{item.value}</SVText>
                 </View>
