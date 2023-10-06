@@ -100,7 +100,15 @@ function ProfileTabScreen({}: PropsType) {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}>
       <View style={styles.paddingContainer}>
-        <View style={styles.profileContainer} />
+        <View style={styles.profileContainer}>
+          <Image
+            source={{uri: userInfo.profileImage}}
+            style={styles.profileImage}
+          />
+          <SVText body02 style={styles.profileText}>
+            {userInfo.username}
+          </SVText>
+        </View>
         <View style={styles.statusContainer}>
           {userRewardInfoList.map((item, idx) => {
             const isLastItem = idx === userRewardInfoList.length - 1;
@@ -184,8 +192,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: AppStyles.scaleWidth(24),
   },
   profileContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     height: AppStyles.scaleWidth(64),
-    backgroundColor: AppStyles.color.lightGray02,
   },
   statusContainer: {
     display: 'flex',
@@ -268,6 +278,22 @@ const styles = StyleSheet.create({
   },
   barText: {
     marginTop: AppStyles.scaleWidth(2),
+  },
+  profileImage: {
+    width: AppStyles.scaleWidth(60),
+    height: AppStyles.scaleWidth(60),
+    marginRight: AppStyles.scaleWidth(10),
+    borderRadius: AppStyles.scaleWidth(30),
+    borderWidth: AppStyles.scaleWidth(1),
+    borderColor: AppStyles.color.gray02,
+  },
+  profileTextContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  profileText: {
+    fontWeight: 'bold',
+    lineHeight: AppStyles.scaleFont(24),
   },
 });
 
