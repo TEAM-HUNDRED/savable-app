@@ -1,13 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import GiftCard from '../../../../components/card/GiftCard';
-import ShopCategoryCard from '../../../../components/card/ShopCategoryCard';
-import {AppStyles} from '../../../../config';
+import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {useSelector} from 'react-redux';
 
+import {AppStyles} from '../../../../config';
 import Api from '../../../../lib/api/Api';
 import {GiftCardPropsType} from '../../../../types/view/shop';
+import type {RootState} from '../../../../modules/redux/Store';
+
+import GiftCard from '../../../../components/card/GiftCard';
+import ShopCategoryCard from '../../../../components/card/ShopCategoryCard';
+import Icons from '../../../../assets/icons';
+import SVText from '../../../../components/common/SVText';
 
 function StoreTabScreen() {
+  const userInfo = useSelector((state: RootState) => state.userInfo.value);
+
   const [price, setPrice] = useState<number>(0);
   const [giftCardList, setGiftCardList] = useState<GiftCardPropsType[]>(
     [] as GiftCardPropsType[],
@@ -25,7 +32,20 @@ function StoreTabScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.profileContainer}></View>
+      <View style={styles.profileContainer}>
+        <SVText body03 style={styles.text}>
+          {`${userInfo.userName}님, 절약을 통해`}
+        </SVText>
+        <View style={styles.highlightContainer}>
+          <Image source={Icons.point} style={styles.icon} />
+          <SVText header01 style={styles.highlightText}>
+            {`${userInfo.userTotalReward.toLocaleString()}포인트`}
+          </SVText>
+          <SVText body03 style={styles.text}>
+            {' 모았어요!'}
+          </SVText>
+        </View>
+      </View>
       <View style={styles.paddingContainer}>
         <ShopCategoryCard setPrice={setPrice} price={price} />
       </View>
@@ -45,8 +65,29 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     width: '100%',
+    justifyContent: 'center',
     height: AppStyles.scaleWidth(152),
+    paddingHorizontal: AppStyles.scaleWidth(32),
+    paddingTop: AppStyles.scaleWidth(14),
     backgroundColor: '#f6f6f6',
+  },
+  highlightContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: AppStyles.scaleWidth(12),
+  },
+  text: {
+    fontWeight: 'bold',
+  },
+  highlightText: {
+    color: AppStyles.color.mint05,
+    fontWeight: 'bold',
+  },
+  icon: {
+    width: AppStyles.scaleWidth(18),
+    height: AppStyles.scaleWidth(18),
+    marginRight: AppStyles.scaleWidth(6),
   },
   paddingContainer: {
     paddingHorizontal: AppStyles.scaleWidth(24),
