@@ -17,6 +17,7 @@ import {UserInfoPropsType} from '../../../../types/view';
 
 import SVText from '../../../../components/common/SVText';
 import SVDivider from '../../../../components/common/SVDivider';
+import {dummyUserInfo} from '../../../../mock';
 
 type PropsType = {};
 
@@ -24,9 +25,7 @@ function ProfileTabScreen({}: PropsType) {
   const navigation =
     useNavigation<StackNavigationProp<HomeScreenStackPropsList>>();
 
-  const [userInfo, setUserInfo] = useState<UserInfoPropsType>(
-    {} as UserInfoPropsType,
-  );
+  const [userInfo, setUserInfo] = useState<UserInfoPropsType>(dummyUserInfo);
 
   const getUserInfo = async () => {
     try {
@@ -43,7 +42,7 @@ function ProfileTabScreen({}: PropsType) {
       index: '포인트',
       value: `${userInfo.totalReward}포인트`,
       icon: Icons.point,
-      description: `${userInfo.scheduledReward.toLocaleString()}포인트`,
+      description: `${userInfo.scheduledReward}포인트`,
     },
     {
       index: '총 절약 금액',
@@ -167,7 +166,8 @@ function ProfileTabScreen({}: PropsType) {
             <TouchableOpacity
               activeOpacity={0.8}
               style={styles.navigateBarContainer}
-              onPress={item.onPress}>
+              onPress={item.onPress}
+              key={`${item.title}-${idx}`}>
               <SVText body04 style={styles.barText}>
                 {item.title}
               </SVText>
