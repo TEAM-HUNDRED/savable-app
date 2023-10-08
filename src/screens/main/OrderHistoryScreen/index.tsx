@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Linking,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -37,6 +38,10 @@ function OrderHistoryScreen({}: PropsType) {
     }
   };
 
+  const linkToKakaoChat = () => {
+    Linking.openURL('http://pf.kakao.com/_xcVxmCG/chat');
+  };
+
   useEffect(() => {
     getOrderHistoryList();
   }, []);
@@ -67,7 +72,7 @@ function OrderHistoryScreen({}: PropsType) {
       <TouchableOpacity
         activeOpacity={0.8}
         style={styles.buttonContainer}
-        onPress={() => {}}>
+        onPress={linkToKakaoChat}>
         <SVText body06>{'문의하기'}</SVText>
       </TouchableOpacity>
       {orderList.map((item, idx) => {

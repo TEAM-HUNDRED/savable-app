@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   Image,
+  Linking,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -79,7 +80,11 @@ function ProfileTabScreen({}: PropsType) {
       value: `${userInfo.challengeInfo.completeChallengeCount}`,
     },
   ];
-  // http://pf.kakao.com/_xcVxmCG/chat
+
+  const linkToKakaoChat = () => {
+    Linking.openURL('http://pf.kakao.com/_xcVxmCG/chat');
+  };
+
   const navigationBarList = [
     {
       title: '기프티콘 구매 내역',
@@ -89,7 +94,7 @@ function ProfileTabScreen({}: PropsType) {
     },
     {
       title: '문의하기',
-      onPress: () => {},
+      onPress: linkToKakaoChat,
     },
     {
       title: '로그아웃',
@@ -126,7 +131,7 @@ function ProfileTabScreen({}: PropsType) {
             return (
               <>
                 <View style={styles.barContainer} key={`${item.value}-${idx}`}>
-                  <SVText body08>{item.index}</SVText>
+                  <SVText body06>{item.index}</SVText>
                   <View>
                     <View style={styles.valueContainer}>
                       {item.icon && (
