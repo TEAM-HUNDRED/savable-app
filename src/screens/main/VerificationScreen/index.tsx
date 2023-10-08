@@ -60,6 +60,15 @@ function VerificationScreen({route}: PropsType) {
     });
   }, []);
 
+  const createVerification = async (image: FormData) => {
+    const response = await Api.shared.createVerification(
+      route.params.challengeId,
+      image,
+    );
+
+    return response;
+  };
+
   useEffect(() => {
     getChallengeDetail(route.params.challengeId);
   }, [route, getChallengeDetail]);

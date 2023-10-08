@@ -79,7 +79,7 @@ export default class MockApi implements ISvApi {
   }
 
   public async createVerification(
-    participationChallengeId: string,
+    participationChallengeId: number,
     image: FormData,
   ): Promise<CreateVerificationAPIResponse> {
     return 'success';

@@ -30,7 +30,7 @@ export interface ISvApi {
   getUserInfo(): Promise<UserInfoAPIResponse>;
 
   createVerification(
-    participationChallengeId: string,
+    participationChallengeId: number,
     image: FormData,
   ): Promise<CreateVerificationAPIResponse>;
 

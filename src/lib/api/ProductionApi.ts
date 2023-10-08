@@ -84,7 +84,7 @@ export default class ProductionApi implements ISvApi {
   }
 
   public async createVerification(
-    participationChallengeId: string,
+    participationChallengeId: number,
     image: FormData,
   ): Promise<CreateVerificationAPIResponse> {
     const {data} = await this.axios.post(
