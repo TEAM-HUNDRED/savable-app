@@ -36,7 +36,7 @@ function OrderSuccessScreen({route}: PropsType) {
   }, [homeNavigation]);
 
   const navigateToHistory = useCallback(() => {
-    navigation.navigate(ROUTER.ORDER_HISTORY_SCREEN);
+    navigation.replace(ROUTER.ORDER_HISTORY_SCREEN);
   }, [navigation]);
 
   return (

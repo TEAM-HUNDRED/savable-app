@@ -57,7 +57,7 @@ function CreateOrderPage({route}: PropsType) {
   }, [route, inputData]);
 
   const navigateToPurchaseSuccessScreen = useCallback(() => {
-    navigation.navigate(ROUTER.ORDER_SUCCESS_SCREEN, {
+    navigation.replace(ROUTER.ORDER_SUCCESS_SCREEN, {
       giftcardId: route.params.giftcardId,
       image: route.params.image,
       productName: route.params.productName,

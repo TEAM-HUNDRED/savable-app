@@ -33,7 +33,7 @@ function VerificationScreen({route}: PropsType) {
   const [isActive, setIsActive] = useState<boolean>(true);
 
   const navigateToFinishScreen = () => {
-    navigation.navigate(ROUTER.FINISH_VERIFICATION_SCREEN, {
+    navigation.replace(ROUTER.FINISH_VERIFICATION_SCREEN, {
       challengeId: route.params.challengeId,
       challengeTitle: route.params.challengeTitle,
     });
