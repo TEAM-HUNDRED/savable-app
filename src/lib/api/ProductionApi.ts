@@ -5,6 +5,8 @@ import {ISvApi} from './ISvApi';
 import {
   ApplyChallengeAPIResponse,
   ApplyChallengePayload,
+  CreateOrderAPIResponse,
+  CreateOrderPayload,
   CreateVerificationAPIResponse,
   GiftCardListAPIResponse,
   OrderHistoryAPIResponse,
@@ -115,6 +117,14 @@ export default class ProductionApi implements ISvApi {
     payload: ApplyChallengePayload,
   ): Promise<ApplyChallengeAPIResponse> {
     const {data} = await this.axios.post('challenges/participations', payload);
+    return data;
+  }
+
+  public async createOrder(
+    payload: CreateOrderPayload,
+  ): Promise<CreateOrderAPIResponse> {
+    const {data} = await this.axios.post('shop/order', payload);
+
     return data;
   }
 }

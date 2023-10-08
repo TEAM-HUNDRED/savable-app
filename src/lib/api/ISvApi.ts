@@ -11,6 +11,8 @@ import {
   SMSAPIResponse,
   ApplyChallengePayload,
   ApplyChallengeAPIResponse,
+  CreateOrderPayload,
+  CreateOrderAPIResponse,
 } from '../../types/api';
 
 export interface ISvApi {
@@ -43,4 +45,6 @@ export interface ISvApi {
   ApplyChallenge(
     payload: ApplyChallengePayload,
   ): Promise<ApplyChallengeAPIResponse>;
+
+  createOrder(payload: CreateOrderPayload): Promise<CreateOrderAPIResponse>;
 }

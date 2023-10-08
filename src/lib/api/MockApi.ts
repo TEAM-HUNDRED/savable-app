@@ -5,6 +5,8 @@ import {ISvApi} from './ISvApi';
 import {
   ApplyChallengeAPIResponse,
   ApplyChallengePayload,
+  CreateOrderAPIResponse,
+  CreateOrderPayload,
   CreateVerificationAPIResponse,
   GiftCardListAPIResponse,
   OrderHistoryAPIResponse,
@@ -98,6 +100,12 @@ export default class MockApi implements ISvApi {
   public async ApplyChallenge(
     payload: ApplyChallengePayload,
   ): Promise<ApplyChallengeAPIResponse> {
+    return 'success';
+  }
+
+  public async createOrder(
+    payload: CreateOrderPayload,
+  ): Promise<CreateOrderAPIResponse> {
     return 'success';
   }
 }
