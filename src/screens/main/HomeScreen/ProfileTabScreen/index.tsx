@@ -79,7 +79,7 @@ function ProfileTabScreen({}: PropsType) {
       value: `${userInfo.challengeInfo.completeChallengeCount}`,
     },
   ];
-
+  // http://pf.kakao.com/_xcVxmCG/chat
   const navigationBarList = [
     {
       title: '기프티콘 구매 내역',
