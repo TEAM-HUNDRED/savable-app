@@ -25,3 +25,11 @@ export type ChallengeDetailAPIResponse = {
     explanation: string;
   }>;
 };
+
+export type ApplyChallengePayload = {
+  challengeId: number;
+  duration: number;
+  verificationGoal: number;
+};
+
+export type ApplyChallengeAPIResponse = {};

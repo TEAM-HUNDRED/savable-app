@@ -3,6 +3,8 @@ import {API_URL} from '@env';
 
 import {ISvApi} from './ISvApi';
 import {
+  ApplyChallengeAPIResponse,
+  ApplyChallengePayload,
   CreateVerificationAPIResponse,
   GiftCardListAPIResponse,
   OrderHistoryAPIResponse,
@@ -107,5 +109,12 @@ export default class ProductionApi implements ISvApi {
     const {data} = await this.axios.post('send-sms', phoneNumber);
 
     return data.data;
+  }
+
+  public async ApplyChallenge(
+    payload: ApplyChallengePayload,
+  ): Promise<ApplyChallengeAPIResponse> {
+    const {data} = await this.axios.post('challenges/participations', payload);
+    return data;
   }
 }

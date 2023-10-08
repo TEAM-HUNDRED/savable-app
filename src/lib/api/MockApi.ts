@@ -3,6 +3,8 @@ import {API_URL} from '@env';
 
 import {ISvApi} from './ISvApi';
 import {
+  ApplyChallengeAPIResponse,
+  ApplyChallengePayload,
   CreateVerificationAPIResponse,
   GiftCardListAPIResponse,
   OrderHistoryAPIResponse,
@@ -91,5 +93,11 @@ export default class MockApi implements ISvApi {
 
   public async sendSMS(phoneNumber: string): Promise<SMSAPIResponse> {
     return dummyVerificationNumber;
+  }
+
+  public async ApplyChallenge(
+    payload: ApplyChallengePayload,
+  ): Promise<ApplyChallengeAPIResponse> {
+    return 'success';
   }
 }

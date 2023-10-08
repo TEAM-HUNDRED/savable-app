@@ -17,6 +17,7 @@ import ChallengeApplyCard from '../../../components/card/ChallengeApplyCard';
 import {useToastProvider} from '../../../lib/context/ToastContext';
 import {usePopUpProvider} from '../../../lib/context/PopUpContext';
 import {StackNavigationProp} from '@react-navigation/stack';
+import Api from '../../../lib/api/Api';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CHALLENGE_APPLY_SCREEN>;
@@ -76,7 +77,19 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
     // homeNavigation.reset({routes: [{name: ROUTER.PARTICIPATION_SCREEN}]});
   };
 
+  const applyChallenge = async () => {
+    const date = await Api.shared.ApplyChallenge({
+      challengeId: challengeInfo ? challengeInfo.id : 0,
+      duration: (durationList.findIndex(item => item === duration) + 1) * 7,
+      verificationGoal: Number(target),
+    });
+
+    return date;
+  };
+
   const onPressApplyButton = () => {
+    applyChallenge();
+
     showPopUp({
       title: '챌린지 참여 완료!',
       subButtonText: 'Savable과 함께 절약해요',
