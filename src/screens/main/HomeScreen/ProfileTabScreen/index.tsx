@@ -9,7 +9,12 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-import {AppStyles, HomeScreenStackPropsList, ROUTER} from '../../../../config';
+import {
+  AppStyles,
+  HomeScreenStackPropsList,
+  MainScreenStackPropsList,
+  ROUTER,
+} from '../../../../config';
 import Icons from '../../../../assets/icons';
 
 import Api from '../../../../lib/api/Api';
@@ -24,6 +29,8 @@ type PropsType = {};
 function ProfileTabScreen({}: PropsType) {
   const navigation =
     useNavigation<StackNavigationProp<HomeScreenStackPropsList>>();
+  const mainNavigation =
+    useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
   const [userInfo, setUserInfo] = useState<UserInfoPropsType>(dummyUserInfo);
 
@@ -35,6 +42,10 @@ function ProfileTabScreen({}: PropsType) {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const logout = () => {
+    mainNavigation.reset({routes: [{name: ROUTER.LOGIN_SCREEN}]});
   };
 
   const userRewardInfoList = [
@@ -82,7 +93,7 @@ function ProfileTabScreen({}: PropsType) {
     },
     {
       title: '로그아웃',
-      onPress: () => {},
+      onPress: logout,
     },
     {
       title: '탈퇴하기',
