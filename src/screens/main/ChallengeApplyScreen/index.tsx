@@ -2,7 +2,12 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 
-import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
+import {
+  AppStyles,
+  HomeScreenStackPropsList,
+  MainScreenStackPropsList,
+  ROUTER,
+} from '../../../config';
 import {ChallengeInfoViewType} from '../../../types/view';
 
 import SVText from '../../../components/common/SVText';
@@ -11,13 +16,18 @@ import SVButton from '../../../components/common/SVButton';
 import ChallengeApplyCard from '../../../components/card/ChallengeApplyCard';
 import {useToastProvider} from '../../../lib/context/ToastContext';
 import {usePopUpProvider} from '../../../lib/context/PopUpContext';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CHALLENGE_APPLY_SCREEN>;
 };
 
 function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+  const homeNavigation =
+    useNavigation<StackNavigationProp<HomeScreenStackPropsList>>();
+
   const {showToast} = useToastProvider();
   const {showPopUp} = usePopUpProvider();
 
@@ -60,12 +70,20 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
     }
   };
 
+  const navigateToChallengeScreen = () => {
+    // navigation.navigate(ROUTER.HOME_SCREEN);
+    homeNavigation.navigate(ROUTER.PARTICIPATION_SCREEN);
+    // homeNavigation.reset({routes: [{name: ROUTER.PARTICIPATION_SCREEN}]});
+  };
+
   const onPressApplyButton = () => {
     showPopUp({
       title: '챌린지 참여 완료!',
       subButtonText: 'Savable과 함께 절약해요',
       buttonText: '확인',
-      onPressButton: () => {},
+      onPressButton: () => {
+        navigateToChallengeScreen();
+      },
       cardChildren: (
         <View>
           <SVText body04 center>

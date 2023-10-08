@@ -41,15 +41,17 @@ const PopUpProvider: React.FC<{children: React.ReactNode}> = ({
   const [title, setTitle] = useState('');
   const [subButtonText, setSubButtonText] = useState('');
   const [buttonText, setButtonText] = useState('');
-  const [onPressButton, setOnPressButton] = useState(() => {});
+  const [onPressButton, setOnPressButton] = useState<() => void>(
+    () => () => {},
+  );
   const [cardChildren, setCardChildren] = useState<
     React.JSX.Element[] | React.JSX.Element
   >(<></>);
   const [isVisible, setIsVisible] = useState(false);
 
   const handleOnPress = () => {
-    setIsVisible(false);
     onPressButton;
+    setIsVisible(false);
   };
 
   const showPopUp = ({
@@ -62,7 +64,9 @@ const PopUpProvider: React.FC<{children: React.ReactNode}> = ({
     setTitle(title);
     setSubButtonText(subButtonText);
     setButtonText(buttonText);
-    setOnPressButton(onPressButton);
+    setOnPressButton(() => {
+      onPressButton();
+    });
     setCardChildren(cardChildren);
     setIsVisible(true);
   };
