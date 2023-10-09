@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "40370249544",
+    "project_id": "savable-b1305",
+    "storage_bucket": "savable-b1305.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40370249544:android:675424a6ebd27bdbc99d7d",
+        "android_client_info": {
+          "package_name": "com.savable"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDJKQ4WybooquY55sNsDvCzGL9tpdAaEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
