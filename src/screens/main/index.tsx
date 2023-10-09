@@ -43,11 +43,6 @@ function MainStackScreen(): React.ReactElement {
   return (
     <MainStack.Navigator screenOptions={screenOptions}>
       <MainStack.Screen
-        name={ROUTER.HOME_SCREEN}
-        component={HomeScreen}
-        options={headerHideOptions}
-      />
-      <MainStack.Screen
         name={ROUTER.LOGIN_SCREEN}
         component={LoginScreen}
         options={{headerShown: false}}
@@ -56,6 +51,11 @@ function MainStackScreen(): React.ReactElement {
         name={ROUTER.UPDATE_PROFILE_SCREEN}
         component={UpdateProfileScreen}
         options={{headerTitle: '회원 가입'}}
+      />
+      <MainStack.Screen
+        name={ROUTER.HOME_SCREEN}
+        component={HomeScreen}
+        options={headerHideOptions}
       />
       <MainStack.Screen
         name={ROUTER.CHALLENGE_EXPLAIN_SCREEN}
