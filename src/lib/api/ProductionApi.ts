@@ -12,6 +12,8 @@ import {
   OrderHistoryAPIResponse,
   ParticipationChallengeListAPIResponse,
   ParticipationChallengeStatusAPIResponse,
+  SignUpAPIResponse,
+  SignUpPayload,
   SMSAPIResponse,
   UserInfoAPIResponse,
   VerificationDetailAPIResponse,
@@ -124,6 +126,12 @@ export default class ProductionApi implements ISvApi {
     payload: CreateOrderPayload,
   ): Promise<CreateOrderAPIResponse> {
     const {data} = await this.axios.post('shop/order', payload);
+
+    return data;
+  }
+
+  public async signUp(payload: SignUpPayload): Promise<SignUpAPIResponse> {
+    const {data} = await this.axios.post('login/kakao', payload);
 
     return data;
   }

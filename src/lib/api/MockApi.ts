@@ -12,6 +12,8 @@ import {
   OrderHistoryAPIResponse,
   ParticipationChallengeListAPIResponse,
   ParticipationChallengeStatusAPIResponse,
+  SignUpAPIResponse,
+  SignUpPayload,
   SMSAPIResponse,
   UserInfoAPIResponse,
   VerificationDetailAPIResponse,
@@ -106,6 +108,10 @@ export default class MockApi implements ISvApi {
   public async createOrder(
     payload: CreateOrderPayload,
   ): Promise<CreateOrderAPIResponse> {
+    return 'success';
+  }
+
+  public async signUp(payload: SignUpPayload): Promise<SignUpAPIResponse> {
     return 'success';
   }
 }

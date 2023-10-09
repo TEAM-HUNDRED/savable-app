@@ -14,6 +14,8 @@ import Images from '../../../assets/images';
 import Icon from '../../../assets/icons';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 import SVText from '../../../components/common/SVText';
+import Api from '../../../lib/api/Api';
+import {SignUpPayload} from '../../../types/api';
 
 function LoginScreen(): React.ReactElement {
   const navigation =
@@ -44,11 +46,21 @@ function LoginScreen(): React.ReactElement {
     navigation.navigate(ROUTER.UPDATE_PROFILE_SCREEN);
   };
 
+  const signUp = async (payload: SignUpPayload) => {
+    try {
+      const response = await Api.shared.signUp(payload);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onPressKakaoLogin = async () => {
     const response = await signInWithKakao();
     const profile = await getKakaoProfile();
 
     console.log(response, profile);
+
+    signUp(profile as SignUpPayload);
 
     navigateToUpdateProfileScreen();
   };

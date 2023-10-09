@@ -13,6 +13,8 @@ import {
   ApplyChallengeAPIResponse,
   CreateOrderPayload,
   CreateOrderAPIResponse,
+  SignUpAPIResponse,
+  SignUpPayload,
 } from '../../types/api';
 
 export interface ISvApi {
@@ -47,4 +49,6 @@ export interface ISvApi {
   ): Promise<ApplyChallengeAPIResponse>;
 
   createOrder(payload: CreateOrderPayload): Promise<CreateOrderAPIResponse>;
+
+  signUp(payload: SignUpPayload): Promise<SignUpAPIResponse>;
 }
