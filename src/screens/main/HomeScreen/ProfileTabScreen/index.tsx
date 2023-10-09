@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   Image,
+  Linking,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -9,7 +10,12 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-import {AppStyles, HomeScreenStackPropsList, ROUTER} from '../../../../config';
+import {
+  AppStyles,
+  HomeScreenStackPropsList,
+  MainScreenStackPropsList,
+  ROUTER,
+} from '../../../../config';
 import Icons from '../../../../assets/icons';
 
 import Api from '../../../../lib/api/Api';
@@ -17,16 +23,17 @@ import {UserInfoPropsType} from '../../../../types/view';
 
 import SVText from '../../../../components/common/SVText';
 import SVDivider from '../../../../components/common/SVDivider';
+import {dummyUserInfo} from '../../../../mock';
 
 type PropsType = {};
 
 function ProfileTabScreen({}: PropsType) {
   const navigation =
     useNavigation<StackNavigationProp<HomeScreenStackPropsList>>();
+  const mainNavigation =
+    useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
-  const [userInfo, setUserInfo] = useState<UserInfoPropsType>(
-    {} as UserInfoPropsType,
-  );
+  const [userInfo, setUserInfo] = useState<UserInfoPropsType>(dummyUserInfo);
 
   const getUserInfo = async () => {
     try {
@@ -38,12 +45,16 @@ function ProfileTabScreen({}: PropsType) {
     }
   };
 
+  const logout = () => {
+    mainNavigation.reset({routes: [{name: ROUTER.LOGIN_SCREEN}]});
+  };
+
   const userRewardInfoList = [
     {
       index: '포인트',
       value: `${userInfo.totalReward}포인트`,
       icon: Icons.point,
-      description: `${userInfo.scheduledReward.toLocaleString()}포인트`,
+      description: `${userInfo.scheduledReward}포인트`,
     },
     {
       index: '총 절약 금액',
@@ -70,6 +81,10 @@ function ProfileTabScreen({}: PropsType) {
     },
   ];
 
+  const linkToKakaoChat = () => {
+    Linking.openURL('http://pf.kakao.com/_xcVxmCG/chat');
+  };
+
   const navigationBarList = [
     {
       title: '기프티콘 구매 내역',
@@ -79,11 +94,11 @@ function ProfileTabScreen({}: PropsType) {
     },
     {
       title: '문의하기',
-      onPress: () => {},
+      onPress: linkToKakaoChat,
     },
     {
       title: '로그아웃',
-      onPress: () => {},
+      onPress: logout,
     },
     {
       title: '탈퇴하기',
@@ -116,7 +131,7 @@ function ProfileTabScreen({}: PropsType) {
             return (
               <>
                 <View style={styles.barContainer} key={`${item.value}-${idx}`}>
-                  <SVText body08>{item.index}</SVText>
+                  <SVText body06>{item.index}</SVText>
                   <View>
                     <View style={styles.valueContainer}>
                       {item.icon && (
@@ -167,7 +182,8 @@ function ProfileTabScreen({}: PropsType) {
             <TouchableOpacity
               activeOpacity={0.8}
               style={styles.navigateBarContainer}
-              onPress={item.onPress}>
+              onPress={item.onPress}
+              key={`${item.title}-${idx}`}>
               <SVText body04 style={styles.barText}>
                 {item.title}
               </SVText>

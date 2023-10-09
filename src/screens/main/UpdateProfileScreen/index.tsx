@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   Image,
+  Linking,
   StyleSheet,
   TextInput,
   TouchableOpacity,
@@ -39,6 +40,11 @@ function UpdateProfileScreen(): React.ReactElement {
 
   const nameCheck = /^([가-힣]|[0-9]|[a-z]){2,10}$/;
   const phoneCheck = /^[0][1][0][0-9]{3,4}\d{4}$/;
+
+  const consentUri =
+    'https://superb-nannyberry-327.notion.site/d14f4bc9b75842b7a23573e7350b8931?pvs=4';
+  const privacyUri =
+    'https://superb-nannyberry-327.notion.site/d46266ccdf7741109e3a1441321c4b2b?pvs=4';
 
   const validateNickName = () => {
     const nameValidation = nameCheck.test(nickName);
@@ -87,6 +93,10 @@ function UpdateProfileScreen(): React.ReactElement {
     if (canFinish) {
       navigateToHomeScreen();
     }
+  };
+
+  const navigateToOutLink = (uri: string) => {
+    Linking.openURL(uri);
   };
 
   const getKakaoProfile: () => Promise<KakaoLogins.KakaoProfile> = async () => {
@@ -201,13 +211,18 @@ function UpdateProfileScreen(): React.ReactElement {
       </View>
       <View style={styles.bottomContainer}>
         <View style={styles.barContainer}>
-          <TouchableOpacity activeOpacity={0.8}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
+            onPress={() => {
+              navigateToOutLink(consentUri);
+            }}>
             <SVText
               body05
               style={
                 isTermChecked ? styles.highlightCheckText : styles.checkText
               }>
-              {'[필수] 이용약관 '}
+              {'[필수] 개인 정보 활용 동의서 '}
             </SVText>
           </TouchableOpacity>
           <SquareCheckIcon
@@ -217,7 +232,12 @@ function UpdateProfileScreen(): React.ReactElement {
           />
         </View>
         <View style={styles.barContainer}>
-          <TouchableOpacity activeOpacity={0.8}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
+            onPress={() => {
+              navigateToOutLink(privacyUri);
+            }}>
             <SVText
               body05
               style={

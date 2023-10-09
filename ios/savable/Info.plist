@@ -7,14 +7,14 @@
 	  <string>Editor</string>
 	  <key>CFBundleURLSchemes</key>
 	  <array>
-	    <string>kakaoce3815b515b4c90de02f08ce9cc4bb50</string>
+	    <string>kakaoc935fc6537620e8bf17157ca37b8020a</string>
 	  </array>
 	</dict>
 	<key>KAKAO_APP_KEY</key>
-	<string>ce3815b515b4c90de02f08ce9cc4bb50</string>
+	<string>c935fc6537620e8bf17157ca37b8020a</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>kakaoce3815b515b4c90de02f08ce9cc4bb50</string>
+		<string>kakaoc935fc6537620e8bf17157ca37b8020a</string>
 		<string>kakaolink</string>
 		<string>kakaokompassauth</string>
 	</array>

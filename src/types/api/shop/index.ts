@@ -16,3 +16,13 @@ export type OrderHistoryAPIResponse = Array<{
   quantity: number;
   sendState: string;
 }>;
+
+export type CreateOrderPayload = {
+  giftcardId: number;
+  quantity: number;
+  positivePoint: string;
+  negativePoint: string;
+  challengeOpinion: string;
+};
+
+export type CreateOrderAPIResponse = {};

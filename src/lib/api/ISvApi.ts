@@ -9,6 +9,10 @@ import {
   CreateVerificationAPIResponse,
   VerificationDetailAPIResponse,
   SMSAPIResponse,
+  ApplyChallengePayload,
+  ApplyChallengeAPIResponse,
+  CreateOrderPayload,
+  CreateOrderAPIResponse,
 } from '../../types/api';
 
 export interface ISvApi {
@@ -28,7 +32,7 @@ export interface ISvApi {
   getUserInfo(): Promise<UserInfoAPIResponse>;
 
   createVerification(
-    participationChallengeId: string,
+    participationChallengeId: number,
     image: FormData,
   ): Promise<CreateVerificationAPIResponse>;
 
@@ -37,4 +41,10 @@ export interface ISvApi {
   ): Promise<VerificationDetailAPIResponse>;
 
   sendSMS(phoneNumber: string): Promise<SMSAPIResponse>;
+
+  ApplyChallenge(
+    payload: ApplyChallengePayload,
+  ): Promise<ApplyChallengeAPIResponse>;
+
+  createOrder(payload: CreateOrderPayload): Promise<CreateOrderAPIResponse>;
 }

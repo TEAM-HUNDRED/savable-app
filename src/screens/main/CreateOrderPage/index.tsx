@@ -8,6 +8,7 @@ import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 import CreateOrderContainer from '../../../container/CreateOrderContainer';
 import {useToastProvider} from '../../../lib/context/ToastContext';
 import SVButton from '../../../components/common/SVButton';
+import Api from '../../../lib/api/Api';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CREATE_ORDER_PAGE>;
@@ -43,8 +44,20 @@ function CreateOrderPage({route}: PropsType) {
     setInputData(currentInputData);
   }, []);
 
+  const createOrder = useCallback(async () => {
+    const response = await Api.shared.createOrder({
+      giftcardId: route.params.giftcardId,
+      quantity: inputData.amount,
+      negativePoint: inputData.negativePoint,
+      positivePoint: inputData.positivePoint,
+      challengeOpinion: inputData.challengeOpinion,
+    });
+
+    return response;
+  }, [route, inputData]);
+
   const navigateToPurchaseSuccessScreen = useCallback(() => {
-    navigation.navigate(ROUTER.ORDER_SUCCESS_SCREEN, {
+    navigation.replace(ROUTER.ORDER_SUCCESS_SCREEN, {
       giftcardId: route.params.giftcardId,
       image: route.params.image,
       productName: route.params.productName,
@@ -56,8 +69,11 @@ function CreateOrderPage({route}: PropsType) {
 
   const onPressPurchaseButton = useCallback(() => {
     if (!validationInputData()) return;
-    else navigateToPurchaseSuccessScreen();
-  }, [validationInputData, navigateToPurchaseSuccessScreen]);
+    else {
+      createOrder();
+      navigateToPurchaseSuccessScreen();
+    }
+  }, [validationInputData, navigateToPurchaseSuccessScreen, createOrder]);
 
   useEffect(() => {
     navigation.setOptions({title: '기프티콘 구매'});

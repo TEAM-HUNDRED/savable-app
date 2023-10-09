@@ -3,6 +3,10 @@ import {API_URL} from '@env';
 
 import {ISvApi} from './ISvApi';
 import {
+  ApplyChallengeAPIResponse,
+  ApplyChallengePayload,
+  CreateOrderAPIResponse,
+  CreateOrderPayload,
   CreateVerificationAPIResponse,
   GiftCardListAPIResponse,
   OrderHistoryAPIResponse,
@@ -77,7 +81,7 @@ export default class MockApi implements ISvApi {
   }
 
   public async createVerification(
-    participationChallengeId: string,
+    participationChallengeId: number,
     image: FormData,
   ): Promise<CreateVerificationAPIResponse> {
     return 'success';
@@ -91,5 +95,17 @@ export default class MockApi implements ISvApi {
 
   public async sendSMS(phoneNumber: string): Promise<SMSAPIResponse> {
     return dummyVerificationNumber;
+  }
+
+  public async ApplyChallenge(
+    payload: ApplyChallengePayload,
+  ): Promise<ApplyChallengeAPIResponse> {
+    return 'success';
+  }
+
+  public async createOrder(
+    payload: CreateOrderPayload,
+  ): Promise<CreateOrderAPIResponse> {
+    return 'success';
   }
 }

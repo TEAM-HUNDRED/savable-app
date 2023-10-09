@@ -33,7 +33,7 @@ function VerificationScreen({route}: PropsType) {
   const [isActive, setIsActive] = useState<boolean>(true);
 
   const navigateToFinishScreen = () => {
-    navigation.navigate(ROUTER.FINISH_VERIFICATION_SCREEN, {
+    navigation.replace(ROUTER.FINISH_VERIFICATION_SCREEN, {
       challengeId: route.params.challengeId,
       challengeTitle: route.params.challengeTitle,
     });
@@ -59,6 +59,15 @@ function VerificationScreen({route}: PropsType) {
       guide: response.verificationGuide,
     });
   }, []);
+
+  const createVerification = async (image: FormData) => {
+    const response = await Api.shared.createVerification(
+      route.params.challengeId,
+      image,
+    );
+
+    return response;
+  };
 
   useEffect(() => {
     getChallengeDetail(route.params.challengeId);
