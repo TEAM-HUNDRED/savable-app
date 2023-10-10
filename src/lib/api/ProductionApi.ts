@@ -127,6 +127,7 @@ export default class ProductionApi implements ISvApi {
     payload: ApplyChallengePayload,
   ): Promise<ApplyChallengeAPIResponse> {
     const {data} = await this.axios.post('challenges/participations', payload);
+
     return data;
   }
 
