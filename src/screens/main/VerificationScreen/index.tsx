@@ -112,6 +112,9 @@ function VerificationScreen({route}: PropsType) {
         <View style={styles.circle} />
       </TouchableOpacity>
       <VerificationGuideContainer
+        verificationDescription={
+          challengeInfo ? challengeInfo.verificationDescription : ''
+        }
         challengeGuideInfo={challengeInfo ? challengeInfo.guide : []}
       />
     </View>

@@ -70,7 +70,6 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
         <ChallengeInfoCard
           title={challengeInfo.title}
           explanation={challengeInfo.explanation}
-          verificationDescription={challengeInfo.verificationDescription}
           reward={challengeInfo.reward}
           hasDeadline={challengeInfo.hasDeadline}
           startDate={challengeInfo.startDate}
@@ -87,7 +86,10 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
       </View>
       <SVDivider />
       <View>
-        <VerificationGuideCard flatListData={challengeInfo.guide} />
+        <VerificationGuideCard
+          flatListData={challengeInfo.guide}
+          verificationDescription={challengeInfo.verificationDescription}
+        />
       </View>
       <SVDivider />
       <View style={styles.defaultHorizontal}>

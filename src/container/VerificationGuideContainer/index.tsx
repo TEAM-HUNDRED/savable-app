@@ -21,9 +21,13 @@ const minHeightOfBottomSheet = AppStyles.scaleWidth(60);
 
 type PropsType = {
   challengeGuideInfo: ChallengeGuideViewType[];
+  verificationDescription: string;
 };
 
-function VerificationGuideContainer({challengeGuideInfo}: PropsType) {
+function VerificationGuideContainer({
+  challengeGuideInfo,
+  verificationDescription,
+}: PropsType) {
   const bottomSheetHeight = React.useRef(
     new Animated.Value(AppStyles.scaleWidth(60)),
   ).current;
@@ -83,6 +87,7 @@ function VerificationGuideContainer({challengeGuideInfo}: PropsType) {
               <VerificationGuideCard
                 titleShown={false}
                 flatListData={challengeGuideInfo}
+                verificationDescription={verificationDescription}
               />
             </View>
             <View style={styles.defaultHorizontal}>
