@@ -80,7 +80,6 @@ function ShopCategoryCard({setPrice, price}: PropsType) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     marginVertical: AppStyles.scaleWidth(16),
   },
   barContainer: {

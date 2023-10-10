@@ -21,9 +21,13 @@ function StoreTabScreen() {
   );
 
   const getGiftCardList = async (price: number) => {
-    const response = await Api.shared.getGiftCardList(price);
+    try {
+      const response = await Api.shared.getGiftCardList(price);
 
-    setGiftCardList(response);
+      setGiftCardList(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -31,7 +35,7 @@ function StoreTabScreen() {
   }, [price]);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.profileContainer}>
         <SVText body03 style={styles.text}>
           {`${userInfo.userName}님, 절약을 통해`}
@@ -49,11 +53,19 @@ function StoreTabScreen() {
       <View style={styles.paddingContainer}>
         <ShopCategoryCard setPrice={setPrice} price={price} />
       </View>
-      <View style={styles.paddingContainer}>
-        {giftCardList.map((item, idx) => {
-          return <GiftCard {...item} key={`${item.productName}-${idx}`} />;
-        })}
-      </View>
+      {giftCardList.length === 0 ? (
+        <View style={styles.noneData}>
+          <SVText body02 style={styles.noneDataText}>
+            {'상품이 존재하지 않습니다.'}
+          </SVText>
+        </View>
+      ) : (
+        <View style={styles.paddingContainer}>
+          {giftCardList.map((item, idx) => {
+            return <GiftCard {...item} key={`${item.productName}-${idx}`} />;
+          })}
+        </View>
+      )}
     </ScrollView>
   );
 }
@@ -88,6 +100,15 @@ const styles = StyleSheet.create({
     width: AppStyles.scaleWidth(18),
     height: AppStyles.scaleWidth(18),
     marginRight: AppStyles.scaleWidth(6),
+  },
+  noneData: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noneDataText: {
+    color: AppStyles.color.gray03,
+    fontWeight: 'bold',
   },
   paddingContainer: {
     paddingHorizontal: AppStyles.scaleWidth(24),
