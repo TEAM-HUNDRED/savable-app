@@ -141,12 +141,25 @@ export default class ProductionApi implements ISvApi {
 
   public async signUp(payload: SignUpPayload): Promise<SignUpAPIResponse> {
     const {data} = await this.axios
-      .post('login/kakao', payload)
+      .post('login/kakao', JSON.stringify(payload), {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(response => {
         const cookies = response.headers['set-cookie'];
         console.log(cookies);
 
-        if (cookies) this.setAuthToken(cookies[0]);
+        if (cookies) {
+          const regex = /SESSION=([A-Za-z0-9]+);/;
+          const match = cookies[0].match(regex);
+
+          if (match) {
+            const sessionValue = match[1];
+
+            this.setAuthToken(`SESSION=${sessionValue}`);
+          }
+        }
         return response;
       });
 
