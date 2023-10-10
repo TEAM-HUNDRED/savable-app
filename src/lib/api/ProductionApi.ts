@@ -155,7 +155,7 @@ export default class ProductionApi implements ISvApi {
   public async updateMemberProfile(
     payload: UpdateMemberPayload,
   ): Promise<UpdateMemberAPIResponse> {
-    const {data} = await this.axios.post('member/settings', payload);
+    const {data} = await this.axios.patch('member/settings', payload);
 
     return data;
   }
