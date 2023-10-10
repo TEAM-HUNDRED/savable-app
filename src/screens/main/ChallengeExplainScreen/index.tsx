@@ -38,27 +38,23 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
     [navigation],
   );
 
-  const getChallengeDetail = useCallback(
-    async (challengeId: number) => {
-      try {
-        const response = await Api.shared.getChallengeDetail(challengeId);
+  const getChallengeDetail = useCallback(async (challengeId: number) => {
+    try {
+      const response = await Api.shared.getChallengeDetail(challengeId);
 
-        setChallengeInfo({
-          ...response.challenge,
-          guide: response.verificationGuide,
-        });
-
-        handleNavigationHeader(response.challenge.title);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    [handleNavigationHeader],
-  );
+      setChallengeInfo({
+        ...response.challenge,
+        guide: response.verificationGuide,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   useEffect(() => {
+    handleNavigationHeader(route.params.challengeTitle);
     getChallengeDetail(route.params.challengeId);
-  }, [route, getChallengeDetail]);
+  }, [route, getChallengeDetail, handleNavigationHeader]);
 
   if (!challengeInfo) return <></>;
 

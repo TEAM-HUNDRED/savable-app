@@ -21,8 +21,9 @@ function ChallengeCard({
   const navigateToExplain = useCallback(() => {
     navigation.navigate(ROUTER.CHALLENGE_EXPLAIN_SCREEN, {
       challengeId: id,
+      challengeTitle: title,
     });
-  }, [id, navigation]);
+  }, [id, title, navigation]);
 
   return (
     <TouchableOpacity

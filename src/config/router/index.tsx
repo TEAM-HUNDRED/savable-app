@@ -40,7 +40,10 @@ export type MainScreenStackPropsList = RootScreenStackPropsList & {
     challengeId: number;
     challengeTitle: string;
   };
-  [ROUTER.CHALLENGE_EXPLAIN_SCREEN]: {challengeId: number};
+  [ROUTER.CHALLENGE_EXPLAIN_SCREEN]: {
+    challengeId: number;
+    challengeTitle: string;
+  };
   [ROUTER.CHALLENGE_APPLY_SCREEN]: {
     challengeInfo: ChallengeInfoViewType | undefined;
   };
