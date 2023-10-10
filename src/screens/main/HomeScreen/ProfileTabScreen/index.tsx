@@ -9,6 +9,11 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import KakaoLogins, {
+  login,
+  getProfile,
+  logout,
+} from '@react-native-seoul/kakao-login';
 
 import {
   AppStyles,
@@ -45,7 +50,8 @@ function ProfileTabScreen({}: PropsType) {
     }
   };
 
-  const logout = () => {
+  const userLogout = () => {
+    logout();
     mainNavigation.reset({routes: [{name: ROUTER.LOGIN_SCREEN}]});
   };
 
@@ -98,7 +104,7 @@ function ProfileTabScreen({}: PropsType) {
     },
     {
       title: '로그아웃',
-      onPress: logout,
+      onPress: userLogout,
     },
     {
       title: '탈퇴하기',
