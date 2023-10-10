@@ -40,14 +40,18 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
 
   const getChallengeDetail = useCallback(
     async (challengeId: number) => {
-      const response = await Api.shared.getChallengeDetail(challengeId);
+      try {
+        const response = await Api.shared.getChallengeDetail(challengeId);
 
-      setChallengeInfo({
-        ...response.challenge,
-        guide: response.verificationGuide,
-      });
+        setChallengeInfo({
+          ...response.challenge,
+          guide: response.verificationGuide,
+        });
 
-      handleNavigationHeader(response.challenge.title);
+        handleNavigationHeader(response.challenge.title);
+      } catch (error) {
+        console.log(error);
+      }
     },
     [handleNavigationHeader],
   );
