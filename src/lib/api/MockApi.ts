@@ -15,6 +15,8 @@ import {
   SignUpAPIResponse,
   SignUpPayload,
   SMSAPIResponse,
+  UpdateMemberAPIResponse,
+  UpdateMemberPayload,
   UserInfoAPIResponse,
   VerificationDetailAPIResponse,
 } from '../../types/api';
@@ -43,6 +45,10 @@ export default class MockApi implements ISvApi {
   static get shared() {
     if (!MockApi.instance) MockApi.instance = new MockApi();
     return MockApi.instance;
+  }
+
+  etAuthToken(accessToken: string) {
+    this.axios.defaults.headers['Authorization'] = accessToken;
   }
 
   setBaseUrl(baseURL: string) {
@@ -112,6 +118,12 @@ export default class MockApi implements ISvApi {
   }
 
   public async signUp(payload: SignUpPayload): Promise<SignUpAPIResponse> {
+    return 'success';
+  }
+
+  public async updateMemberProfile(
+    payload: UpdateMemberPayload,
+  ): Promise<UpdateMemberAPIResponse> {
     return 'success';
   }
 }

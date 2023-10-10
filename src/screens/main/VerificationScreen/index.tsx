@@ -47,7 +47,6 @@ function VerificationScreen({route}: PropsType) {
 
       setIsActive(false);
       navigateToFinishScreen();
-      console.log(data);
     }
   };
 

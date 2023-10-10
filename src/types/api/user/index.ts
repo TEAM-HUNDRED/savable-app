@@ -62,3 +62,11 @@ export type SignUpAPIResponse = {
   savingHistoryList: any;
   roleKey: string;
 };
+
+export type UpdateMemberPayload = {
+  userName: string;
+  phoneNumber: string;
+  image: string;
+};
+
+export type UpdateMemberAPIResponse = {};

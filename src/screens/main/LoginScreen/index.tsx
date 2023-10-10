@@ -58,8 +58,6 @@ function LoginScreen(): React.ReactElement {
     const response = await signInWithKakao();
     const profile = await getKakaoProfile();
 
-    console.log(response, profile);
-
     signUp(profile as SignUpPayload);
 
     navigateToUpdateProfileScreen();

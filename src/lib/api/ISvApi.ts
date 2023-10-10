@@ -15,9 +15,12 @@ import {
   CreateOrderAPIResponse,
   SignUpAPIResponse,
   SignUpPayload,
+  UpdateMemberPayload,
+  UpdateMemberAPIResponse,
 } from '../../types/api';
 
 export interface ISvApi {
+  setAuthToken(accessToken: string): void;
   setBaseUrl(baseURL: string): void;
 
   getChallengeList(): Promise<ChallengeListAPIResponse>;
@@ -51,4 +54,8 @@ export interface ISvApi {
   createOrder(payload: CreateOrderPayload): Promise<CreateOrderAPIResponse>;
 
   signUp(payload: SignUpPayload): Promise<SignUpAPIResponse>;
+
+  updateMemberProfile(
+    payload: UpdateMemberPayload,
+  ): Promise<UpdateMemberAPIResponse>;
 }

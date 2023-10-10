@@ -15,6 +15,8 @@ import {
   SignUpAPIResponse,
   SignUpPayload,
   SMSAPIResponse,
+  UpdateMemberAPIResponse,
+  UpdateMemberPayload,
   UserInfoAPIResponse,
   VerificationDetailAPIResponse,
 } from '../../types/api';
@@ -32,6 +34,10 @@ export default class ProductionApi implements ISvApi {
   static get shared() {
     if (!ProductionApi.instance) ProductionApi.instance = new ProductionApi();
     return ProductionApi.instance;
+  }
+
+  setAuthToken(accessToken: string) {
+    this.axios.defaults.headers['Cookie'] = accessToken;
   }
 
   setBaseUrl(baseURL: string) {
@@ -110,9 +116,11 @@ export default class ProductionApi implements ISvApi {
   }
 
   public async sendSMS(phoneNumber: string): Promise<SMSAPIResponse> {
-    const {data} = await this.axios.post('send-sms', phoneNumber);
-
-    return data.data;
+    const {data} = await this.axios.post('send-sms', {
+      phoneNumber: phoneNumber,
+    });
+    console.log(data);
+    return {number: data.data};
   }
 
   public async ApplyChallenge(
@@ -131,7 +139,23 @@ export default class ProductionApi implements ISvApi {
   }
 
   public async signUp(payload: SignUpPayload): Promise<SignUpAPIResponse> {
-    const {data} = await this.axios.post('login/kakao', payload);
+    const {data} = await this.axios
+      .post('login/kakao', payload)
+      .then(response => {
+        const cookies = response.headers['set-cookie'];
+        console.log(cookies);
+
+        if (cookies) this.setAuthToken(cookies[0]);
+        return response;
+      });
+
+    return data;
+  }
+
+  public async updateMemberProfile(
+    payload: UpdateMemberPayload,
+  ): Promise<UpdateMemberAPIResponse> {
+    const {data} = await this.axios.post('member/settings', payload);
 
     return data;
   }

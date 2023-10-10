@@ -16,6 +16,7 @@ import {SquareCheckIcon} from '../../../assets/icons';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 
 import SVText from '../../../components/common/SVText';
+import {UpdateMemberPayload} from '../../../types/api';
 
 function UpdateProfileScreen(): React.ReactElement {
   const navigation =
@@ -26,7 +27,7 @@ function UpdateProfileScreen(): React.ReactElement {
   const [nickName, setNickName] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [verificationNumber, setVerificationNumber] = useState<string>('');
-  const [validationNumber, setValidationNumber] = useState<string>('');
+  const [validationNumber, setValidationNumber] = useState<string>('1');
 
   const [isValidatedNickName, setIsValidatedNickName] = useState<boolean>(true);
   const [isValidatedNumber, setIsValidatedNumber] = useState<boolean>(true);
@@ -73,10 +74,19 @@ function UpdateProfileScreen(): React.ReactElement {
   };
 
   const sendSMS = async () => {
-    const response = await Api.shared.sendSMS(phoneNumber);
+    try {
+      if (validatePhoneNumber()) {
+        const formData = new FormData();
+        formData.append('phoneNumber', phoneNumber);
+        const response = await Api.shared.sendSMS(phoneNumber);
 
-    setSentMessage(true);
-    setValidationNumber(String(response.number));
+        setSentMessage(true);
+        setValidationNumber(String(response.number));
+      } else return new Error('전화번호가 잘못되었어요');
+    } catch (error) {
+      console.log(error);
+      setSentMessage(true);
+    }
   };
 
   const navigateToHomeScreen = () => {
@@ -91,12 +101,26 @@ function UpdateProfileScreen(): React.ReactElement {
       validateTotalCheck();
 
     if (canFinish) {
+      updateProfile({
+        userName: nickName,
+        phoneNumber: phoneNumber,
+        image: profileData ? profileData.profileImageUrl : '',
+      });
       navigateToHomeScreen();
     }
   };
 
   const navigateToOutLink = (uri: string) => {
     Linking.openURL(uri);
+  };
+
+  const updateProfile = async (payload: UpdateMemberPayload) => {
+    try {
+      const response = await Api.shared.updateMemberProfile(payload);
+      console.log(response);
+    } catch (error) {
+      console.log('updateProfile', error);
+    }
   };
 
   const getKakaoProfile: () => Promise<KakaoLogins.KakaoProfile> = async () => {
