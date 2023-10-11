@@ -43,24 +43,27 @@ export type SignUpPayload = {
 };
 
 export type SignUpAPIResponse = {
-  createdAt: string;
-  lastModifiedAt: string;
-  id: number;
-  socialId: string;
-  username: any;
-  reward: number;
-  savings: number;
-  phoneNumber: any;
-  profileImage: string;
-  role: string;
-  accountState: string;
-  deletedAt: any;
-  socialData: string;
-  participationChallengeList: any;
-  giftcardOrderList: any;
-  rewardHistoryList: any;
-  savingHistoryList: any;
-  roleKey: string;
+  sessionKey: string;
+  data: {
+    createdAt: string;
+    lastModifiedAt: string;
+    id: number;
+    socialId: string;
+    username: any;
+    reward: number;
+    savings: number;
+    phoneNumber: any;
+    profileImage: string;
+    role: string;
+    accountState: string;
+    deletedAt: any;
+    socialData: string;
+    participationChallengeList: any;
+    giftcardOrderList: any;
+    rewardHistoryList: any;
+    savingHistoryList: any;
+    roleKey: string;
+  };
 };
 
 export type UpdateMemberPayload = {

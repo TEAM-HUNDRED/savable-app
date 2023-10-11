@@ -1,5 +1,6 @@
 import axios, {AxiosInstance} from 'axios';
 import {API_URL} from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {ISvApi} from './ISvApi';
 import {
@@ -43,6 +44,14 @@ export default class ProductionApi implements ISvApi {
   setBaseUrl(baseURL: string) {
     this.axios.defaults.baseURL = baseURL;
   }
+
+  setSessionKeyOnStorage = async (value: string) => {
+    try {
+      await AsyncStorage.setItem('session_key', value);
+    } catch (error) {
+      console.log('[Session Storage Error]', error);
+    }
+  };
 
   public getChallengeList = async () => {
     const {data: challengeList} = await this.axios.get('challenges');
@@ -140,7 +149,7 @@ export default class ProductionApi implements ISvApi {
   }
 
   public async signUp(payload: SignUpPayload): Promise<SignUpAPIResponse> {
-    const {data} = await this.axios
+    const data = await this.axios
       .post('login/kakao', JSON.stringify(payload), {
         headers: {
           'Content-Type': 'application/json',
@@ -150,6 +159,8 @@ export default class ProductionApi implements ISvApi {
         const cookies = response.headers['set-cookie'];
         console.log(cookies);
 
+        let currentKey = '';
+
         if (cookies) {
           const regex = /SESSION=([A-Za-z0-9]+);/;
           const match = cookies[0].match(regex);
@@ -157,13 +168,15 @@ export default class ProductionApi implements ISvApi {
           if (match) {
             const sessionValue = match[1];
 
+            currentKey = `SESSION=${sessionValue}`;
+            // this.setSessionKeyOnStorage(`SESSION=${sessionValue}`);
             this.setAuthToken(`SESSION=${sessionValue}`);
           }
         }
-        return response;
+        return {response, sessionKey: currentKey};
       });
 
-    return data;
+    return {sessionKey: data.sessionKey, data: data.response.data};
   }
 
   public async updateMemberProfile(

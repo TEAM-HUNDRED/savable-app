@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -10,16 +10,21 @@ import KakaoLogins, {login, getProfile} from '@react-native-seoul/kakao-login';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
+import Api from '../../../lib/api/Api';
+import {useAuthentication} from '../../../lib/hook/useAuthentication';
+import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
+import {SignUpAPIResponse, SignUpPayload} from '../../../types/api';
+
 import Images from '../../../assets/images';
 import Icon from '../../../assets/icons';
-import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 import SVText from '../../../components/common/SVText';
-import Api from '../../../lib/api/Api';
-import {SignUpPayload} from '../../../types/api';
 
 function LoginScreen(): React.ReactElement {
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+  const {isAuthentication, loading} = useAuthentication();
+
+  const [sessionKey, setSessionKey] = useState<string>('');
 
   const signInWithKakao: () => Promise<KakaoLogins.KakaoOAuthToken> =
     async () => {
@@ -43,25 +48,35 @@ function LoginScreen(): React.ReactElement {
   };
 
   const navigateToUpdateProfileScreen = () => {
-    navigation.navigate(ROUTER.UPDATE_PROFILE_SCREEN);
+    navigation.navigate(ROUTER.UPDATE_PROFILE_SCREEN, {sessionKey: sessionKey});
   };
 
   const signUp = async (payload: SignUpPayload) => {
     try {
       const response = await Api.shared.signUp(payload);
+
+      return response;
     } catch (error) {
       console.log(error);
     }
+    return {} as SignUpAPIResponse;
   };
 
   const onPressKakaoLogin = async () => {
     const response = await signInWithKakao();
     const profile = await getKakaoProfile();
 
-    signUp(profile as SignUpPayload);
+    const {sessionKey: currentSessionKey, data} = await signUp(
+      profile as SignUpPayload,
+    );
+    setSessionKey(currentSessionKey);
 
     navigateToUpdateProfileScreen();
   };
+
+  useEffect(() => {
+    if (isAuthentication) navigation.navigate(ROUTER.HOME_SCREEN);
+  }, [isAuthentication, navigation]);
 
   return (
     <View style={styles.container}>

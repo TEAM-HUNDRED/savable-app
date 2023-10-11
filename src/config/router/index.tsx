@@ -33,7 +33,7 @@ export type MainScreenKeyList = keyof MainScreenStackPropsList;
 export type MainScreenStackPropsList = RootScreenStackPropsList & {
   [ROUTER.HOME_SCREEN]: undefined;
   [ROUTER.LOGIN_SCREEN]: undefined;
-  [ROUTER.UPDATE_PROFILE_SCREEN]: undefined;
+  [ROUTER.UPDATE_PROFILE_SCREEN]: {sessionKey: string};
   [ROUTER.ORDER_HISTORY_SCREEN]: undefined;
   [ROUTER.VERIFICATION_SCREEN]: {challengeId: number; challengeTitle: string};
   [ROUTER.FINISH_VERIFICATION_SCREEN]: {
