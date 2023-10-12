@@ -88,7 +88,7 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
 
       return data;
     } catch (error) {
-      console.log(error);
+      console.log('[Error: Failed to apply challenge', error);
     }
   };
 

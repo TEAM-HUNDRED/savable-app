@@ -88,7 +88,7 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
         // setValidationNumber(String(response.number));
       } else return new Error('전화번호가 잘못되었어요');
     } catch (error) {
-      console.log(error);
+      console.log('[Error: Failed to send sms', error);
       setSentMessage(true);
     }
   };
@@ -106,10 +106,11 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
 
     if (canFinish) {
       updateProfile({
-        userName: nickName,
+        username: nickName,
         phoneNumber: phoneNumber,
         imageUrl: profileData ? profileData.profileImageUrl : '',
       });
+
       try {
         Api.shared.setAuthToken(route.params.sessionKey);
         Api.shared.setSessionKeyOnStorage(route.params.sessionKey);

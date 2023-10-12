@@ -48,7 +48,7 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
         isParticipatable: response.isParticipatable,
       });
     } catch (error) {
-      console.log(error);
+      console.log('[Error: Failed to get challenge details', error);
     }
   }, []);
 

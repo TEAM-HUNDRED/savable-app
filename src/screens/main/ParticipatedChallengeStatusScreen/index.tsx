@@ -36,11 +36,19 @@ function ParticipatedChallengeStatusScreen({
 
   const getParticipationChallengeStatus = useCallback(
     async (challengeId: number) => {
-      const response = await Api.shared.getParticipationChallengeStatus(
-        challengeId,
-      );
-      setVerificationInfo(response.verificationInfo);
-      setChallengeInfo(response.participationChallengeInfo);
+      try {
+        const response = await Api.shared.getParticipationChallengeStatus(
+          challengeId,
+        );
+
+        setVerificationInfo(response.verificationInfo);
+        setChallengeInfo(response.participationChallengeInfo);
+      } catch (error) {
+        console.log(
+          '[Error: Failed to get participation challenge status',
+          error,
+        );
+      }
     },
     [],
   );

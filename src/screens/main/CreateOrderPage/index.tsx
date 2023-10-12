@@ -45,15 +45,19 @@ function CreateOrderPage({route}: PropsType) {
   }, []);
 
   const createOrder = useCallback(async () => {
-    const response = await Api.shared.createOrder({
-      giftcardId: route.params.giftcardId,
-      quantity: inputData.amount,
-      negativePoint: inputData.negativePoint,
-      positivePoint: inputData.positivePoint,
-      challengeOpinion: inputData.challengeOpinion,
-    });
+    try {
+      const response = await Api.shared.createOrder({
+        giftcardId: route.params.giftcardId,
+        quantity: inputData.amount,
+        negativePoint: inputData.negativePoint,
+        positivePoint: inputData.positivePoint,
+        challengeOpinion: inputData.challengeOpinion,
+      });
 
-    return response;
+      return response;
+    } catch (error) {
+      console.log('[Error: Failed to create order', error);
+    }
   }, [route, inputData]);
 
   const navigateToPurchaseSuccessScreen = useCallback(() => {

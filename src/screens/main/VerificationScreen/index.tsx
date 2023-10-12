@@ -51,21 +51,30 @@ function VerificationScreen({route}: PropsType) {
   };
 
   const getChallengeDetail = useCallback(async (challengeId: number) => {
-    const response = await Api.shared.getChallengeDetail(challengeId);
+    try {
+      const response = await Api.shared.getChallengeDetail(challengeId);
 
-    setChallengeInfo({
-      ...response.challenge,
-      guide: response.verificationGuide,
-    });
+      setChallengeInfo({
+        ...response.challenge,
+        guide: response.verificationGuide,
+        isParticipatable: response.isParticipatable,
+      });
+    } catch (error) {
+      console.log('[Error: Failed to get challenge detail', error);
+    }
   }, []);
 
   const createVerification = async (image: FormData) => {
-    const response = await Api.shared.createVerification(
-      route.params.challengeId,
-      image,
-    );
+    try {
+      const response = await Api.shared.createVerification(
+        route.params.challengeId,
+        image,
+      );
 
-    return response;
+      return response;
+    } catch (error) {
+      console.log('[Error: Failed to create verification', error);
+    }
   };
 
   useEffect(() => {

@@ -49,12 +49,13 @@ function ProfileTabScreen({}: PropsType) {
         challengeInfo: response.challengeInfoResponseDto,
       });
     } catch (error) {
-      console.log(error);
+      console.log('[Error: Failed to get user info', error);
     }
   };
 
   const userLogout = () => {
     logout();
+    Api.shared.setSessionKeyOnStorage('');
     mainNavigation.reset({routes: [{name: ROUTER.LOGIN_SCREEN}]});
   };
 

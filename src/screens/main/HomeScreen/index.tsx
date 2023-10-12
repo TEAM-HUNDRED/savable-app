@@ -39,7 +39,7 @@ function HomeScreen(): React.ReactElement {
         }),
       );
     } catch (error) {
-      console.log(error);
+      console.log('[Error: Failed to get user Info', error);
     }
   };
 

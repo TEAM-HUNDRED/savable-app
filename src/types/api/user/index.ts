@@ -67,13 +67,13 @@ export type SignUpAPIResponse = {
 };
 
 export type UpdateMemberPayload = {
-  userName: string;
+  username: string;
   phoneNumber: string;
   image: string;
 };
 
 export type UpdateMemberURLPayload = {
-  userName: string;
+  username: string;
   phoneNumber: string;
   imageUrl: string;
 };

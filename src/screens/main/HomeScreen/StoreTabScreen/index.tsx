@@ -26,7 +26,7 @@ function StoreTabScreen() {
 
       setGiftCardList(response);
     } catch (error) {
-      console.log(error);
+      console.log('[Error: Failed to get gift card list', error);
     }
   };
 

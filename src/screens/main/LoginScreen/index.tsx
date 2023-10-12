@@ -55,7 +55,7 @@ function LoginScreen(): React.ReactElement {
 
       return response;
     } catch (error) {
-      console.log(error);
+      console.log('[Error: Failed to sign up', error);
     }
     return {} as SignUpAPIResponse;
   };

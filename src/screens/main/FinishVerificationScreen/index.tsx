@@ -42,7 +42,7 @@ function FinishVerificationScreen({route}: PropsType) {
 
       setVerificationDate(response);
     } catch (error) {
-      console.log(error);
+      console.log('[Error: Failed to get verification detail', error);
     }
   };
 
