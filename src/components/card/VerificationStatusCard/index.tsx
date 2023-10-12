@@ -79,6 +79,14 @@ function VerificationStatusCard({
     );
   };
 
+  const flatListData = !verificationList
+    ? []
+    : verificationList.sort((item, nextItem) => {
+        if (item.dateTime > nextItem.dateTime) return 1;
+        else if (item.dateTime < nextItem.dateTime) return -1;
+        else return 0;
+      });
+
   return (
     <View style={styles.container}>
       <View style={styles.paddingContainer}>
@@ -103,11 +111,7 @@ function VerificationStatusCard({
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        data={verificationList.sort((item, nextItem) => {
-          if (item.dateTime > nextItem.dateTime) return 1;
-          else if (item.dateTime < nextItem.dateTime) return -1;
-          else return 0;
-        })}
+        data={flatListData}
         renderItem={({item, index}) => renderItem(item, index)}
         ListHeaderComponent={<View style={styles.flatListPadding} />}
         ListFooterComponent={<View style={styles.flatListPadding} />}

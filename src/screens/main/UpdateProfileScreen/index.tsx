@@ -127,9 +127,8 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
 
   const updateProfile = async (payload: UpdateMemberURLPayload) => {
     try {
-      const response = await Api.shared.updateMemberURLProfile(payload);
+      await Api.shared.updateMemberURLProfile(payload);
       // const response = await Api.shared.updateMemberProfile(payload);
-      console.log(response);
     } catch (error) {
       console.log('updateProfile', error);
     }

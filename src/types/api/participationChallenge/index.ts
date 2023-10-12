@@ -10,7 +10,7 @@ export type ParticipationChallengeListAPIResponse = Array<{
 }>;
 
 export type ParticipationChallengeStatusAPIResponse = {
-  participationChallengeInfo: {
+  participationChallengeInfoDto: {
     challengeId: number;
     image: string;
     title: string;
@@ -20,11 +20,11 @@ export type ParticipationChallengeStatusAPIResponse = {
     scheduledReward: number;
     savings: number;
   };
-  verificationInfo: {
+  verificationInfoDto: {
     successCount: number;
     failCount: number;
     remainingCount: number;
-    verificationList: Array<{
+    verificationResponseDtos: Array<{
       id: number;
       image: string;
       state: string;

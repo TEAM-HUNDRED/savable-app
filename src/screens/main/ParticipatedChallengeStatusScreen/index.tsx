@@ -30,19 +30,28 @@ function ParticipatedChallengeStatusScreen({
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
   const [challengeInfo, setChallengeInfo] =
-    useState<ParticipationChallengeInfoPropsType>();
+    useState<ParticipationChallengeInfoPropsType>(
+      {} as ParticipationChallengeInfoPropsType,
+    );
   const [verificationInfo, setVerificationInfo] =
-    useState<ChallengeVerificationInfoPropsType>();
+    useState<ChallengeVerificationInfoPropsType>(
+      {} as ChallengeVerificationInfoPropsType,
+    );
 
   const getParticipationChallengeStatus = useCallback(
     async (challengeId: number) => {
+      console.log(challengeId);
       try {
         const response = await Api.shared.getParticipationChallengeStatus(
           challengeId,
         );
-
-        setVerificationInfo(response.verificationInfo);
-        setChallengeInfo(response.participationChallengeInfo);
+        console.log(response);
+        setVerificationInfo({
+          ...response.verificationInfoDto,
+          verificationList:
+            response.verificationInfoDto.verificationResponseDtos,
+        });
+        setChallengeInfo(response.participationChallengeInfoDto);
       } catch (error) {
         console.log(
           '[Error: Failed to get participation challenge status',
@@ -92,7 +101,10 @@ function ParticipatedChallengeStatusScreen({
         />
       </View>
       <SVDivider />
-      <VerificationStatusCard {...verificationInfo} />
+      <VerificationStatusCard
+        {...verificationInfo}
+        verificationList={verificationInfo.verificationList}
+      />
       {route.params.isVerifiedToday ? (
         <View style={styles.buttonContainer}>
           <SVButton

@@ -22,11 +22,25 @@ function ParticipationChallengeInfoCard({
   startDate,
   endDate,
 }: PropsType): React.ReactElement {
+  const handleDateText = (date: Date) => {
+    const month =
+      date.getMonth() + 1 >= 10
+        ? date.getMonth() + 1
+        : `0${date.getMonth() + 1}`;
+    const currentDate =
+      date.getDate() + 1 >= 10 ? date.getDate() + 1 : `0${date.getDate() + 1}`;
+
+    return `${month}.${currentDate}`;
+  };
+
+  const startDateText = handleDateText(new Date(startDate));
+  const endDateText = handleDateText(new Date(endDate));
+
   return (
     <View style={styles.container}>
       <ChallengeInfoBar
         title={'진행 기간'}
-        value={`${startDate} - ${endDate}`}
+        value={`${startDateText} - ${endDateText}`}
       />
       <ChallengeInfoBar
         title={'목표 인증 횟수'}
@@ -53,7 +67,7 @@ function ParticipationChallengeInfoCard({
           <View>
             <View style={styles.valueContainer}>
               <SVText right body06 style={styles.barValueText}>
-                {`${savings.toLocaleString()}원`}
+                {`${savings}원`}
               </SVText>
             </View>
           </View>
