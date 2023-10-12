@@ -158,7 +158,6 @@ export default class ProductionApi implements ISvApi {
       })
       .then(response => {
         const cookies = response.headers['set-cookie'];
-        console.log(cookies);
 
         let currentKey = '';
 
@@ -170,7 +169,6 @@ export default class ProductionApi implements ISvApi {
             const sessionValue = match[1];
 
             currentKey = `SESSION=${sessionValue}`;
-            // this.setSessionKeyOnStorage(`SESSION=${sessionValue}`);
             this.setAuthToken(`SESSION=${sessionValue}`);
           }
         }

@@ -1,7 +1,9 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
+import Api from '../../../lib/api/Api';
 import {ROUTER} from '../../../config/router';
 import {AppStyles} from '../../../config';
 import {
@@ -10,6 +12,7 @@ import {
   PersonIcon,
   StoreIcon,
 } from '../../../assets/icons';
+import {handleUserInfo} from '../../../modules/redux/slice/userInfoSlice';
 
 import ChallengeTabScreen from './ChallengeTabScreen';
 import ParticipationTabScreen from './ParticipationTabScreen';
@@ -19,6 +22,27 @@ import ProfileTabScreen from './ProfileTabScreen';
 const BottomTabNavigation = createBottomTabNavigator();
 
 function HomeScreen(): React.ReactElement {
+  const dispatch = useDispatch();
+
+  const getUserInfo = async () => {
+    try {
+      const response = await Api.shared.getUserInfo();
+
+      dispatch(
+        handleUserInfo({
+          value: {
+            userName: response.username,
+            userPhoneNumber: response.username,
+            userProfileImageUrl: response.profileImage,
+            userTotalReward: response.totalReward,
+          },
+        }),
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const tabBarIcon = useCallback((routeName: string, color: string) => {
     switch (routeName) {
       case ROUTER.CHALLENGE_SCREEN:
@@ -43,6 +67,10 @@ function HomeScreen(): React.ReactElement {
     [ROUTER.STORE_SCREEN]: '상점',
     [ROUTER.PROFILE_SCREEN]: '마이페이지',
   };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   return (
     <BottomTabNavigation.Navigator

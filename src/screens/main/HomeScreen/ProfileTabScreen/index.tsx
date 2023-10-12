@@ -44,7 +44,10 @@ function ProfileTabScreen({}: PropsType) {
     try {
       const response = await Api.shared.getUserInfo();
 
-      setUserInfo(response);
+      setUserInfo({
+        ...response,
+        challengeInfo: response.challengeInfoResponseDto,
+      });
     } catch (error) {
       console.log(error);
     }
