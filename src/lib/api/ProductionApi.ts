@@ -6,6 +6,8 @@ import {ISvApi} from './ISvApi';
 import {
   ApplyChallengeAPIResponse,
   ApplyChallengePayload,
+  ChallengeDetailAPIResponse,
+  ChallengeListAPIResponse,
   CreateOrderAPIResponse,
   CreateOrderPayload,
   CreateVerificationAPIResponse,
@@ -54,13 +56,15 @@ export default class ProductionApi implements ISvApi {
     }
   };
 
-  public getChallengeList = async () => {
+  public getChallengeList = async (): Promise<ChallengeListAPIResponse> => {
     const {data: challengeList} = await this.axios.get('challenges');
 
     return challengeList.data;
   };
 
-  public getChallengeDetail = async (challengeId: number) => {
+  public getChallengeDetail = async (
+    challengeId: number,
+  ): Promise<ChallengeDetailAPIResponse> => {
     const {data: challengeDetail} = await this.axios.get(
       `challenges/${challengeId}`,
     );

@@ -45,6 +45,7 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
       setChallengeInfo({
         ...response.challenge,
         guide: response.verificationGuide,
+        isParticipatable: response.isParticipatable,
       });
     } catch (error) {
       console.log(error);
@@ -57,6 +58,8 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
   }, [route, getChallengeDetail, handleNavigationHeader]);
 
   if (!challengeInfo) return <></>;
+
+  console.log(challengeInfo);
 
   return (
     <ScrollView
@@ -98,8 +101,15 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
       <View style={styles.buttonContainer}>
         <SVButton
           borderRadius={AppStyles.scaleWidth(8)}
-          onPress={navigateToApplyScreen}>
-          {'신청하기'}
+          color={
+            challengeInfo.isParticipatable
+              ? AppStyles.color.mint05
+              : AppStyles.color.gray02
+          }
+          onPress={
+            challengeInfo.isParticipatable ? navigateToApplyScreen : () => {}
+          }>
+          {challengeInfo.isParticipatable ? '신청하기' : '신청 완료'}
         </SVButton>
       </View>
     </ScrollView>
