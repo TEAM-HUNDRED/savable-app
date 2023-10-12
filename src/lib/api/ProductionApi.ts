@@ -90,7 +90,7 @@ export default class ProductionApi implements ISvApi {
   public async getGiftCardList(
     price: number,
   ): Promise<GiftCardListAPIResponse> {
-    const {data} = await this.axios.get(`shop/giftcard/${price}`);
+    const {data} = await this.axios.get(`shop/giftcards/${price}`);
 
     return data.data;
   }

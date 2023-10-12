@@ -20,9 +20,9 @@ function StoreTabScreen() {
     [] as GiftCardPropsType[],
   );
 
-  const getGiftCardList = async (price: number) => {
+  const getGiftCardList = async (currentPrice: number) => {
     try {
-      const response = await Api.shared.getGiftCardList(price);
+      const response = await Api.shared.getGiftCardList(currentPrice);
 
       setGiftCardList(response);
     } catch (error) {
