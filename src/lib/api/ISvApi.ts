@@ -17,6 +17,7 @@ import {
   SignUpPayload,
   UpdateMemberPayload,
   UpdateMemberAPIResponse,
+  UpdateMemberURLPayload,
 } from '../../types/api';
 
 export interface ISvApi {
@@ -58,5 +59,9 @@ export interface ISvApi {
 
   updateMemberProfile(
     payload: UpdateMemberPayload,
+  ): Promise<UpdateMemberAPIResponse>;
+
+  updateMemberURLProfile(
+    payload: UpdateMemberURLPayload,
   ): Promise<UpdateMemberAPIResponse>;
 }

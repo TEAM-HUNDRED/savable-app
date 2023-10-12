@@ -16,7 +16,7 @@ import {SquareCheckIcon} from '../../../assets/icons';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 
 import SVText from '../../../components/common/SVText';
-import {UpdateMemberPayload} from '../../../types/api';
+import {UpdateMemberPayload, UpdateMemberURLPayload} from '../../../types/api';
 
 type IProps = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.UPDATE_PROFILE_SCREEN>;
@@ -108,7 +108,7 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
       updateProfile({
         userName: nickName,
         phoneNumber: phoneNumber,
-        image: profileData ? profileData.profileImageUrl : '',
+        imageUrl: profileData ? profileData.profileImageUrl : '',
       });
       try {
         Api.shared.setAuthToken(route.params.sessionKey);
@@ -124,9 +124,10 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
     Linking.openURL(uri);
   };
 
-  const updateProfile = async (payload: UpdateMemberPayload) => {
+  const updateProfile = async (payload: UpdateMemberURLPayload) => {
     try {
-      const response = await Api.shared.updateMemberProfile(payload);
+      const response = await Api.shared.updateMemberURLProfile(payload);
+      // const response = await Api.shared.updateMemberProfile(payload);
       console.log(response);
     } catch (error) {
       console.log('updateProfile', error);

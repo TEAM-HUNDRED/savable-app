@@ -72,4 +72,10 @@ export type UpdateMemberPayload = {
   image: string;
 };
 
+export type UpdateMemberURLPayload = {
+  userName: string;
+  phoneNumber: string;
+  imageUrl: string;
+};
+
 export type UpdateMemberAPIResponse = {};

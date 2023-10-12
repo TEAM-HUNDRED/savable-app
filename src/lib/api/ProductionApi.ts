@@ -18,6 +18,7 @@ import {
   SMSAPIResponse,
   UpdateMemberAPIResponse,
   UpdateMemberPayload,
+  UpdateMemberURLPayload,
   UserInfoAPIResponse,
   VerificationDetailAPIResponse,
 } from '../../types/api';
@@ -183,6 +184,14 @@ export default class ProductionApi implements ISvApi {
     payload: UpdateMemberPayload,
   ): Promise<UpdateMemberAPIResponse> {
     const {data} = await this.axios.patch('member/settings', payload);
+
+    return data;
+  }
+
+  public async updateMemberURLProfile(
+    payload: UpdateMemberURLPayload,
+  ): Promise<UpdateMemberAPIResponse> {
+    const {data} = await this.axios.patch('member/sign-up', payload);
 
     return data;
   }

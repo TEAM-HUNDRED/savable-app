@@ -73,7 +73,10 @@ function LoginScreen(): React.ReactElement {
 
   useEffect(() => {
     if (isAuthentication) navigation.navigate(ROUTER.HOME_SCREEN);
-  }, [isAuthentication, navigation]);
+  }, [isAuthentication, navigation, loading]);
+
+  if (loading || isAuthentication)
+    return <ImageBackground source={Images.splash} style={styles.container} />;
 
   return (
     <View style={styles.container}>
