@@ -44,7 +44,7 @@ function GiftCard({
       style={styles.container}>
       <Image style={styles.image} source={{uri: image}} />
       <View style={styles.contentContainer}>
-        <SVText body03 style={styles.brandText}>
+        <SVText body04 style={styles.brandText}>
           {brandName}
         </SVText>
         <SVText body03 style={styles.titleText}>

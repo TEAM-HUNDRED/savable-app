@@ -60,11 +60,11 @@ function StoreTabScreen() {
           </SVText>
         </View>
       ) : (
-        <View style={styles.paddingContainer}>
+        <ScrollView style={styles.paddingContainer}>
           {giftCardList.map((item, idx) => {
             return <GiftCard {...item} key={`${item.productName}-${idx}`} />;
           })}
-        </View>
+        </ScrollView>
       )}
     </ScrollView>
   );
