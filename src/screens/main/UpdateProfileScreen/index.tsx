@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import KakaoLogins, {getProfile} from '@react-native-seoul/kakao-login';
 
@@ -18,7 +18,11 @@ import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 import SVText from '../../../components/common/SVText';
 import {UpdateMemberPayload} from '../../../types/api';
 
-function UpdateProfileScreen(): React.ReactElement {
+type IProps = {
+  route: RouteProp<MainScreenStackPropsList, ROUTER.UPDATE_PROFILE_SCREEN>;
+};
+
+function UpdateProfileScreen({route}: IProps): React.ReactElement {
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
@@ -106,8 +110,13 @@ function UpdateProfileScreen(): React.ReactElement {
         phoneNumber: phoneNumber,
         image: profileData ? profileData.profileImageUrl : '',
       });
-
-      navigateToHomeScreen();
+      try {
+        Api.shared.setAuthToken(route.params.sessionKey);
+        Api.shared.setSessionKeyOnStorage(route.params.sessionKey);
+        navigateToHomeScreen();
+      } catch (error) {
+        console.log('[Error: Set Storage error]', error);
+      }
     }
   };
 

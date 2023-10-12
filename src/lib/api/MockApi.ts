@@ -47,13 +47,15 @@ export default class MockApi implements ISvApi {
     return MockApi.instance;
   }
 
-  etAuthToken(accessToken: string) {
+  setAuthToken(accessToken: string) {
     this.axios.defaults.headers['Authorization'] = accessToken;
   }
 
   setBaseUrl(baseURL: string) {
     this.axios.defaults.baseURL = baseURL;
   }
+
+  setSessionKeyOnStorage(value: string): Promise<void> {}
 
   public getChallengeList = async () => {
     return dummyChallengeList;

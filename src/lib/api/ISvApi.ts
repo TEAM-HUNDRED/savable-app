@@ -22,6 +22,7 @@ import {
 export interface ISvApi {
   setAuthToken(accessToken: string): void;
   setBaseUrl(baseURL: string): void;
+  setSessionKeyOnStorage(value: string): Promise<void>;
 
   getChallengeList(): Promise<ChallengeListAPIResponse>;
   getChallengeDetail(challengeId: number): Promise<ChallengeDetailAPIResponse>;

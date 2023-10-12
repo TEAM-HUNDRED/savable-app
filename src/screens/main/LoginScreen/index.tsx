@@ -24,8 +24,6 @@ function LoginScreen(): React.ReactElement {
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
   const {isAuthentication, loading} = useAuthentication();
 
-  const [sessionKey, setSessionKey] = useState<string>('');
-
   const signInWithKakao: () => Promise<KakaoLogins.KakaoOAuthToken> =
     async () => {
       return await login()
@@ -47,8 +45,8 @@ function LoginScreen(): React.ReactElement {
       });
   };
 
-  const navigateToUpdateProfileScreen = () => {
-    navigation.navigate(ROUTER.UPDATE_PROFILE_SCREEN, {sessionKey: sessionKey});
+  const navigateToUpdateProfileScreen = (currentKey: string) => {
+    navigation.navigate(ROUTER.UPDATE_PROFILE_SCREEN, {sessionKey: currentKey});
   };
 
   const signUp = async (payload: SignUpPayload) => {
@@ -66,12 +64,11 @@ function LoginScreen(): React.ReactElement {
     const response = await signInWithKakao();
     const profile = await getKakaoProfile();
 
-    const {sessionKey: currentSessionKey, data} = await signUp(
+    const {sessionKey: currentSessionKey} = await signUp(
       profile as SignUpPayload,
     );
-    setSessionKey(currentSessionKey);
 
-    navigateToUpdateProfileScreen();
+    navigateToUpdateProfileScreen(currentSessionKey);
   };
 
   useEffect(() => {
