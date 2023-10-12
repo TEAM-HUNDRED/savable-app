@@ -1,16 +1,17 @@
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
 
 import Icons from '../../../assets/icons';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
+import {useToastProvider} from '../../../lib/context/ToastContext';
 import {GiftCardPropsType} from '../../../types/view/shop';
 
 import SVText from '../../common/SVText';
-import {StackNavigationProp} from '@react-navigation/stack';
 
 type PropsType = GiftCardPropsType & {
-  disabled?: boolean;
+  totalReward: number;
 };
 
 function GiftCard({
@@ -19,8 +20,9 @@ function GiftCard({
   productName,
   price,
   brandName,
-  disabled,
+  totalReward,
 }: PropsType) {
+  const {showToast} = useToastProvider();
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
@@ -34,13 +36,16 @@ function GiftCard({
     });
   };
 
-  const onPressCard = () => {
-    navigateToOrder();
+  const canPurchase = totalReward > price;
+
+  const disableButton = () => {
+    showToast({currentText: '리워드가 부족합니다'});
   };
+
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={disabled ? () => {} : onPressCard}
+      onPress={canPurchase ? navigateToOrder : disableButton}
       style={styles.container}>
       <Image style={styles.image} source={{uri: image}} />
       <View style={styles.contentContainer}>

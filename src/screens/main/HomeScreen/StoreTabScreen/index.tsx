@@ -62,7 +62,13 @@ function StoreTabScreen() {
       ) : (
         <ScrollView style={styles.paddingContainer}>
           {giftCardList.map((item, idx) => {
-            return <GiftCard {...item} key={`${item.productName}-${idx}`} />;
+            return (
+              <GiftCard
+                {...item}
+                key={`${item.productName}-${idx}`}
+                totalReward={userInfo.userTotalReward}
+              />
+            );
           })}
         </ScrollView>
       )}
