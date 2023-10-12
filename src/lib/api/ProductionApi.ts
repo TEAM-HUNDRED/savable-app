@@ -128,8 +128,8 @@ export default class ProductionApi implements ISvApi {
     const {data} = await this.axios.post('send-sms', {
       phoneNumber: phoneNumber,
     });
-    console.log(data);
-    return {number: data.data};
+
+    return {number: data};
   }
 
   public async ApplyChallenge(

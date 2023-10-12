@@ -78,10 +78,10 @@ function UpdateProfileScreen(): React.ReactElement {
       if (validatePhoneNumber()) {
         const formData = new FormData();
         formData.append('phoneNumber', phoneNumber);
-        const response = await Api.shared.sendSMS(phoneNumber);
+        // const response = await Api.shared.sendSMS(phoneNumber);
 
         setSentMessage(true);
-        setValidationNumber(String(response.number));
+        // setValidationNumber(String(response.number));
       } else return new Error('전화번호가 잘못되었어요');
     } catch (error) {
       console.log(error);
@@ -106,6 +106,7 @@ function UpdateProfileScreen(): React.ReactElement {
         phoneNumber: phoneNumber,
         image: profileData ? profileData.profileImageUrl : '',
       });
+
       navigateToHomeScreen();
     }
   };
