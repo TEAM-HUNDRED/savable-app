@@ -13,6 +13,7 @@ export const useAuthentication = (): {
   const getStorageSessionData = async () => {
     try {
       const value = await AsyncStorage.getItem('session_key');
+      console.log(value);
 
       if (value !== null) {
         Api.shared.setAuthToken(value);

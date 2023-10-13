@@ -11,7 +11,7 @@ import {GiftCardPropsType} from '../../../types/view/shop';
 import SVText from '../../common/SVText';
 
 type PropsType = GiftCardPropsType & {
-  totalReward: number;
+  totalReward?: number;
 };
 
 function GiftCard({
@@ -36,7 +36,7 @@ function GiftCard({
     });
   };
 
-  const canPurchase = totalReward > price;
+  const canPurchase = totalReward ? totalReward > price : false;
 
   const disableButton = () => {
     showToast({currentText: '리워드가 부족합니다'});

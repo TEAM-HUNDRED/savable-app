@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
@@ -8,7 +8,6 @@ import {ParticipationViewPropsType} from '../../types/view';
 
 import SVText from '../../components/common/SVText';
 import ParticipationChallengeCard from '../../components/card/ParticipationChallengeCard';
-import {ScrollView} from 'react-native-gesture-handler';
 
 type PropsType = {
   participationList: Array<ParticipationViewPropsType>;
@@ -79,22 +78,13 @@ function ParticipationChallengeContainer({
           );
         })}
       </View>
-      <ScrollView>
-        {currentParticipationList.map((item, idx) => {
-          return (
-            <ParticipationChallengeCard
-              {...item}
-              key={`${item.title}-${idx}`}
-            />
-          );
-        })}
-      </ScrollView>
-      {currentParticipationList.length === 0 && (
+
+      {currentParticipationList.length === 0 ? (
         <View style={styles.emptyContainer}>
           <SVText body05 center style={styles.emptyText}>
             {hasParticipationChallenge && toggleIndex
               ? '참여 완료한 챌린지가 없어요!\n챌린지 참여하러 가실래요?'
-              : '참여할 챌린지가 없어요!\n챌린지를 신청하고 돌아와주세요!'}
+              : '참여할 챌린지가 없어요\n챌린지를 신청하고 돌아와주세요!'}
           </SVText>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -111,6 +101,17 @@ function ParticipationChallengeContainer({
             </SVText>
           </TouchableOpacity>
         </View>
+      ) : (
+        <ScrollView>
+          {currentParticipationList.map((item, idx) => {
+            return (
+              <ParticipationChallengeCard
+                {...item}
+                key={`${item.title}-${idx}`}
+              />
+            );
+          })}
+        </ScrollView>
       )}
     </View>
   );
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    lineHeight: AppStyles.scaleWidth(18),
+    lineHeight: AppStyles.scaleWidth(20),
   },
   emptyButton: {
     width: AppStyles.scaleWidth(200),

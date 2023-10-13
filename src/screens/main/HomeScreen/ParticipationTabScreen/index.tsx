@@ -1,17 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 import Api from '../../../../lib/api/Api';
 import type {RootState} from '../../../../modules/redux/Store';
-
-import LogoHeader from '../../../../components/header/LogoHeader';
-import {ParticipationViewPropsType} from '../../../../types/view';
-import ParticipationChallengeContainer from '../../../../container/ParticipationChallengeContainer';
 import {AppStyles} from '../../../../config';
+import {ParticipationViewPropsType} from '../../../../types/view';
+
+import ParticipationChallengeContainer from '../../../../container/ParticipationChallengeContainer';
+import LogoHeader from '../../../../components/header/LogoHeader';
 import SVText from '../../../../components/common/SVText';
 
 function ParticipationTabScreen(): React.ReactElement {
+  const navigation = useNavigation();
+
   const [participationList, setParticipationList] = useState<
     ParticipationViewPropsType[]
   >([]);
@@ -30,7 +33,7 @@ function ParticipationTabScreen(): React.ReactElement {
 
   useEffect(() => {
     getParticipationList();
-  }, []);
+  }, [navigation]);
 
   return (
     <ScrollView
