@@ -59,7 +59,15 @@ function FinishVerificationScreen({route}: PropsType) {
     getVerificationDetail();
   }, []);
 
+  console.log(verificationData);
+
   if (!verificationData) return <></>;
+
+  console.log(
+    verificationData.goalCount,
+    verificationData.currentCount,
+    verificationData.goalCount - verificationData.currentCount,
+  );
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -106,7 +114,7 @@ function FinishVerificationScreen({route}: PropsType) {
           {verificationData.percentage === 100
             ? '사진 확인까지 1시간 가량 소요돼요!'
             : `지금까지 ${verificationData.currentCount}회 인증 성공\n앞으로  ${
-                verificationData.goalsCount - verificationData.currentCount
+                verificationData.goalCount - verificationData.currentCount
               }회 남았어요!`}
         </SVText>
       </View>
@@ -122,7 +130,7 @@ function FinishVerificationScreen({route}: PropsType) {
                 </SVText>
               </View>
               <SVText right caption01 style={styles.descriptionText}>
-                {`이번 인증으로 ${verificationData.additionalReward}포인트 획득`}
+                {`이번 인증으로 ${verificationData.reward}포인트 획득`}
               </SVText>
             </View>
           </View>
@@ -151,7 +159,6 @@ function FinishVerificationScreen({route}: PropsType) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: AppStyles.color.white,
   },
   contentContainer: {
@@ -208,6 +215,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F6F6F6',
     paddingTop: AppStyles.scaleWidth(24),
+    paddingBottom: AppStyles.scaleWidth(40),
   },
   statusContainer: {
     display: 'flex',

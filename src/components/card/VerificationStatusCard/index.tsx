@@ -11,7 +11,7 @@ type VerificationItemPropsType = {
   id: number;
   image: string;
   state: string;
-  dateTime: string;
+  createAt: string;
 };
 
 function VerificationStatusCard({
@@ -27,8 +27,8 @@ function VerificationStatusCard({
   ];
 
   const renderItem = (item: VerificationItemPropsType, idx: number) => {
-    const month = new Date(item.dateTime).getMonth();
-    const day = new Date(item.dateTime).getDate();
+    const month = new Date(item.createAt).getMonth();
+    const day = new Date(item.createAt).getDate();
 
     const date = `${month}/${day}`;
     const stateComponent = (state: string) => {
@@ -82,8 +82,8 @@ function VerificationStatusCard({
   const flatListData = !verificationList
     ? []
     : verificationList.sort((item, nextItem) => {
-        if (item.dateTime > nextItem.dateTime) return 1;
-        else if (item.dateTime < nextItem.dateTime) return -1;
+        if (item.createAt > nextItem.createAt) return 1;
+        else if (item.createAt < nextItem.createAt) return -1;
         else return 0;
       });
 

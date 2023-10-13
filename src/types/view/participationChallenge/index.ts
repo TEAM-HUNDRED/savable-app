@@ -37,8 +37,8 @@ export type VerificationDetailPropsType = {
   title: string;
   percentage: number;
   currentCount: number;
-  goalsCount: number;
+  goalCount: number;
   scheduledReward: number;
-  additionalReward: number;
+  reward: number;
   savings: number;
 };

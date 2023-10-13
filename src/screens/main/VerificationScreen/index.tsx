@@ -42,7 +42,6 @@ function VerificationScreen({route}: PropsType) {
 
   const takePhoto = async () => {
     const formData = new FormData();
-    console.log(formData);
 
     if (cameraRef.current) {
       try {

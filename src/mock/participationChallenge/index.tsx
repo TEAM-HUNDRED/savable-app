@@ -101,6 +101,6 @@ export const dummyVerificationChallenge = {
   currentCount: 5,
   goalsCount: 15,
   scheduledReward: 400,
-  additionalReward: 100,
+  reward: 100,
   savings: 25000,
 };

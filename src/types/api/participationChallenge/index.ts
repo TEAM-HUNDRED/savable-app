@@ -41,6 +41,6 @@ export type VerificationDetailAPIResponse = {
   currentCount: number;
   goalsCount: number;
   scheduledReward: number;
-  additionalReward: number;
+  reward: number;
   savings: number;
 };

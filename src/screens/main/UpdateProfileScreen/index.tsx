@@ -97,7 +97,7 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
     navigation.reset({routes: [{name: ROUTER.HOME_SCREEN}]});
   };
 
-  const onPressFinishButton = () => {
+  const onPressFinishButton = async () => {
     const canFinish =
       validateNickName() &&
       validateNumber() &&
@@ -105,15 +105,15 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
       validateTotalCheck();
 
     if (canFinish) {
-      updateProfile({
-        username: nickName,
-        phoneNumber: phoneNumber,
-        imageUrl: profileData ? profileData.profileImageUrl : '',
-      });
-
       try {
-        Api.shared.setAuthToken(route.params.sessionKey);
-        Api.shared.setSessionKeyOnStorage(route.params.sessionKey);
+        await updateProfile({
+          username: nickName,
+          phoneNumber: phoneNumber,
+          imageUrl: profileData ? profileData.profileImageUrl : '',
+        });
+
+        await Api.shared.setAuthToken(route.params.sessionKey);
+        await Api.shared.setSessionKeyOnStorage(route.params.sessionKey);
         navigateToHomeScreen();
       } catch (error) {
         console.log('[Error: Set Storage error]', error);
@@ -131,6 +131,7 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
       // const response = await Api.shared.updateMemberProfile(payload);
     } catch (error) {
       console.log('updateProfile', error);
+      return new Error('Error Update Profile');
     }
   };
 

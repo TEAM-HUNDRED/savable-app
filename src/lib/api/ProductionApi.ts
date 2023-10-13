@@ -130,7 +130,6 @@ export default class ProductionApi implements ISvApi {
   public async getVerificationDetail(
     participationChallengeId: string,
   ): Promise<VerificationDetailAPIResponse> {
-    console.log(participationChallengeId);
     const {data} = await this.axios.get(
       `participations/${participationChallengeId}/verification`,
     );
@@ -157,9 +156,7 @@ export default class ProductionApi implements ISvApi {
   public async createOrder(
     payload: CreateOrderPayload,
   ): Promise<CreateOrderAPIResponse> {
-    console.log(payload);
     const {data} = await this.axios.post('shop/order', payload);
-    console.log(data);
 
     return data;
   }
