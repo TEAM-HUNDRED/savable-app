@@ -109,12 +109,14 @@ export default class ProductionApi implements ISvApi {
 
   public async createVerification(
     participationChallengeId: number,
-    image: FormData,
+    payload: FormData,
   ): Promise<CreateVerificationAPIResponse> {
     const {data} = await this.axios.post(
       `participation/${participationChallengeId}/verification/`,
-      {image: image},
+      payload,
     );
+
+    console.log(data);
 
     return data;
   }
@@ -148,7 +150,9 @@ export default class ProductionApi implements ISvApi {
   public async createOrder(
     payload: CreateOrderPayload,
   ): Promise<CreateOrderAPIResponse> {
+    console.log(payload);
     const {data} = await this.axios.post('shop/order', payload);
+    console.log(data);
 
     return data;
   }

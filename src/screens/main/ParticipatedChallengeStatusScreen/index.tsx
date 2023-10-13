@@ -40,12 +40,11 @@ function ParticipatedChallengeStatusScreen({
 
   const getParticipationChallengeStatus = useCallback(
     async (challengeId: number) => {
-      console.log(challengeId);
       try {
         const response = await Api.shared.getParticipationChallengeStatus(
           challengeId,
         );
-        console.log(response);
+
         setVerificationInfo({
           ...response.verificationInfoDto,
           verificationList:
@@ -71,7 +70,8 @@ function ParticipatedChallengeStatusScreen({
 
   const navigateToVerificationScreen = () => {
     navigation.navigate(ROUTER.VERIFICATION_SCREEN, {
-      challengeId: route.params.challengeId,
+      challengeId: challengeInfo.challengeId,
+      participationId: route.params.challengeId,
       challengeTitle: route.params.challengeTitle,
     });
   };

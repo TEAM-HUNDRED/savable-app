@@ -15,7 +15,7 @@ type PropsType = GiftCardPropsType & {
 };
 
 function GiftCard({
-  giftcardId,
+  id,
   image,
   productName,
   price,
@@ -28,7 +28,7 @@ function GiftCard({
 
   const navigateToOrder = () => {
     navigation.navigate(ROUTER.CREATE_ORDER_PAGE, {
-      giftcardId: giftcardId,
+      id: id,
       image: image,
       productName: productName,
       price: price,

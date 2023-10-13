@@ -35,7 +35,11 @@ export type MainScreenStackPropsList = RootScreenStackPropsList & {
   [ROUTER.LOGIN_SCREEN]: undefined;
   [ROUTER.UPDATE_PROFILE_SCREEN]: {sessionKey: string};
   [ROUTER.ORDER_HISTORY_SCREEN]: undefined;
-  [ROUTER.VERIFICATION_SCREEN]: {challengeId: number; challengeTitle: string};
+  [ROUTER.VERIFICATION_SCREEN]: {
+    challengeId: number;
+    participationId: number;
+    challengeTitle: string;
+  };
   [ROUTER.FINISH_VERIFICATION_SCREEN]: {
     challengeId: number;
     challengeTitle: string;
@@ -53,7 +57,7 @@ export type MainScreenStackPropsList = RootScreenStackPropsList & {
     isVerifiedToday: boolean;
   };
   [ROUTER.CREATE_ORDER_PAGE]: {
-    giftcardId: number;
+    id: number;
     image: string;
     productName: string;
     price: number;

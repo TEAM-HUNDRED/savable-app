@@ -40,14 +40,19 @@ function VerificationScreen({route}: PropsType) {
   };
 
   const takePhoto = async () => {
+    const formData = new FormData();
+
     if (cameraRef.current) {
       const result = await cameraRef.current.takePhoto();
-      const fetchResult = await fetch(`file://${result.path}`);
-      const data = await fetchResult.blob();
+      formData.append('image', result.path);
 
-      setIsActive(false);
-      navigateToFinishScreen();
+      // const fetchResult = await fetch(`file://${result.path}`);
+      // const data = await fetchResult.blob();
+
+      // setIsActive(false);
+      // navigateToFinishScreen();
     }
+    return formData;
   };
 
   const getChallengeDetail = useCallback(async (challengeId: number) => {
@@ -60,21 +65,29 @@ function VerificationScreen({route}: PropsType) {
         isParticipatable: response.isParticipatable,
       });
     } catch (error) {
-      console.log('[Error: Failed to get challenge detail', error);
+      console.log('[Error: Failed to get challenge detail]', error);
     }
   }, []);
 
-  const createVerification = async (image: FormData) => {
+  const createVerification = async (
+    participationId: number,
+    payload: FormData,
+  ) => {
     try {
       const response = await Api.shared.createVerification(
-        route.params.challengeId,
-        image,
+        participationId,
+        payload,
       );
 
       return response;
     } catch (error) {
       console.log('[Error: Failed to create verification', error);
     }
+  };
+
+  const onPressTakeButton = async () => {
+    const response = await takePhoto();
+    await createVerification(route.params.participationId, response);
   };
 
   useEffect(() => {
@@ -113,11 +126,7 @@ function VerificationScreen({route}: PropsType) {
         isActive={isActive}
         photo
       />
-      <TouchableOpacity
-        style={styles.takeButton}
-        onPress={() => {
-          takePhoto();
-        }}>
+      <TouchableOpacity style={styles.takeButton} onPress={onPressTakeButton}>
         <View style={styles.circle} />
       </TouchableOpacity>
       <VerificationGuideContainer

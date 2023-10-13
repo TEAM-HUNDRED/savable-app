@@ -1,5 +1,5 @@
 export type GiftCardListAPIResponse = Array<{
-  giftcardId: number;
+  id: number;
   image: string;
   productName: string;
   price: number;
@@ -22,7 +22,7 @@ export type CreateOrderPayload = {
   quantity: number;
   positivePoint: string;
   negativePoint: string;
-  challengeOpinion: string;
+  wishChallenge: string;
 };
 
 export type CreateOrderAPIResponse = {};
