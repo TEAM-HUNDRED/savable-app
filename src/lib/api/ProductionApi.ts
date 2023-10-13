@@ -130,8 +130,9 @@ export default class ProductionApi implements ISvApi {
   public async getVerificationDetail(
     participationChallengeId: string,
   ): Promise<VerificationDetailAPIResponse> {
+    console.log(participationChallengeId);
     const {data} = await this.axios.get(
-      `participation/${participationChallengeId}/verification/`,
+      `participations/${participationChallengeId}/verification`,
     );
 
     return data.data;

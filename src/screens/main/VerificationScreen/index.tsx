@@ -35,7 +35,7 @@ function VerificationScreen({route}: PropsType) {
 
   const navigateToFinishScreen = () => {
     navigation.replace(ROUTER.FINISH_VERIFICATION_SCREEN, {
-      challengeId: route.params.challengeId,
+      challengeId: route.params.participationId,
       challengeTitle: route.params.challengeTitle,
     });
   };
@@ -57,7 +57,6 @@ function VerificationScreen({route}: PropsType) {
         console.log(error);
       }
       setIsActive(false);
-      navigateToFinishScreen();
     }
     return formData;
   };
@@ -80,14 +79,11 @@ function VerificationScreen({route}: PropsType) {
     participationId: number,
     payload: FormData,
   ) => {
-    console.log(payload);
     try {
       const response = await Api.shared.createVerification(
         participationId,
         payload,
       );
-
-      console.log(response);
 
       return response;
     } catch (error) {
@@ -97,7 +93,11 @@ function VerificationScreen({route}: PropsType) {
 
   const onPressTakeButton = async () => {
     const response = await takePhoto();
-    await createVerification(route.params.participationId, response);
+    await createVerification(route.params.participationId, response).then(
+      () => {
+        navigateToFinishScreen();
+      },
+    );
   };
 
   useEffect(() => {
