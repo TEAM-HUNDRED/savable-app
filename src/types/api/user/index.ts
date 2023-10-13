@@ -79,3 +79,4 @@ export type UpdateMemberURLPayload = {
 };
 
 export type UpdateMemberAPIResponse = {};
+export type RemoveMemberAPIResponse = {};

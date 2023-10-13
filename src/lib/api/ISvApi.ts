@@ -18,6 +18,7 @@ import {
   UpdateMemberPayload,
   UpdateMemberAPIResponse,
   UpdateMemberURLPayload,
+  RemoveMemberAPIResponse,
 } from '../../types/api';
 
 export interface ISvApi {
@@ -64,4 +65,6 @@ export interface ISvApi {
   updateMemberURLProfile(
     payload: UpdateMemberURLPayload,
   ): Promise<UpdateMemberAPIResponse>;
+
+  removeMember(): Promise<RemoveMemberAPIResponse>;
 }

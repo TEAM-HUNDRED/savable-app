@@ -95,6 +95,18 @@ function ProfileTabScreen({}: PropsType) {
     Linking.openURL('http://pf.kakao.com/_xcVxmCG/chat');
   };
 
+  const withdrawalAccount = async () => {
+    try {
+      await Api.shared.removeMember();
+      Api.shared.setAuthToken('');
+      Api.shared.setSessionKeyOnStorage('');
+
+      navigation.navigate(ROUTER.LOGIN_SCREEN);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const navigationBarList = [
     {
       title: '기프티콘 구매 내역',
@@ -112,7 +124,7 @@ function ProfileTabScreen({}: PropsType) {
     },
     {
       title: '탈퇴하기',
-      onPress: () => {},
+      onPress: withdrawalAccount,
     },
   ];
 

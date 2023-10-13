@@ -15,6 +15,7 @@ import {
   OrderHistoryAPIResponse,
   ParticipationChallengeListAPIResponse,
   ParticipationChallengeStatusAPIResponse,
+  RemoveMemberAPIResponse,
   SignUpAPIResponse,
   SignUpPayload,
   SMSAPIResponse,
@@ -198,6 +199,12 @@ export default class ProductionApi implements ISvApi {
     payload: UpdateMemberURLPayload,
   ): Promise<UpdateMemberAPIResponse> {
     const {data} = await this.axios.patch('member/sign-up', payload);
+
+    return data;
+  }
+
+  public async removeMember(): Promise<RemoveMemberAPIResponse> {
+    const {data} = await this.axios.patch('member/deletion');
 
     return data;
   }
