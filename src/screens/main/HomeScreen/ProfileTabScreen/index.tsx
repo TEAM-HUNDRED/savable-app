@@ -9,11 +9,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import KakaoLogins, {
-  login,
-  getProfile,
-  logout,
-} from '@react-native-seoul/kakao-login';
+import {logout} from '@react-native-seoul/kakao-login';
 
 import {
   AppStyles,
@@ -151,8 +147,8 @@ function ProfileTabScreen({}: PropsType) {
             const isLastItem = idx === userRewardInfoList.length - 1;
 
             return (
-              <>
-                <View style={styles.barContainer} key={`${item.value}-${idx}`}>
+              <View key={`${item.value}-${idx}`}>
+                <View style={styles.barContainer}>
                   <SVText body06>{item.index}</SVText>
                   <View>
                     <View style={styles.valueContainer}>
@@ -171,7 +167,7 @@ function ProfileTabScreen({}: PropsType) {
                   </View>
                 </View>
                 {!isLastItem && <View style={styles.divider} />}
-              </>
+              </View>
             );
           })}
         </View>
@@ -183,15 +179,15 @@ function ProfileTabScreen({}: PropsType) {
             const isLastItem = idx === userChallengeInfoList.length - 1;
 
             return (
-              <>
-                <View
-                  style={styles.challengeBarContainer}
-                  key={`${item.value}-${idx}`}>
-                  <SVText body06>{item.index}</SVText>
-                  <SVText body01>{item.value}</SVText>
-                </View>
-                {!isLastItem && <View style={styles.verticalDivider} />}
-              </>
+              <View
+                style={[
+                  styles.challengeBarContainer,
+                  isLastItem ? {} : styles.verticalDivider,
+                ]}
+                key={`${item.value}-${idx}`}>
+                <SVText body06>{item.index}</SVText>
+                <SVText body01>{item.value}</SVText>
+              </View>
             );
           })}
         </View>
@@ -200,18 +196,17 @@ function ProfileTabScreen({}: PropsType) {
       {navigationBarList.map((item, idx) => {
         const isLastItem = idx === navigationBarList.length - 1;
         return (
-          <>
+          <View key={`${item.title}-${idx}`}>
             <TouchableOpacity
               activeOpacity={0.8}
               style={styles.navigateBarContainer}
-              onPress={item.onPress}
-              key={`${item.title}-${idx}`}>
+              onPress={item.onPress}>
               <SVText body04 style={styles.barText}>
                 {item.title}
               </SVText>
             </TouchableOpacity>
             {!isLastItem && <View style={styles.divider} />}
-          </>
+          </View>
         );
       })}
     </ScrollView>
@@ -290,12 +285,12 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
-    marginVertical: AppStyles.scaleWidth(10),
+    paddingVertical: AppStyles.scaleWidth(10),
   },
   verticalDivider: {
     width: AppStyles.scaleWidth(1),
-    height: '100%',
-    backgroundColor: AppStyles.color.lightGray02,
+    borderRightWidth: 1,
+    borderColor: AppStyles.color.lightGray02,
   },
   valueText: {
     textAlignVertical: 'center',

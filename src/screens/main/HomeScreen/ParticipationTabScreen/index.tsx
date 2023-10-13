@@ -32,8 +32,6 @@ function ParticipationTabScreen(): React.ReactElement {
     getParticipationList();
   }, []);
 
-  if (participationList.length === 0) return <></>;
-
   return (
     <ScrollView
       style={styles.container}

@@ -8,6 +8,7 @@ import {ParticipationViewPropsType} from '../../types/view';
 
 import SVText from '../../components/common/SVText';
 import ParticipationChallengeCard from '../../components/card/ParticipationChallengeCard';
+import {ScrollView} from 'react-native-gesture-handler';
 
 type PropsType = {
   participationList: Array<ParticipationViewPropsType>;
@@ -29,8 +30,8 @@ function ParticipationChallengeContainer({
 
   const toggleList = useMemo(() => {
     return [
-      `인증 전(${beforeVerifiedList.length})`,
-      `인증 완료(${afterVerifiedList.length})`,
+      `인증 전 (${beforeVerifiedList.length})`,
+      `인증 완료 (${afterVerifiedList.length})`,
     ];
   }, [beforeVerifiedList, afterVerifiedList]);
 
@@ -70,7 +71,7 @@ function ParticipationChallengeContainer({
               }>
               <SVText
                 center
-                body07
+                body06
                 style={isHighlight ? styles.highlightBarText : styles.barText}>
                 {item}
               </SVText>
@@ -78,12 +79,16 @@ function ParticipationChallengeContainer({
           );
         })}
       </View>
-
-      {currentParticipationList.map((item, idx) => {
-        return (
-          <ParticipationChallengeCard {...item} key={`${item.title}-${idx}`} />
-        );
-      })}
+      <ScrollView>
+        {currentParticipationList.map((item, idx) => {
+          return (
+            <ParticipationChallengeCard
+              {...item}
+              key={`${item.title}-${idx}`}
+            />
+          );
+        })}
+      </ScrollView>
       {currentParticipationList.length === 0 && (
         <View style={styles.emptyContainer}>
           <SVText body05 center style={styles.emptyText}>
@@ -122,7 +127,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderColor: AppStyles.color.lightGray02,
     marginVertical: AppStyles.scaleWidth(16),
-    height: AppStyles.scaleWidth(24),
     borderRadius: AppStyles.scaleWidth(30),
     borderWidth: AppStyles.scaleWidth(1),
   },
@@ -130,6 +134,7 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     justifyContent: 'center',
+    paddingVertical: AppStyles.scaleWidth(6),
   },
   highlightToggleBar: {
     flex: 1,
@@ -137,6 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: AppStyles.scaleWidth(30),
     backgroundColor: AppStyles.color.mint04,
+    paddingVertical: AppStyles.scaleWidth(6),
   },
   barText: {
     color: AppStyles.color.deepGray,
