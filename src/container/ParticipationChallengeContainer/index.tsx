@@ -166,7 +166,6 @@ const styles = StyleSheet.create({
   },
   emptyButton: {
     width: AppStyles.scaleWidth(200),
-    height: AppStyles.scaleWidth(36),
     marginTop: AppStyles.scaleWidth(10),
     paddingVertical: AppStyles.scaleWidth(10),
     borderWidth: AppStyles.scaleWidth(1),
@@ -175,6 +174,7 @@ const styles = StyleSheet.create({
   },
   emptyButtonText: {
     color: AppStyles.color.deepGray,
+    marginBottom: AppStyles.scaleWidth(2),
   },
 });
 
