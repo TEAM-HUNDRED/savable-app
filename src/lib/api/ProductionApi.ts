@@ -113,8 +113,13 @@ export default class ProductionApi implements ISvApi {
     payload: FormData,
   ): Promise<CreateVerificationAPIResponse> {
     const {data} = await this.axios.post(
-      `participation/${participationChallengeId}/verification/`,
+      `participations/${participationChallengeId}/verification`,
       payload,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     );
 
     console.log(data);

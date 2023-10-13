@@ -4,6 +4,7 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {
   Camera,
+  PhotoFile,
   useCameraDevice,
   useCameraPermission,
 } from 'react-native-vision-camera';
@@ -41,16 +42,22 @@ function VerificationScreen({route}: PropsType) {
 
   const takePhoto = async () => {
     const formData = new FormData();
+    console.log(formData);
 
     if (cameraRef.current) {
-      const result = await cameraRef.current.takePhoto();
-      formData.append('image', result.path);
+      try {
+        const result: PhotoFile = await cameraRef.current.takePhoto();
 
-      // const fetchResult = await fetch(`file://${result.path}`);
-      // const data = await fetchResult.blob();
-
-      // setIsActive(false);
-      // navigateToFinishScreen();
+        formData.append('image', {
+          uri: `file://${result.path}`,
+          type: 'multipart/form-data',
+          name: '아몰랑',
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      setIsActive(false);
+      navigateToFinishScreen();
     }
     return formData;
   };
@@ -73,15 +80,18 @@ function VerificationScreen({route}: PropsType) {
     participationId: number,
     payload: FormData,
   ) => {
+    console.log(payload);
     try {
       const response = await Api.shared.createVerification(
         participationId,
         payload,
       );
 
+      console.log(response);
+
       return response;
     } catch (error) {
-      console.log('[Error: Failed to create verification', error);
+      console.log('[Error: Failed to create verification]', error);
     }
   };
 
