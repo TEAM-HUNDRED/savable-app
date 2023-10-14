@@ -2,9 +2,11 @@ import React, {useCallback, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 import Api from '../../../lib/api/Api';
-import {ROUTER} from '../../../config/router';
+import {MainScreenStackPropsList, ROUTER} from '../../../config/router';
 import {AppStyles} from '../../../config';
 import {
   ChallengeIcon,
@@ -23,6 +25,8 @@ const BottomTabNavigation = createBottomTabNavigator();
 
 function HomeScreen(): React.ReactElement {
   const dispatch = useDispatch();
+  const navigation =
+    useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
   const getUserInfo = async () => {
     try {
@@ -40,6 +44,8 @@ function HomeScreen(): React.ReactElement {
       );
     } catch (error) {
       console.log('[Error: Failed to get user Info', error);
+      await Api.shared.setSessionKeyOnStorage('');
+      navigation.navigate(ROUTER.LOGIN_SCREEN);
     }
   };
 
