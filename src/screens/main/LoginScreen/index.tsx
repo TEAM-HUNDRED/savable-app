@@ -46,7 +46,7 @@ function LoginScreen(): React.ReactElement {
   };
 
   const navigateToUpdateProfileScreen = (currentKey: string) => {
-    navigation.navigate(ROUTER.UPDATE_PROFILE_SCREEN, {sessionKey: currentKey});
+    navigation.replace(ROUTER.UPDATE_PROFILE_SCREEN, {sessionKey: currentKey});
   };
 
   const signUp = async (payload: SignUpPayload) => {
