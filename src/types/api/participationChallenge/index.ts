@@ -39,7 +39,7 @@ export type VerificationDetailAPIResponse = {
   title: string;
   percentage: number;
   currentCount: number;
-  goalsCount: number;
+  goalCount: number;
   scheduledReward: number;
   reward: number;
   savings: number;
