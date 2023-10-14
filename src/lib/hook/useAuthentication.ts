@@ -17,6 +17,7 @@ export const useAuthentication = (): {
 
       if (value !== null) {
         Api.shared.setAuthToken(value);
+        getUserInfo();
 
         setIsAuthentication(true);
       }
@@ -30,6 +31,17 @@ export const useAuthentication = (): {
       }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const getUserInfo = async () => {
+    try {
+      const response = await Api.shared.getUserInfo();
+
+      console.log(response);
+    } catch (error) {
+      console.log('[Error: Failed to get user Info', error);
+      await Api.shared.setSessionKeyOnStorage('');
     }
   };
 
