@@ -19,6 +19,7 @@ export type ChallengeDetailAPIResponse = {
     startDate: string;
     endDate: string;
   };
+  isParticipatable: boolean;
   verificationGuide: Array<{
     isPass: boolean;
     image: string;

@@ -99,8 +99,8 @@ export const dummyVerificationChallenge = {
   title: '집밥 먹기 챌린지',
   percentage: 100,
   currentCount: 5,
-  goalsCount: 15,
+  goalCount: 15,
   scheduledReward: 400,
-  additionalReward: 100,
+  reward: 100,
   savings: 25000,
 };

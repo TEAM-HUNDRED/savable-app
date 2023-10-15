@@ -30,17 +30,33 @@ function ParticipatedChallengeStatusScreen({
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
   const [challengeInfo, setChallengeInfo] =
-    useState<ParticipationChallengeInfoPropsType>();
+    useState<ParticipationChallengeInfoPropsType>(
+      {} as ParticipationChallengeInfoPropsType,
+    );
   const [verificationInfo, setVerificationInfo] =
-    useState<ChallengeVerificationInfoPropsType>();
+    useState<ChallengeVerificationInfoPropsType>(
+      {} as ChallengeVerificationInfoPropsType,
+    );
 
   const getParticipationChallengeStatus = useCallback(
     async (challengeId: number) => {
-      const response = await Api.shared.getParticipationChallengeStatus(
-        challengeId,
-      );
-      setVerificationInfo(response.verificationInfo);
-      setChallengeInfo(response.participationChallengeInfo);
+      try {
+        const response = await Api.shared.getParticipationChallengeStatus(
+          challengeId,
+        );
+
+        setVerificationInfo({
+          ...response.verificationInfoDto,
+          verificationList:
+            response.verificationInfoDto.verificationResponseDtos,
+        });
+        setChallengeInfo(response.participationChallengeInfoDto);
+      } catch (error) {
+        console.log(
+          '[Error: Failed to get participation challenge status',
+          error,
+        );
+      }
     },
     [],
   );
@@ -54,7 +70,8 @@ function ParticipatedChallengeStatusScreen({
 
   const navigateToVerificationScreen = () => {
     navigation.navigate(ROUTER.VERIFICATION_SCREEN, {
-      challengeId: route.params.challengeId,
+      challengeId: challengeInfo.challengeId,
+      participationId: route.params.challengeId,
       challengeTitle: route.params.challengeTitle,
     });
   };
@@ -65,6 +82,8 @@ function ParticipatedChallengeStatusScreen({
   }, [handleNavigationHeader, getParticipationChallengeStatus, route]);
 
   if (!challengeInfo || !verificationInfo) return <></>;
+
+  console.log(verificationInfo.verificationList);
 
   return (
     <ScrollView
@@ -84,7 +103,10 @@ function ParticipatedChallengeStatusScreen({
         />
       </View>
       <SVDivider />
-      <VerificationStatusCard {...verificationInfo} />
+      <VerificationStatusCard
+        {...verificationInfo}
+        verificationList={verificationInfo.verificationList}
+      />
       {route.params.isVerifiedToday ? (
         <View style={styles.buttonContainer}>
           <SVButton

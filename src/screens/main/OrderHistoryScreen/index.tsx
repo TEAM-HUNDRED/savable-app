@@ -34,7 +34,7 @@ function OrderHistoryScreen({}: PropsType) {
 
       setOrderList(response);
     } catch (error) {
-      console.log(error);
+      console.log('[Error: Failed to get order history list', error);
     }
   };
 

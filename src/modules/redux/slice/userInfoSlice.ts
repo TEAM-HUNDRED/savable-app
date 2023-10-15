@@ -31,6 +31,7 @@ export const userInfoSlice = createSlice({
       // immutable state based off those changes
       state.value = action.payload.value;
     },
+
     initUserInfo: state => {
       state.value = initialState.value;
     },

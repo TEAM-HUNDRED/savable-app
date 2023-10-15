@@ -1,5 +1,5 @@
 export type GiftCardPropsType = {
-  giftcardId: number;
+  id: number;
   image: string;
   productName: string;
   price: number;

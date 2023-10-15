@@ -38,25 +38,28 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
     [navigation],
   );
 
-  const getChallengeDetail = useCallback(
-    async (challengeId: number) => {
+  const getChallengeDetail = useCallback(async (challengeId: number) => {
+    try {
       const response = await Api.shared.getChallengeDetail(challengeId);
 
       setChallengeInfo({
         ...response.challenge,
         guide: response.verificationGuide,
+        isParticipatable: response.isParticipatable,
       });
-
-      handleNavigationHeader(response.challenge.title);
-    },
-    [handleNavigationHeader],
-  );
+    } catch (error) {
+      console.log('[Error: Failed to get challenge details]', error);
+    }
+  }, []);
 
   useEffect(() => {
+    handleNavigationHeader(route.params.challengeTitle);
     getChallengeDetail(route.params.challengeId);
-  }, [route, getChallengeDetail]);
+  }, [route, getChallengeDetail, handleNavigationHeader]);
 
   if (!challengeInfo) return <></>;
+
+  console.log(challengeInfo);
 
   return (
     <ScrollView
@@ -70,7 +73,6 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
         <ChallengeInfoCard
           title={challengeInfo.title}
           explanation={challengeInfo.explanation}
-          verificationDescription={challengeInfo.verificationDescription}
           reward={challengeInfo.reward}
           hasDeadline={challengeInfo.hasDeadline}
           startDate={challengeInfo.startDate}
@@ -87,7 +89,10 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
       </View>
       <SVDivider />
       <View>
-        <VerificationGuideCard flatListData={challengeInfo.guide} />
+        <VerificationGuideCard
+          flatListData={challengeInfo.guide}
+          verificationDescription={challengeInfo.verificationDescription}
+        />
       </View>
       <SVDivider />
       <View style={styles.defaultHorizontal}>
@@ -96,8 +101,15 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
       <View style={styles.buttonContainer}>
         <SVButton
           borderRadius={AppStyles.scaleWidth(8)}
-          onPress={navigateToApplyScreen}>
-          {'신청하기'}
+          color={
+            challengeInfo.isParticipatable
+              ? AppStyles.color.mint05
+              : AppStyles.color.gray02
+          }
+          onPress={
+            challengeInfo.isParticipatable ? navigateToApplyScreen : () => {}
+          }>
+          {challengeInfo.isParticipatable ? '신청하기' : '신청 완료'}
         </SVButton>
       </View>
     </ScrollView>

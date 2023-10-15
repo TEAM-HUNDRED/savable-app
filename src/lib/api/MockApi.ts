@@ -12,7 +12,11 @@ import {
   OrderHistoryAPIResponse,
   ParticipationChallengeListAPIResponse,
   ParticipationChallengeStatusAPIResponse,
+  SignUpAPIResponse,
+  SignUpPayload,
   SMSAPIResponse,
+  UpdateMemberAPIResponse,
+  UpdateMemberPayload,
   UserInfoAPIResponse,
   VerificationDetailAPIResponse,
 } from '../../types/api';
@@ -43,9 +47,15 @@ export default class MockApi implements ISvApi {
     return MockApi.instance;
   }
 
+  setAuthToken(accessToken: string) {
+    this.axios.defaults.headers['Authorization'] = accessToken;
+  }
+
   setBaseUrl(baseURL: string) {
     this.axios.defaults.baseURL = baseURL;
   }
+
+  setSessionKeyOnStorage(value: string): Promise<void> {}
 
   public getChallengeList = async () => {
     return dummyChallengeList;
@@ -106,6 +116,16 @@ export default class MockApi implements ISvApi {
   public async createOrder(
     payload: CreateOrderPayload,
   ): Promise<CreateOrderAPIResponse> {
+    return 'success';
+  }
+
+  public async signUp(payload: SignUpPayload): Promise<SignUpAPIResponse> {
+    return 'success';
+  }
+
+  public async updateMemberProfile(
+    payload: UpdateMemberPayload,
+  ): Promise<UpdateMemberAPIResponse> {
     return 'success';
   }
 }

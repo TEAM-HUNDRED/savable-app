@@ -45,20 +45,26 @@ function CreateOrderPage({route}: PropsType) {
   }, []);
 
   const createOrder = useCallback(async () => {
-    const response = await Api.shared.createOrder({
-      giftcardId: route.params.giftcardId,
-      quantity: inputData.amount,
-      negativePoint: inputData.negativePoint,
-      positivePoint: inputData.positivePoint,
-      challengeOpinion: inputData.challengeOpinion,
-    });
+    try {
+      const response = await Api.shared.createOrder({
+        giftcardId: route.params.id,
+        quantity: inputData.amount,
+        positivePoint: inputData.positivePoint,
+        negativePoint: inputData.negativePoint,
+        wishChallenge: inputData.challengeOpinion
+          ? inputData.challengeOpinion
+          : '',
+      });
 
-    return response;
+      return response;
+    } catch (error) {
+      console.log('[Error: Failed to create order', error);
+    }
   }, [route, inputData]);
 
   const navigateToPurchaseSuccessScreen = useCallback(() => {
     navigation.replace(ROUTER.ORDER_SUCCESS_SCREEN, {
-      giftcardId: route.params.giftcardId,
+      giftcardId: route.params.id,
       image: route.params.image,
       productName: route.params.productName,
       price: route.params.price,
@@ -85,7 +91,7 @@ function CreateOrderPage({route}: PropsType) {
       contentContainerStyle={styles.contentContainer}>
       <View style={styles.paddingContainer}>
         <GiftCard
-          giftcardId={route.params.giftcardId}
+          id={route.params.id}
           image={route.params.image}
           productName={route.params.productName}
           price={route.params.price}

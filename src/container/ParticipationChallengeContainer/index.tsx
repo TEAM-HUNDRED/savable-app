@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
@@ -29,8 +29,8 @@ function ParticipationChallengeContainer({
 
   const toggleList = useMemo(() => {
     return [
-      `인증 전(${beforeVerifiedList.length})`,
-      `인증 완료(${afterVerifiedList.length})`,
+      `인증 전 (${beforeVerifiedList.length})`,
+      `인증 완료 (${afterVerifiedList.length})`,
     ];
   }, [beforeVerifiedList, afterVerifiedList]);
 
@@ -70,7 +70,7 @@ function ParticipationChallengeContainer({
               }>
               <SVText
                 center
-                body07
+                body06
                 style={isHighlight ? styles.highlightBarText : styles.barText}>
                 {item}
               </SVText>
@@ -79,17 +79,12 @@ function ParticipationChallengeContainer({
         })}
       </View>
 
-      {currentParticipationList.map((item, idx) => {
-        return (
-          <ParticipationChallengeCard {...item} key={`${item.title}-${idx}`} />
-        );
-      })}
-      {currentParticipationList.length === 0 && (
+      {currentParticipationList.length === 0 ? (
         <View style={styles.emptyContainer}>
           <SVText body05 center style={styles.emptyText}>
             {hasParticipationChallenge && toggleIndex
               ? '참여 완료한 챌린지가 없어요!\n챌린지 참여하러 가실래요?'
-              : '참여할 챌린지가 없어요!\n챌린지를 신청하고 돌아와주세요!'}
+              : '참여할 챌린지가 없어요\n챌린지를 신청하고 돌아와주세요!'}
           </SVText>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -106,6 +101,17 @@ function ParticipationChallengeContainer({
             </SVText>
           </TouchableOpacity>
         </View>
+      ) : (
+        <ScrollView>
+          {currentParticipationList.map((item, idx) => {
+            return (
+              <ParticipationChallengeCard
+                {...item}
+                key={`${item.title}-${idx}`}
+              />
+            );
+          })}
+        </ScrollView>
       )}
     </View>
   );
@@ -122,7 +128,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderColor: AppStyles.color.lightGray02,
     marginVertical: AppStyles.scaleWidth(16),
-    height: AppStyles.scaleWidth(24),
     borderRadius: AppStyles.scaleWidth(30),
     borderWidth: AppStyles.scaleWidth(1),
   },
@@ -130,6 +135,7 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     justifyContent: 'center',
+    paddingVertical: AppStyles.scaleWidth(6),
   },
   highlightToggleBar: {
     flex: 1,
@@ -137,6 +143,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: AppStyles.scaleWidth(30),
     backgroundColor: AppStyles.color.mint04,
+    paddingVertical: AppStyles.scaleWidth(6),
   },
   barText: {
     color: AppStyles.color.deepGray,
@@ -155,11 +162,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    lineHeight: AppStyles.scaleWidth(18),
+    lineHeight: AppStyles.scaleWidth(20),
   },
   emptyButton: {
     width: AppStyles.scaleWidth(200),
-    height: AppStyles.scaleWidth(36),
     marginTop: AppStyles.scaleWidth(10),
     paddingVertical: AppStyles.scaleWidth(10),
     borderWidth: AppStyles.scaleWidth(1),
@@ -168,6 +174,7 @@ const styles = StyleSheet.create({
   },
   emptyButtonText: {
     color: AppStyles.color.deepGray,
+    marginBottom: AppStyles.scaleWidth(2),
   },
 });
 

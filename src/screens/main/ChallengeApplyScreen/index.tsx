@@ -78,13 +78,18 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
   };
 
   const applyChallenge = async () => {
-    const date = await Api.shared.ApplyChallenge({
-      challengeId: challengeInfo ? challengeInfo.id : 0,
-      duration: (durationList.findIndex(item => item === duration) + 1) * 7,
-      verificationGoal: Number(target),
-    });
+    try {
+      const data = await Api.shared.ApplyChallenge({
+        challengeId: challengeInfo ? challengeInfo.id : 0,
+        duration: (durationList.findIndex(item => item === duration) + 1) * 7,
+        verificationGoal: Number(target),
+      });
+      console.log(data);
 
-    return date;
+      return data;
+    } catch (error) {
+      console.log('[Error: Failed to apply challenge', error);
+    }
   };
 
   const onPressApplyButton = () => {

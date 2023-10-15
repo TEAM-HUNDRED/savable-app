@@ -4,6 +4,7 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {
   Camera,
+  PhotoFile,
   useCameraDevice,
   useCameraPermission,
 } from 'react-native-vision-camera';
@@ -34,39 +35,68 @@ function VerificationScreen({route}: PropsType) {
 
   const navigateToFinishScreen = () => {
     navigation.replace(ROUTER.FINISH_VERIFICATION_SCREEN, {
-      challengeId: route.params.challengeId,
+      challengeId: route.params.participationId,
       challengeTitle: route.params.challengeTitle,
     });
   };
 
   const takePhoto = async () => {
-    if (cameraRef.current) {
-      const result = await cameraRef.current.takePhoto();
-      const fetchResult = await fetch(`file://${result.path}`);
-      const data = await fetchResult.blob();
+    const formData = new FormData();
 
+    if (cameraRef.current) {
+      try {
+        const result: PhotoFile = await cameraRef.current.takePhoto();
+
+        formData.append('image', {
+          uri: `file://${result.path}`,
+          type: 'multipart/form-data',
+          name: '아몰랑',
+        });
+      } catch (error) {
+        console.log(error);
+      }
       setIsActive(false);
-      navigateToFinishScreen();
-      console.log(data);
     }
+    return formData;
   };
 
   const getChallengeDetail = useCallback(async (challengeId: number) => {
-    const response = await Api.shared.getChallengeDetail(challengeId);
+    try {
+      const response = await Api.shared.getChallengeDetail(challengeId);
 
-    setChallengeInfo({
-      ...response.challenge,
-      guide: response.verificationGuide,
-    });
+      setChallengeInfo({
+        ...response.challenge,
+        guide: response.verificationGuide,
+        isParticipatable: response.isParticipatable,
+      });
+    } catch (error) {
+      console.log('[Error: Failed to get challenge detail]', error);
+    }
   }, []);
 
-  const createVerification = async (image: FormData) => {
-    const response = await Api.shared.createVerification(
-      route.params.challengeId,
-      image,
-    );
+  const createVerification = async (
+    participationId: number,
+    payload: FormData,
+  ) => {
+    try {
+      const response = await Api.shared.createVerification(
+        participationId,
+        payload,
+      );
 
-    return response;
+      return response;
+    } catch (error) {
+      console.log('[Error: Failed to create verification]', error);
+    }
+  };
+
+  const onPressTakeButton = async () => {
+    const response = await takePhoto();
+    await createVerification(route.params.participationId, response).then(
+      () => {
+        navigateToFinishScreen();
+      },
+    );
   };
 
   useEffect(() => {
@@ -105,14 +135,13 @@ function VerificationScreen({route}: PropsType) {
         isActive={isActive}
         photo
       />
-      <TouchableOpacity
-        style={styles.takeButton}
-        onPress={() => {
-          takePhoto();
-        }}>
+      <TouchableOpacity style={styles.takeButton} onPress={onPressTakeButton}>
         <View style={styles.circle} />
       </TouchableOpacity>
       <VerificationGuideContainer
+        verificationDescription={
+          challengeInfo ? challengeInfo.verificationDescription : ''
+        }
         challengeGuideInfo={challengeInfo ? challengeInfo.guide : []}
       />
     </View>

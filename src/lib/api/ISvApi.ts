@@ -13,10 +13,18 @@ import {
   ApplyChallengeAPIResponse,
   CreateOrderPayload,
   CreateOrderAPIResponse,
+  SignUpAPIResponse,
+  SignUpPayload,
+  UpdateMemberPayload,
+  UpdateMemberAPIResponse,
+  UpdateMemberURLPayload,
+  RemoveMemberAPIResponse,
 } from '../../types/api';
 
 export interface ISvApi {
+  setAuthToken(accessToken: string): void;
   setBaseUrl(baseURL: string): void;
+  setSessionKeyOnStorage(value: string): Promise<void>;
 
   getChallengeList(): Promise<ChallengeListAPIResponse>;
   getChallengeDetail(challengeId: number): Promise<ChallengeDetailAPIResponse>;
@@ -47,4 +55,16 @@ export interface ISvApi {
   ): Promise<ApplyChallengeAPIResponse>;
 
   createOrder(payload: CreateOrderPayload): Promise<CreateOrderAPIResponse>;
+
+  signUp(payload: SignUpPayload): Promise<SignUpAPIResponse>;
+
+  updateMemberProfile(
+    payload: UpdateMemberPayload,
+  ): Promise<UpdateMemberAPIResponse>;
+
+  updateMemberURLProfile(
+    payload: UpdateMemberURLPayload,
+  ): Promise<UpdateMemberAPIResponse>;
+
+  removeMember(): Promise<RemoveMemberAPIResponse>;
 }

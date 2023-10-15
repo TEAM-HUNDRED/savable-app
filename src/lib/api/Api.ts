@@ -6,8 +6,8 @@ export default class Api {
   private static instance: ISvApi;
 
   private constructor() {
-    // Api.instance = ProductionApi.shared;
-    Api.instance = MockApi.shared;
+    Api.instance = ProductionApi.shared;
+    // Api.instance = MockApi.shared;
     // switch (publicRuntimeConfig.reactAppApiVersion) {
     //   case 'local':
     //     Api.instance = ProductionApi.shared;

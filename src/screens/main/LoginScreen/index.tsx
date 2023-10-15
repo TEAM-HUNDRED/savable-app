@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -10,14 +10,19 @@ import KakaoLogins, {login, getProfile} from '@react-native-seoul/kakao-login';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
+import Api from '../../../lib/api/Api';
+import {useAuthentication} from '../../../lib/hook/useAuthentication';
+import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
+import {SignUpAPIResponse, SignUpPayload} from '../../../types/api';
+
 import Images from '../../../assets/images';
 import Icon from '../../../assets/icons';
-import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 import SVText from '../../../components/common/SVText';
 
 function LoginScreen(): React.ReactElement {
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+  const {isAuthentication, loading} = useAuthentication();
 
   const signInWithKakao: () => Promise<KakaoLogins.KakaoOAuthToken> =
     async () => {
@@ -40,18 +45,40 @@ function LoginScreen(): React.ReactElement {
       });
   };
 
-  const navigateToUpdateProfileScreen = () => {
-    navigation.navigate(ROUTER.UPDATE_PROFILE_SCREEN);
+  const navigateToUpdateProfileScreen = (currentKey: string) => {
+    navigation.replace(ROUTER.UPDATE_PROFILE_SCREEN, {sessionKey: currentKey});
+  };
+
+  const signUp = async (payload: SignUpPayload) => {
+    try {
+      const response = await Api.shared.signUp(payload);
+
+      return response;
+    } catch (error) {
+      console.log('[Error: Failed to sign up', error);
+    }
+    return {} as SignUpAPIResponse;
   };
 
   const onPressKakaoLogin = async () => {
     const response = await signInWithKakao();
     const profile = await getKakaoProfile();
 
-    console.log(response, profile);
+    const {sessionKey: currentSessionKey} = await signUp(
+      profile as SignUpPayload,
+    );
 
-    navigateToUpdateProfileScreen();
+    navigateToUpdateProfileScreen(currentSessionKey);
   };
+
+  useEffect(() => {
+    if (isAuthentication) navigation.navigate(ROUTER.HOME_SCREEN);
+  }, [isAuthentication, navigation, loading]);
+
+  console.log(loading, isAuthentication);
+
+  if (loading || isAuthentication)
+    return <ImageBackground source={Images.splash} style={styles.container} />;
 
   return (
     <View style={styles.container}>

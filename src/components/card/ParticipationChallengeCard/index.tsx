@@ -5,6 +5,7 @@ import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import Icons from '../../../assets/icons';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
+import Api from '../../../lib/api/Api';
 import {ParticipationViewPropsType} from '../../../types/view';
 
 import SVText from '../../common/SVText';
@@ -24,9 +25,10 @@ function ParticipationChallengeCard({
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
-  const navigateToVerificationScreen = () => {
+  const navigateToVerificationScreen = (challengeId: number) => {
     navigation.navigate(ROUTER.VERIFICATION_SCREEN, {
-      challengeId: participationChallengeId,
+      challengeId: challengeId,
+      participationId: participationChallengeId,
       challengeTitle: title,
     });
   };
@@ -39,8 +41,14 @@ function ParticipationChallengeCard({
     });
   };
 
-  const onPressButton = () => {
-    navigateToVerificationScreen();
+  const onPressButton = async () => {
+    const response = await Api.shared.getParticipationChallengeStatus(
+      participationChallengeId,
+    );
+
+    navigateToVerificationScreen(
+      response.participationChallengeInfoDto.challengeId,
+    );
   };
 
   const challengeInfoConfig = [

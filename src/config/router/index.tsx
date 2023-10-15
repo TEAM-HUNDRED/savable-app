@@ -33,14 +33,21 @@ export type MainScreenKeyList = keyof MainScreenStackPropsList;
 export type MainScreenStackPropsList = RootScreenStackPropsList & {
   [ROUTER.HOME_SCREEN]: undefined;
   [ROUTER.LOGIN_SCREEN]: undefined;
-  [ROUTER.UPDATE_PROFILE_SCREEN]: undefined;
+  [ROUTER.UPDATE_PROFILE_SCREEN]: {sessionKey: string};
   [ROUTER.ORDER_HISTORY_SCREEN]: undefined;
-  [ROUTER.VERIFICATION_SCREEN]: {challengeId: number; challengeTitle: string};
+  [ROUTER.VERIFICATION_SCREEN]: {
+    challengeId: number;
+    participationId: number;
+    challengeTitle: string;
+  };
   [ROUTER.FINISH_VERIFICATION_SCREEN]: {
     challengeId: number;
     challengeTitle: string;
   };
-  [ROUTER.CHALLENGE_EXPLAIN_SCREEN]: {challengeId: number};
+  [ROUTER.CHALLENGE_EXPLAIN_SCREEN]: {
+    challengeId: number;
+    challengeTitle: string;
+  };
   [ROUTER.CHALLENGE_APPLY_SCREEN]: {
     challengeInfo: ChallengeInfoViewType | undefined;
   };
@@ -50,7 +57,7 @@ export type MainScreenStackPropsList = RootScreenStackPropsList & {
     isVerifiedToday: boolean;
   };
   [ROUTER.CREATE_ORDER_PAGE]: {
-    giftcardId: number;
+    id: number;
     image: string;
     productName: string;
     price: number;

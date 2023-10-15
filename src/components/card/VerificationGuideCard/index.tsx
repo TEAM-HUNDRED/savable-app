@@ -9,9 +9,14 @@ import SVText from '../../common/SVText';
 type PropsType = {
   flatListData: ChallengeGuideViewType[];
   titleShown?: boolean;
+  verificationDescription: string;
 };
 
-function VerificationGuideCard({flatListData, titleShown = true}: PropsType) {
+function VerificationGuideCard({
+  flatListData,
+  verificationDescription,
+  titleShown = true,
+}: PropsType) {
   const FlatListItem = ({
     isPass,
     explanation,
@@ -20,11 +25,11 @@ function VerificationGuideCard({flatListData, titleShown = true}: PropsType) {
     <View style={styles.itemContainer}>
       <Image source={{uri: image}} style={styles.image} />
       {isPass ? (
-        <SVText caption02 color={'#3893D6'} style={styles.imageText}>
+        <SVText body07 color={'#3893D6'} style={styles.imageText}>
           {'인증 승인'}
         </SVText>
       ) : (
-        <SVText caption02 color={'#E43E3E'} style={styles.imageText}>
+        <SVText body07 color={'#E43E3E'} style={styles.imageText}>
           {'인증 거부'}
         </SVText>
       )}
@@ -40,9 +45,7 @@ function VerificationGuideCard({flatListData, titleShown = true}: PropsType) {
         </SVText>
       )}
       <SVText body06 style={styles.descriptionText}>
-        {
-          '챌린지 신청이후 다음과 같은 인증 조건을 달성해야만 인증 수락이 이루어집니다. 해당 부분 참고 하여 챌린지 인증을 해주시면 됩니다.'
-        }
+        {verificationDescription}
       </SVText>
       <FlatList
         horizontal
@@ -84,11 +87,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: AppStyles.scaleWidth(10),
+    maxWidth: AppStyles.scaleWidth(160),
   },
   image: {
     width: AppStyles.scaleWidth(160),
     height: AppStyles.scaleWidth(160),
     borderRadius: AppStyles.scaleWidth(8),
+    marginBottom: AppStyles.scaleWidth(4),
   },
   imageText: {
     fontWeight: 'bold',

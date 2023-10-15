@@ -3,6 +3,7 @@ import {ScrollView, StyleSheet} from 'react-native';
 
 import MainBanner from '../../../../components/banner/MainBanner';
 import LogoHeader from '../../../../components/header/LogoHeader';
+import {AppStyles} from '../../../../config';
 import ChallengeContainer from '../../../../container/ChallengeContainer';
 import Api from '../../../../lib/api/Api';
 import {ChallengeViewType} from '../../../../types/view/challenge';
@@ -36,6 +37,7 @@ function ChallengeTabScreen(): React.ReactElement {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: AppStyles.color.white,
   },
 });
 

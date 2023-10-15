@@ -10,7 +10,6 @@ import SVText from '../../common/SVText';
 type PropsType = {
   title: string;
   explanation: string;
-  verificationDescription: string;
   reward: number;
   hasDeadline: boolean;
   startDate: string;

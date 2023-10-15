@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import KakaoLogins, {getProfile} from '@react-native-seoul/kakao-login';
 
@@ -16,8 +16,13 @@ import {SquareCheckIcon} from '../../../assets/icons';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 
 import SVText from '../../../components/common/SVText';
+import {UpdateMemberPayload, UpdateMemberURLPayload} from '../../../types/api';
 
-function UpdateProfileScreen(): React.ReactElement {
+type IProps = {
+  route: RouteProp<MainScreenStackPropsList, ROUTER.UPDATE_PROFILE_SCREEN>;
+};
+
+function UpdateProfileScreen({route}: IProps): React.ReactElement {
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
@@ -26,7 +31,7 @@ function UpdateProfileScreen(): React.ReactElement {
   const [nickName, setNickName] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [verificationNumber, setVerificationNumber] = useState<string>('');
-  const [validationNumber, setValidationNumber] = useState<string>('');
+  const [validationNumber, setValidationNumber] = useState<string>('1');
 
   const [isValidatedNickName, setIsValidatedNickName] = useState<boolean>(true);
   const [isValidatedNumber, setIsValidatedNumber] = useState<boolean>(true);
@@ -73,17 +78,26 @@ function UpdateProfileScreen(): React.ReactElement {
   };
 
   const sendSMS = async () => {
-    const response = await Api.shared.sendSMS(phoneNumber);
+    try {
+      if (validatePhoneNumber()) {
+        const formData = new FormData();
+        formData.append('phoneNumber', phoneNumber);
+        // const response = await Api.shared.sendSMS(phoneNumber);
 
-    setSentMessage(true);
-    setValidationNumber(String(response.number));
+        setSentMessage(true);
+        // setValidationNumber(String(response.number));
+      } else return new Error('전화번호가 잘못되었어요');
+    } catch (error) {
+      console.log('[Error: Failed to send sms', error);
+      setSentMessage(true);
+    }
   };
 
   const navigateToHomeScreen = () => {
     navigation.reset({routes: [{name: ROUTER.HOME_SCREEN}]});
   };
 
-  const onPressFinishButton = () => {
+  const onPressFinishButton = async () => {
     const canFinish =
       validateNickName() &&
       validateNumber() &&
@@ -91,12 +105,34 @@ function UpdateProfileScreen(): React.ReactElement {
       validateTotalCheck();
 
     if (canFinish) {
-      navigateToHomeScreen();
+      try {
+        await updateProfile({
+          username: nickName,
+          phoneNumber: phoneNumber,
+          imageUrl: profileData ? profileData.profileImageUrl : '',
+        });
+
+        await Api.shared.setAuthToken(route.params.sessionKey);
+        await Api.shared.setSessionKeyOnStorage(route.params.sessionKey);
+        navigateToHomeScreen();
+      } catch (error) {
+        console.log('[Error: Set Storage error]', error);
+      }
     }
   };
 
   const navigateToOutLink = (uri: string) => {
     Linking.openURL(uri);
+  };
+
+  const updateProfile = async (payload: UpdateMemberURLPayload) => {
+    try {
+      await Api.shared.updateMemberURLProfile(payload);
+      // const response = await Api.shared.updateMemberProfile(payload);
+    } catch (error) {
+      console.log('updateProfile', error);
+      return new Error('Error Update Profile');
+    }
   };
 
   const getKakaoProfile: () => Promise<KakaoLogins.KakaoProfile> = async () => {

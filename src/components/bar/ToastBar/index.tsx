@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     width: '100%',
     position: 'absolute',
-    bottom: AppStyles.scaleWidth(90),
+    bottom: AppStyles.scaleWidth(40),
     height: AppStyles.scaleWidth(50),
     paddingHorizontal: AppStyles.scaleWidth(50),
   },
