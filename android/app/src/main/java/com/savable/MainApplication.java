@@ -1,4 +1,4 @@
-package com.savable;
+package com.sav_able.kr;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

@@ -1,4 +1,4 @@
-package com.savable;
+package com.sav_able.kr;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
