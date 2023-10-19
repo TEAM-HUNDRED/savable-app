@@ -106,7 +106,7 @@ function ProfileTabScreen({}: PropsType) {
       index: '포인트',
       value: `${userInfo.totalReward}포인트`,
       icon: Icons.point,
-      description: `${userInfo.scheduledReward}포인트`,
+      description: `지급 예정 ${userInfo.scheduledReward}포인트`,
     },
     {
       index: '총 절약 금액',
