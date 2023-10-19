@@ -25,6 +25,7 @@ import {UserInfoPropsType} from '../../../../types/view';
 import SVText from '../../../../components/common/SVText';
 import SVDivider from '../../../../components/common/SVDivider';
 import {dummyUserInfo} from '../../../../mock';
+import {usePopUpProvider} from '../../../../lib/context/PopUpContext';
 
 type PropsType = {};
 
@@ -33,6 +34,7 @@ function ProfileTabScreen({}: PropsType) {
     useNavigation<StackNavigationProp<HomeScreenStackPropsList>>();
   const mainNavigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+  const {showPopUp} = usePopUpProvider();
 
   const [userInfo, setUserInfo] = useState<UserInfoPropsType>(dummyUserInfo);
 
@@ -46,6 +48,50 @@ function ProfileTabScreen({}: PropsType) {
       });
     } catch (error) {
       console.log('[Error: Failed to get user info', error);
+    }
+  };
+
+  const onPressLogout = () => {
+    showPopUp({
+      title: '로그아웃',
+      subButtonText: '',
+      buttonText: '아니오',
+      leftButtonText: '네',
+      onPressLeftButton: userLogout,
+      onPressButton: () => {},
+      cardChildren: (
+        <SVText body04 style={styles.cardText}>
+          {'로그아웃 하시겠습니까?'}
+        </SVText>
+      ),
+    });
+  };
+  const onPressWithdrawal = () => {
+    showPopUp({
+      title: '탈퇴하기',
+      subButtonText: '',
+      buttonText: '아니오',
+      leftButtonText: '네',
+      onPressLeftButton: withdrawalAccount,
+      onPressButton: () => {},
+      cardChildren: (
+        <SVText body04 style={styles.cardText}>
+          {'정말로 탈퇴하시겠습니까?'}
+        </SVText>
+      ),
+    });
+  };
+
+  const withdrawalAccount = async () => {
+    try {
+      await Api.shared.removeMember();
+      await Api.shared.setAuthToken('');
+      await Api.shared.setSessionKeyOnStorage('');
+      await logout();
+
+      navigation.navigate(ROUTER.LOGIN_SCREEN);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -91,19 +137,6 @@ function ProfileTabScreen({}: PropsType) {
     Linking.openURL('http://pf.kakao.com/_xcVxmCG/chat');
   };
 
-  const withdrawalAccount = async () => {
-    try {
-      await Api.shared.removeMember();
-      await Api.shared.setAuthToken('');
-      await Api.shared.setSessionKeyOnStorage('');
-      await logout();
-
-      navigation.navigate(ROUTER.LOGIN_SCREEN);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const navigationBarList = [
     {
       title: '기프티콘 구매 내역',
@@ -117,11 +150,11 @@ function ProfileTabScreen({}: PropsType) {
     },
     {
       title: '로그아웃',
-      onPress: userLogout,
+      onPress: onPressLogout,
     },
     {
       title: '탈퇴하기',
-      onPress: withdrawalAccount,
+      onPress: onPressWithdrawal,
     },
   ];
 
@@ -328,6 +361,14 @@ const styles = StyleSheet.create({
   profileText: {
     fontWeight: 'bold',
     lineHeight: AppStyles.scaleFont(24),
+  },
+  buttonContainer: {
+    width: '100%',
+    height: AppStyles.scaleWidth(40),
+    marginTop: AppStyles.scaleWidth(10),
+  },
+  cardText: {
+    marginBottom: AppStyles.scaleWidth(10),
   },
 });
 

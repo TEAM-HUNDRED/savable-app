@@ -8,14 +8,18 @@ type PropsType = {
   title: string;
   subButtonText: string;
   buttonText: string;
-  onPressButton: () => void;
   children: JSX.Element[] | JSX.Element;
+  onPressButton: () => void;
+  onPressLeftButton?: () => void;
+  leftButtonText?: string;
 };
 
 function PopUpCard({
   title,
   subButtonText,
   buttonText,
+  leftButtonText,
+  onPressLeftButton,
   onPressButton,
   children,
 }: PropsType) {
@@ -25,18 +29,35 @@ function PopUpCard({
         {title}
       </SVText>
       {children}
-      <SVText
-        body06
-        color={AppStyles.color.gray04}
-        style={styles.subButtonText}>
-        {subButtonText}
-      </SVText>
-      <View style={styles.buttonContainer}>
-        <SVButton
-          onPress={onPressButton}
-          borderRadius={AppStyles.scaleWidth(8)}>
-          {buttonText}
-        </SVButton>
+      {subButtonText && (
+        <SVText
+          body06
+          color={AppStyles.color.gray04}
+          style={styles.subButtonText}>
+          {subButtonText}
+        </SVText>
+      )}
+      <View style={styles.buttonWrapper}>
+        {leftButtonText && (
+          <>
+            <View style={styles.buttonContainer}>
+              <SVButton
+                onPress={onPressLeftButton}
+                borderRadius={AppStyles.scaleWidth(8)}
+                color={AppStyles.color.lightGray02}>
+                {leftButtonText}
+              </SVButton>
+            </View>
+            <View style={styles.divider} />
+          </>
+        )}
+        <View style={styles.buttonContainer}>
+          <SVButton
+            onPress={onPressButton}
+            borderRadius={AppStyles.scaleWidth(8)}>
+            {buttonText}
+          </SVButton>
+        </View>
       </View>
     </View>
   );
@@ -65,8 +86,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingTop: AppStyles.scaleWidth(10),
   },
-  buttonContainer: {
+  buttonWrapper: {
+    flexDirection: 'row',
     width: '100%',
+  },
+  divider: {
+    width: AppStyles.scaleWidth(12),
+  },
+  buttonContainer: {
+    flex: 1,
     height: AppStyles.scaleWidth(40),
     marginTop: AppStyles.scaleWidth(10),
   },
