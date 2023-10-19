@@ -25,7 +25,7 @@ function LoginScreen(): React.ReactElement {
   const {isAuthentication, loading} = useAuthentication();
 
   const navigateToUpdateProfileScreen = (currentKey: string) => {
-    navigation.replace(ROUTER.UPDATE_PROFILE_SCREEN, {sessionKey: currentKey});
+    navigation.navigate(ROUTER.UPDATE_PROFILE_SCREEN, {sessionKey: currentKey});
   };
 
   const navigateToHomeScreen = () => {
