@@ -100,6 +100,10 @@ export default class ProductionApi implements ISvApi {
   public async getUserInfo(): Promise<UserInfoAPIResponse> {
     const {data} = await this.axios.get('my-page');
 
+    if (data.code === 401) {
+      throw 'NOT_AUTHORIZATION';
+    }
+
     return data.data;
   }
 
@@ -123,8 +127,6 @@ export default class ProductionApi implements ISvApi {
       },
     );
 
-    console.log(data);
-
     return data;
   }
 
@@ -143,7 +145,11 @@ export default class ProductionApi implements ISvApi {
       phoneNumber: phoneNumber,
     });
 
-    return {number: data};
+    if (data.code === 409) {
+      throw 'WRONG_NUMBER';
+    }
+
+    return data.data;
   }
 
   public async ApplyChallenge(
@@ -185,10 +191,11 @@ export default class ProductionApi implements ISvApi {
             this.setAuthToken(`SESSION=${sessionValue}`);
           }
         }
+
         return {response, sessionKey: currentKey};
       });
 
-    return {sessionKey: data.sessionKey, data: data.response.data};
+    return {sessionKey: data.sessionKey, data: data.response.data.data};
   }
 
   public async updateMemberProfile(

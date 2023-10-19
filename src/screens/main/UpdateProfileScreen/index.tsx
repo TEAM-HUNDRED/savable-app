@@ -16,7 +16,7 @@ import {SquareCheckIcon} from '../../../assets/icons';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 
 import SVText from '../../../components/common/SVText';
-import {UpdateMemberPayload, UpdateMemberURLPayload} from '../../../types/api';
+import {UpdateMemberURLPayload} from '../../../types/api';
 
 type IProps = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.UPDATE_PROFILE_SCREEN>;
@@ -32,6 +32,8 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [verificationNumber, setVerificationNumber] = useState<string>('');
   const [validationNumber, setValidationNumber] = useState<string>('1');
+  const [duplicatedPhoneNumber, setDuplicatedPhoneNumber] =
+    useState<boolean>(false);
 
   const [isValidatedNickName, setIsValidatedNickName] = useState<boolean>(true);
   const [isValidatedNumber, setIsValidatedNumber] = useState<boolean>(true);
@@ -44,7 +46,7 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
   const [isPrivacyChecked, setIsPrivacyChecked] = useState<boolean>(false);
 
   const nameCheck = /^([가-힣]|[0-9]|[a-z]){2,10}$/;
-  const phoneCheck = /^[0][1][0][0-9]{3,4}\d{4}$/;
+  const phoneCheck = /^[0][1][0][0-9]{4}\d{4}$/;
 
   const consentUri =
     'https://superb-nannyberry-327.notion.site/d14f4bc9b75842b7a23573e7350b8931?pvs=4';
@@ -77,19 +79,27 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
     return isPrivacyChecked && isTermChecked;
   };
 
+  const handlePhoneNumber = (text: string) => {
+    if (validationNumber) {
+      setValidationNumber('');
+      setSentMessage(false);
+    }
+
+    setPhoneNumber(text);
+  };
+
   const sendSMS = async () => {
     try {
       if (validatePhoneNumber()) {
-        const formData = new FormData();
-        formData.append('phoneNumber', phoneNumber);
-        // const response = await Api.shared.sendSMS(phoneNumber);
+        const response = await Api.shared.sendSMS(phoneNumber);
 
         setSentMessage(true);
-        // setValidationNumber(String(response.number));
+        setValidationNumber(String(response));
       } else return new Error('전화번호가 잘못되었어요');
     } catch (error) {
-      console.log('[Error: Failed to send sms', error);
-      setSentMessage(true);
+      console.log('[Error: Failed to send sms]', error);
+
+      if (error === 'WRONG_NUMBER') setDuplicatedPhoneNumber(true);
     }
   };
 
@@ -112,7 +122,6 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
           imageUrl: profileData ? profileData.profileImageUrl : '',
         });
 
-        await Api.shared.setAuthToken(route.params.sessionKey);
         await Api.shared.setSessionKeyOnStorage(route.params.sessionKey);
         navigateToHomeScreen();
       } catch (error) {
@@ -128,10 +137,8 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
   const updateProfile = async (payload: UpdateMemberURLPayload) => {
     try {
       await Api.shared.updateMemberURLProfile(payload);
-      // const response = await Api.shared.updateMemberProfile(payload);
     } catch (error) {
       console.log('updateProfile', error);
-      return new Error('Error Update Profile');
     }
   };
 
@@ -187,9 +194,9 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
           <View style={styles.inputContainer}>
             <TextInput
               placeholder={'휴대폰 번호를 입력해주세요'}
-              style={[styles.input, {flex: 1}]}
+              style={[styles.input, styles.phoneInput]}
               inputMode={'tel'}
-              onChangeText={setPhoneNumber}
+              onChangeText={handlePhoneNumber}
               onBlur={validatePhoneNumber}
               value={phoneNumber}
             />
@@ -221,13 +228,19 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
               </TouchableOpacity>
             )}
           </View>
-          <SVText
-            body06
-            style={
-              isValidatedPhoneNumber ? styles.description : styles.errorText
-            }>
-            {"'-' 없이 휴대폰 번호를 입력해주세요"}
-          </SVText>
+          {duplicatedPhoneNumber ? (
+            <SVText body06 style={styles.errorText}>
+              {'이미 가입이 되어 있는 휴대폰 번호입니다.'}
+            </SVText>
+          ) : (
+            <SVText
+              body06
+              style={
+                isValidatedPhoneNumber ? styles.description : styles.errorText
+              }>
+              {"'-' 없이 휴대폰 번호 11자를 입력해주세요"}
+            </SVText>
+          )}
         </View>
         <View style={styles.inputCardContainer}>
           <SVText body03>{'인증번호'}</SVText>
@@ -340,6 +353,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: AppStyles.scaleWidth(48),
     marginVertical: AppStyles.scaleWidth(6),
+  },
+  phoneInput: {
+    flex: 1,
   },
   input: {
     width: '100%',

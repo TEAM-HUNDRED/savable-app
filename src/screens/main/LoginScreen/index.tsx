@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   Image,
   ImageBackground,
@@ -6,14 +6,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import KakaoLogins, {login, getProfile} from '@react-native-seoul/kakao-login';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {login, getProfile} from '@react-native-seoul/kakao-login';
 
 import Api from '../../../lib/api/Api';
 import {useAuthentication} from '../../../lib/hook/useAuthentication';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
-import {SignUpAPIResponse, SignUpPayload} from '../../../types/api';
+import {SignUpPayload} from '../../../types/api';
 
 import Images from '../../../assets/images';
 import Icon from '../../../assets/icons';
@@ -24,19 +24,17 @@ function LoginScreen(): React.ReactElement {
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
   const {isAuthentication, loading} = useAuthentication();
 
-  const signInWithKakao: () => Promise<KakaoLogins.KakaoOAuthToken> =
-    async () => {
-      return await login()
-        .then(result => {
-          return result;
-        })
-        .catch(error => {
-          throw error;
-        });
-    };
+  const navigateToUpdateProfileScreen = (currentKey: string) => {
+    navigation.navigate(ROUTER.UPDATE_PROFILE_SCREEN, {sessionKey: currentKey});
+  };
 
-  const getKakaoProfile: () => Promise<KakaoLogins.KakaoProfile> = async () => {
-    return await getProfile()
+  const navigateToHomeScreen = () => {
+    navigation.replace(ROUTER.HOME_SCREEN);
+  };
+
+  const signUp = async (payload: SignUpPayload) => {
+    return await Api.shared
+      .signUp(payload)
       .then(result => {
         return result;
       })
@@ -45,30 +43,24 @@ function LoginScreen(): React.ReactElement {
       });
   };
 
-  const navigateToUpdateProfileScreen = (currentKey: string) => {
-    navigation.replace(ROUTER.UPDATE_PROFILE_SCREEN, {sessionKey: currentKey});
-  };
-
-  const signUp = async (payload: SignUpPayload) => {
-    try {
-      const response = await Api.shared.signUp(payload);
-
-      return response;
-    } catch (error) {
-      console.log('[Error: Failed to sign up', error);
-    }
-    return {} as SignUpAPIResponse;
-  };
-
   const onPressKakaoLogin = async () => {
-    const response = await signInWithKakao();
-    const profile = await getKakaoProfile();
+    try {
+      await login();
+      const profile = await getProfile();
 
-    const {sessionKey: currentSessionKey} = await signUp(
-      profile as SignUpPayload,
-    );
+      const {sessionKey: currentSessionKey, data} = await signUp(
+        profile as SignUpPayload,
+      );
 
-    navigateToUpdateProfileScreen(currentSessionKey);
+      if (data.isRegistered) {
+        await Api.shared.setSessionKeyOnStorage(currentSessionKey);
+        navigateToHomeScreen();
+      } else {
+        navigateToUpdateProfileScreen(currentSessionKey);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

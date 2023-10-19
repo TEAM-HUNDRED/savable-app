@@ -1,7 +1,9 @@
 import {useEffect, useState} from 'react';
-
+import {useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Api from '../api/Api';
+import {handleUserInfo} from '../../modules/redux/slice/userInfoSlice';
 
 export const useAuthentication = (): {
   isAuthentication: boolean;
@@ -10,14 +12,15 @@ export const useAuthentication = (): {
   const [isAuthentication, setIsAuthentication] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const dispatch = useDispatch();
+
   const getStorageSessionData = async () => {
     try {
       const value = await AsyncStorage.getItem('session_key');
-      console.log(value);
 
       if (value !== null) {
-        Api.shared.setAuthToken(value);
-        getUserInfo();
+        await Api.shared.setAuthToken(value);
+        await getUserInfo();
 
         setIsAuthentication(true);
       }
@@ -38,7 +41,16 @@ export const useAuthentication = (): {
     try {
       const response = await Api.shared.getUserInfo();
 
-      console.log(response);
+      dispatch(
+        handleUserInfo({
+          value: {
+            userName: response.username,
+            userPhoneNumber: response.username,
+            userProfileImageUrl: response.profileImage,
+            userTotalReward: response.totalReward,
+          },
+        }),
+      );
     } catch (error) {
       console.log('[Error: Failed to get user Info', error);
       await Api.shared.setSessionKeyOnStorage('');
