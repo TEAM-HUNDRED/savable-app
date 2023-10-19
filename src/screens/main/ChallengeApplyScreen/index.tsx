@@ -72,9 +72,7 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
   };
 
   const navigateToChallengeScreen = () => {
-    // navigation.navigate(ROUTER.HOME_SCREEN);
     homeNavigation.navigate(ROUTER.PARTICIPATION_SCREEN);
-    // homeNavigation.reset({routes: [{name: ROUTER.PARTICIPATION_SCREEN}]});
   };
 
   const applyChallenge = async () => {
@@ -84,7 +82,7 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
         duration: (durationList.findIndex(item => item === duration) + 1) * 7,
         verificationGoal: Number(target),
       });
-      console.log(data);
+      navigateToChallengeScreen();
 
       return data;
     } catch (error) {
@@ -93,15 +91,11 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
   };
 
   const onPressApplyButton = () => {
-    applyChallenge();
-
     showPopUp({
       title: '챌린지 참여 완료!',
       subButtonText: 'Savable과 함께 절약해요',
       buttonText: '확인',
-      onPressButton: () => {
-        navigateToChallengeScreen();
-      },
+      onPressButton: applyChallenge,
       cardChildren: (
         <View>
           <SVText body04 center>
@@ -117,7 +111,7 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
           </View>
           <View style={styles.cardTextContainer}>
             <SVText body04 center style={styles.highlightText}>
-              {`${String(route.params.challengeInfo?.reward)} 포인트 `}
+              {`${String(route.params.challengeInfo?.reward)}포인트 `}
             </SVText>
             <SVText body04 center>
               {'지급!'}

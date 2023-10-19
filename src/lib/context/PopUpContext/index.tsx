@@ -59,7 +59,7 @@ const PopUpProvider: React.FC<{children: React.ReactNode}> = ({
   const [isVisible, setIsVisible] = useState(false);
 
   const handleOnPress = () => {
-    onPressButton;
+    onPressButton();
     setIsVisible(false);
   };
 
