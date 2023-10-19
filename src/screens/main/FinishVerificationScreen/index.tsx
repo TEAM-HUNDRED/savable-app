@@ -59,15 +59,7 @@ function FinishVerificationScreen({route}: PropsType) {
     getVerificationDetail();
   }, []);
 
-  console.log(verificationData);
-
   if (!verificationData) return <></>;
-
-  console.log(
-    verificationData.goalCount,
-    verificationData.currentCount,
-    verificationData.goalCount - verificationData.currentCount,
-  );
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -104,15 +96,15 @@ function FinishVerificationScreen({route}: PropsType) {
             body07
             style={{
               marginLeft: AppStyles.scaleWidth(
-                2.38 * verificationData.percentage,
+                2.3 * verificationData.percentage,
               ),
             }}>
             {`${verificationData.percentage}%`}
           </SVText>
         </View>
-        <SVText body02 style={styles.currentText}>
+        <SVText center body02 style={styles.currentText}>
           {verificationData.percentage === 100
-            ? '인증 성공 여부 반영까지 하루 정도 소요돼요!'
+            ? '인증 성공 여부 반영까지\n하루 정도 소요돼요!'
             : `지금까지 ${verificationData.currentCount}회 인증 성공\n앞으로  ${
                 verificationData.goalCount - verificationData.currentCount
               }회 남았어요!`}
