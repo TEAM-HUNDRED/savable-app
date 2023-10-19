@@ -2,10 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {
   Image,
   Linking,
-  NativeSyntheticEvent,
   StyleSheet,
   TextInput,
-  TextInputChangeEventData,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -18,7 +16,7 @@ import {SquareCheckIcon} from '../../../assets/icons';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 
 import SVText from '../../../components/common/SVText';
-import {UpdateMemberPayload, UpdateMemberURLPayload} from '../../../types/api';
+import {UpdateMemberURLPayload} from '../../../types/api';
 
 type IProps = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.UPDATE_PROFILE_SCREEN>;
@@ -196,7 +194,7 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
           <View style={styles.inputContainer}>
             <TextInput
               placeholder={'휴대폰 번호를 입력해주세요'}
-              style={[styles.input, {flex: 1}]}
+              style={[styles.input, styles.phoneInput]}
               inputMode={'tel'}
               onChangeText={handlePhoneNumber}
               onBlur={validatePhoneNumber}
@@ -355,6 +353,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: AppStyles.scaleWidth(48),
     marginVertical: AppStyles.scaleWidth(6),
+  },
+  phoneInput: {
+    flex: 1,
   },
   input: {
     width: '100%',

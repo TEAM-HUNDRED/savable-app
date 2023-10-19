@@ -100,6 +100,10 @@ export default class ProductionApi implements ISvApi {
   public async getUserInfo(): Promise<UserInfoAPIResponse> {
     const {data} = await this.axios.get('my-page');
 
+    if (data.code === 401) {
+      throw 'NOT_AUTHORIZATION';
+    }
+
     return data.data;
   }
 
@@ -122,8 +126,6 @@ export default class ProductionApi implements ISvApi {
         },
       },
     );
-
-    console.log(data);
 
     return data;
   }
