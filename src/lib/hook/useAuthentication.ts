@@ -16,8 +16,8 @@ export const useAuthentication = (): {
       console.log(value);
 
       if (value !== null) {
-        Api.shared.setAuthToken(value);
-        getUserInfo();
+        await Api.shared.setAuthToken(value);
+        await getUserInfo();
 
         setIsAuthentication(true);
       }

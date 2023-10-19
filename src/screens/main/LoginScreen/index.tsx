@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   Image,
   ImageBackground,
@@ -6,14 +6,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import KakaoLogins, {login, getProfile} from '@react-native-seoul/kakao-login';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import KakaoLogins, {login, getProfile} from '@react-native-seoul/kakao-login';
 
 import Api from '../../../lib/api/Api';
 import {useAuthentication} from '../../../lib/hook/useAuthentication';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
-import {SignUpAPIResponse, SignUpPayload} from '../../../types/api';
+import {SignUpPayload} from '../../../types/api';
 
 import Images from '../../../assets/images';
 import Icon from '../../../assets/icons';
@@ -49,26 +49,47 @@ function LoginScreen(): React.ReactElement {
     navigation.replace(ROUTER.UPDATE_PROFILE_SCREEN, {sessionKey: currentKey});
   };
 
-  const signUp = async (payload: SignUpPayload) => {
-    try {
-      const response = await Api.shared.signUp(payload);
+  const navigateToHomeScreen = () => {
+    navigation.replace(ROUTER.HOME_SCREEN);
+  };
 
-      return response;
-    } catch (error) {
-      console.log('[Error: Failed to sign up', error);
-    }
-    return {} as SignUpAPIResponse;
+  const signUp = async (payload: SignUpPayload) => {
+    return await Api.shared
+      .signUp(payload)
+      .then(result => {
+        return result;
+      })
+      .catch(error => {
+        throw error;
+      });
+  };
+
+  const getUserInfo = async () => {
+    return await Api.shared
+      .getUserInfo()
+      .then(result => {
+        navigateToHomeScreen();
+        return result;
+      })
+      .catch(error => {
+        throw error;
+      });
   };
 
   const onPressKakaoLogin = async () => {
-    const response = await signInWithKakao();
-    const profile = await getKakaoProfile();
+    try {
+      await signInWithKakao();
+      const profile = await getKakaoProfile();
+      const {sessionKey: currentSessionKey} = await signUp(
+        profile as SignUpPayload,
+      );
 
-    const {sessionKey: currentSessionKey} = await signUp(
-      profile as SignUpPayload,
-    );
+      console.log(currentSessionKey);
 
-    navigateToUpdateProfileScreen(currentSessionKey);
+      // navigateToUpdateProfileScreen(currentSessionKey);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

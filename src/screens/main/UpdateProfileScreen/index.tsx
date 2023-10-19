@@ -112,7 +112,6 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
           imageUrl: profileData ? profileData.profileImageUrl : '',
         });
 
-        await Api.shared.setAuthToken(route.params.sessionKey);
         await Api.shared.setSessionKeyOnStorage(route.params.sessionKey);
         navigateToHomeScreen();
       } catch (error) {
