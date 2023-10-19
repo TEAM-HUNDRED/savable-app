@@ -46,7 +46,7 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
   const [isPrivacyChecked, setIsPrivacyChecked] = useState<boolean>(false);
 
   const nameCheck = /^([가-힣]|[0-9]|[a-z]){2,10}$/;
-  const phoneCheck = /^[0][1][0][0-9]{3,4}\d{4}$/;
+  const phoneCheck = /^[0][1][0][0-9]{4}\d{4}$/;
 
   const consentUri =
     'https://superb-nannyberry-327.notion.site/d14f4bc9b75842b7a23573e7350b8931?pvs=4';
@@ -232,7 +232,7 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
               style={
                 isValidatedPhoneNumber ? styles.description : styles.errorText
               }>
-              {"'-' 없이 휴대폰 번호를 입력해주세요"}
+              {"'-' 없이 휴대폰 번호 11자를 입력해주세요"}
             </SVText>
           )}
         </View>
