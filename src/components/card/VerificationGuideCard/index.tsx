@@ -17,25 +17,23 @@ function VerificationGuideCard({
   verificationDescription,
   titleShown = true,
 }: PropsType) {
-  const FlatListItem = ({
-    isPass,
-    explanation,
-    image,
-  }: ChallengeGuideViewType) => (
-    <View style={styles.itemContainer}>
-      <Image source={{uri: image}} style={styles.image} />
-      {isPass ? (
-        <SVText body07 color={'#3893D6'} style={styles.imageText}>
-          {'인증 승인'}
-        </SVText>
-      ) : (
-        <SVText body07 color={'#E43E3E'} style={styles.imageText}>
-          {'인증 거부'}
-        </SVText>
-      )}
-      <SVText caption02>{explanation}</SVText>
-    </View>
-  );
+  const renderItem = (item: ChallengeGuideViewType) => {
+    return (
+      <View style={styles.itemContainer}>
+        <Image source={{uri: item.image}} style={styles.image} />
+        {item.isPass ? (
+          <SVText body07 color={'#3893D6'} style={styles.imageText}>
+            {'인증 승인'}
+          </SVText>
+        ) : (
+          <SVText body07 color={'#E43E3E'} style={styles.imageText}>
+            {'인증 반려'}
+          </SVText>
+        )}
+        <SVText caption02>{item.explanation}</SVText>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -51,7 +49,7 @@ function VerificationGuideCard({
         horizontal
         showsHorizontalScrollIndicator={false}
         data={flatListData}
-        renderItem={({item}) => <FlatListItem {...item} />}
+        renderItem={({item}) => renderItem(item)}
         keyExtractor={(item, idx) => `${item.isPass}-${idx}`}
         style={styles.flatList}
         ListFooterComponent={<View style={styles.footer} />}
@@ -84,7 +82,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     display: 'flex',
-    justifyContent: 'center',
+
     alignItems: 'center',
     marginRight: AppStyles.scaleWidth(10),
     maxWidth: AppStyles.scaleWidth(160),
