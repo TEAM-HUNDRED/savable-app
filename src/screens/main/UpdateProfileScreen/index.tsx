@@ -32,6 +32,8 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [verificationNumber, setVerificationNumber] = useState<string>('');
   const [validationNumber, setValidationNumber] = useState<string>('1');
+  const [duplicatedPhoneNumber, setDuplicatedPhoneNumber] =
+    useState<boolean>(false);
 
   const [isValidatedNickName, setIsValidatedNickName] = useState<boolean>(true);
   const [isValidatedNumber, setIsValidatedNumber] = useState<boolean>(true);
@@ -80,16 +82,16 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
   const sendSMS = async () => {
     try {
       if (validatePhoneNumber()) {
-        const formData = new FormData();
-        formData.append('phoneNumber', phoneNumber);
-        // const response = await Api.shared.sendSMS(phoneNumber);
+        const response = await Api.shared.sendSMS(phoneNumber);
 
         setSentMessage(true);
-        // setValidationNumber(String(response.number));
+        setValidationNumber(String(response));
       } else return new Error('전화번호가 잘못되었어요');
     } catch (error) {
-      console.log('[Error: Failed to send sms', error);
+      console.log('[Error: Failed to send sms]', error);
       setSentMessage(true);
+
+      if (error === 'WRONG_NUMBER') setDuplicatedPhoneNumber(true);
     }
   };
 
@@ -220,13 +222,19 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
               </TouchableOpacity>
             )}
           </View>
-          <SVText
-            body06
-            style={
-              isValidatedPhoneNumber ? styles.description : styles.errorText
-            }>
-            {"'-' 없이 휴대폰 번호를 입력해주세요"}
-          </SVText>
+          {duplicatedPhoneNumber ? (
+            <SVText body06 style={styles.errorText}>
+              {'이미 가입이 되어 있는 휴대폰 번호입니다.'}
+            </SVText>
+          ) : (
+            <SVText
+              body06
+              style={
+                isValidatedPhoneNumber ? styles.description : styles.errorText
+              }>
+              {"'-' 없이 휴대폰 번호를 입력해주세요"}
+            </SVText>
+          )}
         </View>
         <View style={styles.inputCardContainer}>
           <SVText body03>{'인증번호'}</SVText>

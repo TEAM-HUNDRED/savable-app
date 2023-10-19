@@ -143,7 +143,11 @@ export default class ProductionApi implements ISvApi {
       phoneNumber: phoneNumber,
     });
 
-    return {number: data};
+    if (data.code === 409) {
+      throw 'WRONG_NUMBER';
+    }
+
+    return data.data;
   }
 
   public async ApplyChallenge(

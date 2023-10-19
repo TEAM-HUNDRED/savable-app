@@ -13,7 +13,7 @@ export type UserInfoAPIResponse = {
 };
 
 export type SMSAPIResponse = {
-  number: number;
+  data: string;
 };
 
 export type SignUpPayload = {
