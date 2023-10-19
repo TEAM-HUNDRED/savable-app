@@ -112,7 +112,7 @@ function FinishVerificationScreen({route}: PropsType) {
         </View>
         <SVText body02 style={styles.currentText}>
           {verificationData.percentage === 100
-            ? '사진 확인까지 1시간 가량 소요돼요!'
+            ? '인증 성공 여부 반영까지 하루 정도 소요돼요!'
             : `지금까지 ${verificationData.currentCount}회 인증 성공\n앞으로  ${
                 verificationData.goalCount - verificationData.currentCount
               }회 남았어요!`}
