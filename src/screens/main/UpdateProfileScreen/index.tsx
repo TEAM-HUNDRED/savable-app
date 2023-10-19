@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {
   Image,
   Linking,
+  NativeSyntheticEvent,
   StyleSheet,
   TextInput,
+  TextInputChangeEventData,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -79,6 +81,15 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
     return isPrivacyChecked && isTermChecked;
   };
 
+  const handlePhoneNumber = (text: string) => {
+    if (validationNumber) {
+      setValidationNumber('');
+      setSentMessage(false);
+    }
+
+    setPhoneNumber(text);
+  };
+
   const sendSMS = async () => {
     try {
       if (validatePhoneNumber()) {
@@ -89,7 +100,6 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
       } else return new Error('전화번호가 잘못되었어요');
     } catch (error) {
       console.log('[Error: Failed to send sms]', error);
-      setSentMessage(true);
 
       if (error === 'WRONG_NUMBER') setDuplicatedPhoneNumber(true);
     }
@@ -129,10 +139,8 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
   const updateProfile = async (payload: UpdateMemberURLPayload) => {
     try {
       await Api.shared.updateMemberURLProfile(payload);
-      // const response = await Api.shared.updateMemberProfile(payload);
     } catch (error) {
       console.log('updateProfile', error);
-      return new Error('Error Update Profile');
     }
   };
 
@@ -190,7 +198,7 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
               placeholder={'휴대폰 번호를 입력해주세요'}
               style={[styles.input, {flex: 1}]}
               inputMode={'tel'}
-              onChangeText={setPhoneNumber}
+              onChangeText={handlePhoneNumber}
               onBlur={validatePhoneNumber}
               value={phoneNumber}
             />
