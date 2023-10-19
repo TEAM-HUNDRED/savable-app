@@ -94,8 +94,9 @@ function ProfileTabScreen({}: PropsType) {
   const withdrawalAccount = async () => {
     try {
       await Api.shared.removeMember();
-      Api.shared.setAuthToken('');
-      Api.shared.setSessionKeyOnStorage('');
+      await Api.shared.setAuthToken('');
+      await Api.shared.setSessionKeyOnStorage('');
+      await logout();
 
       navigation.navigate(ROUTER.LOGIN_SCREEN);
     } catch (error) {

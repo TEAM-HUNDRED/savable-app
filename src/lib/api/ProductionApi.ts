@@ -185,10 +185,11 @@ export default class ProductionApi implements ISvApi {
             this.setAuthToken(`SESSION=${sessionValue}`);
           }
         }
+
         return {response, sessionKey: currentKey};
       });
 
-    return {sessionKey: data.sessionKey, data: data.response.data};
+    return {sessionKey: data.sessionKey, data: data.response.data.data};
   }
 
   public async updateMemberProfile(

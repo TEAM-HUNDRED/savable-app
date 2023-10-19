@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import KakaoLogins, {login, getProfile} from '@react-native-seoul/kakao-login';
+import {login, getProfile} from '@react-native-seoul/kakao-login';
 
 import Api from '../../../lib/api/Api';
 import {useAuthentication} from '../../../lib/hook/useAuthentication';
@@ -23,27 +23,6 @@ function LoginScreen(): React.ReactElement {
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
   const {isAuthentication, loading} = useAuthentication();
-
-  const signInWithKakao: () => Promise<KakaoLogins.KakaoOAuthToken> =
-    async () => {
-      return await login()
-        .then(result => {
-          return result;
-        })
-        .catch(error => {
-          throw error;
-        });
-    };
-
-  const getKakaoProfile: () => Promise<KakaoLogins.KakaoProfile> = async () => {
-    return await getProfile()
-      .then(result => {
-        return result;
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
 
   const navigateToUpdateProfileScreen = (currentKey: string) => {
     navigation.replace(ROUTER.UPDATE_PROFILE_SCREEN, {sessionKey: currentKey});
@@ -64,29 +43,21 @@ function LoginScreen(): React.ReactElement {
       });
   };
 
-  const getUserInfo = async () => {
-    return await Api.shared
-      .getUserInfo()
-      .then(result => {
-        navigateToHomeScreen();
-        return result;
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-
   const onPressKakaoLogin = async () => {
     try {
-      await signInWithKakao();
-      const profile = await getKakaoProfile();
-      const {sessionKey: currentSessionKey} = await signUp(
+      await login();
+      const profile = await getProfile();
+
+      const {sessionKey: currentSessionKey, data} = await signUp(
         profile as SignUpPayload,
       );
 
-      console.log(currentSessionKey);
-
-      // navigateToUpdateProfileScreen(currentSessionKey);
+      if (data.isRegistered) {
+        await Api.shared.setSessionKeyOnStorage(currentSessionKey);
+        navigateToHomeScreen();
+      } else {
+        navigateToUpdateProfileScreen(currentSessionKey);
+      }
     } catch (error) {
       console.log(error);
     }
