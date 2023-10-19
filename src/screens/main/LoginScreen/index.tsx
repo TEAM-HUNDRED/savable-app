@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {
   Image,
   ImageBackground,
@@ -28,9 +28,9 @@ function LoginScreen(): React.ReactElement {
     navigation.navigate(ROUTER.UPDATE_PROFILE_SCREEN, {sessionKey: currentKey});
   };
 
-  const navigateToHomeScreen = () => {
+  const navigateToHomeScreen = useCallback(() => {
     navigation.replace(ROUTER.HOME_SCREEN);
-  };
+  }, [navigation]);
 
   const signUp = async (payload: SignUpPayload) => {
     return await Api.shared
@@ -64,8 +64,8 @@ function LoginScreen(): React.ReactElement {
   };
 
   useEffect(() => {
-    if (isAuthentication) navigation.navigate(ROUTER.HOME_SCREEN);
-  }, [isAuthentication, navigation, loading]);
+    if (isAuthentication) navigateToHomeScreen();
+  }, [isAuthentication, loading, navigateToHomeScreen]);
 
   console.log(loading, isAuthentication);
 
