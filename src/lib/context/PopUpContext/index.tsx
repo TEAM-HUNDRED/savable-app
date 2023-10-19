@@ -12,6 +12,8 @@ type PopUpContextType = {
     buttonText,
     onPressButton,
     cardChildren,
+    onPressLeftButton,
+    leftButtonText,
   }: ShowPopUpParamsType) => void;
 };
 
@@ -21,6 +23,8 @@ type ShowPopUpParamsType = {
   buttonText: string;
   onPressButton: () => void;
   cardChildren: React.JSX.Element[] | React.JSX.Element;
+  onPressLeftButton?: () => void;
+  leftButtonText?: string;
 };
 
 export const PopUpContext = React.createContext<PopUpContextType>({
@@ -30,6 +34,8 @@ export const PopUpContext = React.createContext<PopUpContextType>({
     buttonText,
     onPressButton,
     cardChildren,
+    onPressLeftButton,
+    leftButtonText,
   }: ShowPopUpParamsType) => {},
 });
 
@@ -41,9 +47,12 @@ const PopUpProvider: React.FC<{children: React.ReactNode}> = ({
   const [title, setTitle] = useState('');
   const [subButtonText, setSubButtonText] = useState('');
   const [buttonText, setButtonText] = useState('');
-  const [onPressButton, setOnPressButton] = useState<() => void>(
-    () => () => {},
+  const [leftButtonText, setLeftButtonText] = useState('');
+
+  const [onPressLeftButton, setOnPressLeftButton] = useState<() => void>(
+    () => {},
   );
+  const [onPressButton, setOnPressButton] = useState<() => void>();
   const [cardChildren, setCardChildren] = useState<
     React.JSX.Element[] | React.JSX.Element
   >(<></>);
@@ -54,21 +63,29 @@ const PopUpProvider: React.FC<{children: React.ReactNode}> = ({
     setIsVisible(false);
   };
 
+  const handleOnPressLeftButton = () => {
+    onPressLeftButton();
+    setIsVisible(false);
+  };
+
   const showPopUp = ({
     title,
     subButtonText,
     buttonText,
     onPressButton,
     cardChildren,
+    onPressLeftButton,
+    leftButtonText,
   }: ShowPopUpParamsType) => {
     setTitle(title);
     setSubButtonText(subButtonText);
     setButtonText(buttonText);
-    setOnPressButton(() => {
-      onPressButton();
-    });
+    setOnPressButton(() => onPressButton);
     setCardChildren(cardChildren);
     setIsVisible(true);
+
+    onPressLeftButton && setOnPressLeftButton(() => onPressLeftButton);
+    leftButtonText && setLeftButtonText(leftButtonText);
   };
 
   return (
@@ -82,6 +99,8 @@ const PopUpProvider: React.FC<{children: React.ReactNode}> = ({
             buttonText={buttonText}
             subButtonText={subButtonText}
             children={cardChildren}
+            onPressLeftButton={handleOnPressLeftButton}
+            leftButtonText={leftButtonText}
           />
         </View>
       )}
