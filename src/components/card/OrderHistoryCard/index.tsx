@@ -9,24 +9,25 @@ import {AppStyles} from '../../../config';
 
 type PropsType = GiftCardPropsType & {
   amount: number;
+  phoneNumber: string;
 };
 
 function OrderHistoryCard({
-  giftcardId,
+  id,
   image,
   productName,
   price,
   brandName,
   amount,
+  phoneNumber,
 }: PropsType) {
-  const phoneNumber = '010-0000-0000';
   return (
     <View style={styles.container}>
       <SVText body01>{'구매 내역'}</SVText>
       <View style={styles.divider} />
       <View style={styles.cardContainer}>
         <GiftCard
-          giftcardId={giftcardId}
+          id={id}
           image={image}
           productName={productName}
           price={price}
@@ -41,7 +42,7 @@ function OrderHistoryCard({
           </View>
         </View>
         <View style={styles.barContainer}>
-          <SVText body04>{'핸드폰 번호'}</SVText>
+          <SVText body04>{'휴대폰 번호'}</SVText>
           <SVText body04>{phoneNumber}</SVText>
         </View>
       </View>

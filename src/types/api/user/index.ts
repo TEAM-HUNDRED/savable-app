@@ -5,6 +5,7 @@ export type UserInfoAPIResponse = {
   totalReward: number;
   scheduledReward: number;
   verificationCount: number;
+  phoneNumber: string;
   challengeInfoResponseDto: {
     successChallengeCount: number;
     completeChallengeCount: number;

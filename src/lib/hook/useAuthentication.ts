@@ -45,7 +45,7 @@ export const useAuthentication = (): {
         handleUserInfo({
           value: {
             userName: response.username,
-            userPhoneNumber: response.username,
+            userPhoneNumber: response.phoneNumber,
             userProfileImageUrl: response.profileImage,
             userTotalReward: response.totalReward,
           },

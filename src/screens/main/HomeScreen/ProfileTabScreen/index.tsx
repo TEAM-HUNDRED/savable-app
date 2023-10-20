@@ -24,7 +24,6 @@ import {UserInfoPropsType} from '../../../../types/view';
 
 import SVText from '../../../../components/common/SVText';
 import SVDivider from '../../../../components/common/SVDivider';
-import {dummyUserInfo} from '../../../../mock';
 import {usePopUpProvider} from '../../../../lib/context/PopUpContext';
 
 type PropsType = {};
@@ -36,7 +35,9 @@ function ProfileTabScreen({}: PropsType) {
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
   const {showPopUp} = usePopUpProvider();
 
-  const [userInfo, setUserInfo] = useState<UserInfoPropsType>(dummyUserInfo);
+  const [userInfo, setUserInfo] = useState<UserInfoPropsType>(
+    {} as UserInfoPropsType,
+  );
 
   const getUserInfo = async () => {
     try {

@@ -5,6 +5,7 @@ export type UserInfoPropsType = {
   totalReward: number;
   scheduledReward: number;
   verificationCount: number;
+  phoneNumber: string;
   challengeInfo: {
     successChallengeCount: number;
     completeChallengeCount: number;

@@ -12,6 +12,7 @@ import SVText from '../../common/SVText';
 
 type PropsType = GiftCardPropsType & {
   totalReward?: number;
+  disabled?: boolean;
 };
 
 function GiftCard({
@@ -21,6 +22,7 @@ function GiftCard({
   price,
   brandName,
   totalReward,
+  disabled = false,
 }: PropsType) {
   const {showToast} = useToastProvider();
   const navigation =
@@ -41,11 +43,16 @@ function GiftCard({
   const disableButton = () => {
     showToast({currentText: '리워드가 부족합니다'});
   };
+  const onPressCard = disabled
+    ? () => {}
+    : canPurchase
+    ? navigateToOrder
+    : disableButton;
 
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={canPurchase ? navigateToOrder : disableButton}
+      onPress={onPressCard}
       style={styles.container}>
       <Image style={styles.image} source={{uri: image}} />
       <View style={styles.contentContainer}>

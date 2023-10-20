@@ -80,7 +80,7 @@ function CreateOrderPage({route}: PropsType) {
         handleUserInfo({
           value: {
             userName: response.username,
-            userPhoneNumber: response.username,
+            userPhoneNumber: response.phoneNumber,
             userProfileImageUrl: response.profileImage,
             userTotalReward: response.totalReward,
           },

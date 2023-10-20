@@ -36,7 +36,7 @@ function HomeScreen(): React.ReactElement {
         handleUserInfo({
           value: {
             userName: response.username,
-            userPhoneNumber: response.username,
+            userPhoneNumber: response.phoneNumber,
             userProfileImageUrl: response.profileImage,
             userTotalReward: response.totalReward,
           },

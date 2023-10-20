@@ -2,6 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useSelector} from 'react-redux';
 
 import {
   AppStyles,
@@ -10,6 +11,7 @@ import {
   ROUTER,
 } from '../../../config';
 import {CheckIcon} from '../../../assets/icons';
+import {RootState} from '../../../modules/redux/RootReducer';
 
 import SVText from '../../../components/common/SVText';
 import SVDivider from '../../../components/common/SVDivider';
@@ -21,6 +23,7 @@ type PropsType = {
 };
 
 function OrderSuccessScreen({route}: PropsType) {
+  const userInfo = useSelector((state: RootState) => state.userInfo.value);
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
@@ -39,6 +42,13 @@ function OrderSuccessScreen({route}: PropsType) {
     navigation.replace(ROUTER.ORDER_HISTORY_SCREEN);
   }, [navigation]);
 
+  const phoneNumberText = `${userInfo.userPhoneNumber.slice(
+    0,
+    3,
+  )}-${userInfo.userPhoneNumber.slice(3, 7)}-${userInfo.userPhoneNumber.slice(
+    7,
+  )}`;
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.imageContainer}>
@@ -48,12 +58,13 @@ function OrderSuccessScreen({route}: PropsType) {
       <SVDivider />
       <View style={styles.paddingContainer}>
         <OrderHistoryCard
-          giftcardId={route.params.giftcardId}
+          id={route.params.giftcardId}
           image={route.params.image}
           productName={route.params.productName}
           price={route.params.price}
           brandName={route.params.brandName}
           amount={route.params.amount}
+          phoneNumber={phoneNumberText}
         />
         <View style={styles.noticeContainer}>
           <SVText caption01 style={styles.titleText}>
