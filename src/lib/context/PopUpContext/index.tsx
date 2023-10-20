@@ -52,7 +52,7 @@ const PopUpProvider: React.FC<{children: React.ReactNode}> = ({
   const [onPressLeftButton, setOnPressLeftButton] = useState<() => void>(
     () => {},
   );
-  const [onPressButton, setOnPressButton] = useState<() => void>();
+  const [onPressButton, setOnPressButton] = useState<() => void>(() => {});
   const [cardChildren, setCardChildren] = useState<
     React.JSX.Element[] | React.JSX.Element
   >(<></>);
