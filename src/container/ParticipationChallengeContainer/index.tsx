@@ -52,6 +52,13 @@ function ParticipationChallengeContainer({
     handleToggleIndex(0);
   }, [handleToggleIndex]);
 
+  const userChallengeStatus = hasParticipationChallenge ? '' : '';
+  // hasParticipationChallenge && beforeVerifiedList==0 "오늘 인증을 모두 마쳤어요!"
+  // hasParticipationChallenge && afterVerifiedList==0 "챌린지 인증하러 가세여!"
+  // !hasParticipationChallenge "챌린지 신청하러 가세여!"
+
+  console.log(toggleIndex, hasParticipationChallenge);
+
   return (
     <View style={styles.container}>
       <SVText body01>참여 중인 챌린지</SVText>
@@ -82,7 +89,9 @@ function ParticipationChallengeContainer({
       {currentParticipationList.length === 0 ? (
         <View style={styles.emptyContainer}>
           <SVText body05 center style={styles.emptyText}>
-            {hasParticipationChallenge && toggleIndex
+            {hasParticipationChallenge
+              ? '오늘 인증을 모두 마쳤어요! 고생하셨어요'
+              : toggleIndex
               ? '인증 완료한 챌린지가 없어요!\n챌린지 인증하러 가실래요?'
               : '참여할 챌린지가 없어요\n챌린지를 신청하고 돌아와주세요!'}
           </SVText>
@@ -95,7 +104,9 @@ function ParticipationChallengeContainer({
             }
             style={styles.emptyButton}>
             <SVText center body07 style={styles.emptyButtonText}>
-              {hasParticipationChallenge && toggleIndex
+              {hasParticipationChallenge
+                ? '챌린지 추가 신청하기'
+                : toggleIndex
                 ? '챌린지 인증하러 가기'
                 : '챌린지 신청하러 가기'}
             </SVText>
