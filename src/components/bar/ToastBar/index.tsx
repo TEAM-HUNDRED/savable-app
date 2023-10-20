@@ -18,7 +18,11 @@ function ToastBar({text, handleVisible}: PropsType) {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <SVText body02 color={AppStyles.color.black} style={styles.text}>
+        <SVText
+          center
+          body04
+          color={AppStyles.color.gray04}
+          style={styles.text}>
           {text}
         </SVText>
       </View>
