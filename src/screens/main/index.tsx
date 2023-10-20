@@ -14,7 +14,7 @@ import HomeScreen from './HomeScreen';
 import ChallengeExplainScreen from './ChallengeExplainScreen';
 import ChallengeApplyScreen from './ChallengeApplyScreen';
 import ParticipatedChallengeStatusScreen from './ParticipatedChallengeStatusScreen';
-import CreateOrderPage from './CreateOrderPage';
+import CreateOrderScreen from './CreateOrderScreen';
 import OrderSuccessScreen from './OrderSuccessScreen';
 import OrderHistoryScreen from './OrderHistoryScreen';
 import VerificationScreen from './VerificationScreen';
@@ -71,7 +71,7 @@ function MainStackScreen(): React.ReactElement {
       />
       <MainStack.Screen
         name={ROUTER.CREATE_ORDER_PAGE}
-        component={CreateOrderPage}
+        component={CreateOrderScreen}
       />
       <MainStack.Screen
         name={ROUTER.ORDER_SUCCESS_SCREEN}

@@ -24,7 +24,7 @@ type InputPropsType = {
   challengeOpinion: string;
 };
 
-function CreateOrderPage({route}: PropsType) {
+function CreateOrderScreen({route}: PropsType) {
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
   const {showToast} = useToastProvider();
@@ -171,4 +171,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(CreateOrderPage);
+export default React.memo(CreateOrderScreen);
