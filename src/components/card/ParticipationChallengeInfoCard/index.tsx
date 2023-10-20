@@ -57,7 +57,7 @@ function ParticipationChallengeInfoCard({
               </SVText>
             </View>
             <SVText right caption01 style={styles.descriptionText}>
-              {'챌린지 성공 시 종료'}
+              {'챌린지 성공 시 100% 지급'}
             </SVText>
           </View>
         </View>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   valueContainer: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     alignContent: 'center',
   },
