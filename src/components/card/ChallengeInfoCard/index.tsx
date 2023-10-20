@@ -33,7 +33,6 @@ function ChallengeInfoCard({
           title={'1회 인증 시'}
           value={`${reward}포인트 지급`}
           valueIcon={Icons.point}
-          description={'챌린지 실패 시 미지급'}
         />
         <ChallengeInfoBar
           title={'진행 기간'}

@@ -52,7 +52,9 @@ function PointGuideCard() {
               {backgroundColor: AppStyles.color.point01},
             ]}
           />
-          <SVText caption02>{'목표 달성률에 따른 지급 포인트'}</SVText>
+          <SVText caption02 style={styles.graphInfoText}>
+            {'목표 달성률에 따른 지급 포인트'}
+          </SVText>
         </View>
       </View>
     </View>
@@ -88,6 +90,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   graphColorBox: {
     width: AppStyles.scaleWidth(13),
@@ -96,7 +99,8 @@ const styles = StyleSheet.create({
     marginRight: AppStyles.scaleWidth(4),
   },
   graphInfoText: {
-    marginRight: AppStyles.scaleWidth(20),
+    marginRight: AppStyles.scaleWidth(10),
+    marginBottom: AppStyles.scaleWidth(2),
   },
 });
 

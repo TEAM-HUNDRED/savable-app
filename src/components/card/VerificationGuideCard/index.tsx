@@ -27,10 +27,10 @@ function VerificationGuideCard({
           </SVText>
         ) : (
           <SVText body07 color={'#E43E3E'} style={styles.imageText}>
-            {'인증 반려'}
+            {'인증 거부'}
           </SVText>
         )}
-        <SVText caption02>{item.explanation}</SVText>
+        <SVText body07>{item.explanation}</SVText>
       </View>
     );
   };

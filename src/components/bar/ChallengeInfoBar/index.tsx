@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   valueContainer: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     alignContent: 'center',
   },
