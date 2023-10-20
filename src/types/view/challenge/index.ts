@@ -18,6 +18,7 @@ export type ChallengeInfoViewType = {
   startDate: string;
   endDate: string;
   isParticipatable: boolean;
+  estimatedSavings: number;
   guide: ChallengeGuideViewType[];
 };
 

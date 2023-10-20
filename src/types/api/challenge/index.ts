@@ -14,6 +14,7 @@ export type ChallengeDetailAPIResponse = {
     image: string;
     explanation: string;
     verificationDescription: string;
+    estimatedSavings: number;
     reward: number;
     hasDeadline: boolean;
     startDate: string;

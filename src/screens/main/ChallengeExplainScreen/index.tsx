@@ -59,8 +59,6 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
 
   if (!challengeInfo) return <></>;
 
-  console.log(challengeInfo);
-
   return (
     <ScrollView
       style={styles.container}

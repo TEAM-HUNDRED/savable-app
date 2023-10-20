@@ -103,7 +103,7 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
           </SVText>
           <View style={styles.cardTextContainer}>
             <SVText body04 center style={styles.highlightText}>
-              {'3,000원 '}
+              {`${route.params.challengeInfo?.estimatedSavings.toLocaleString()}원 `}
             </SVText>
             <SVText body04 center>
               {'절약!'}
@@ -148,6 +148,11 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
             durationList={durationList}
             duration={duration}
             target={target}
+            estimatedSavings={
+              route.params.challengeInfo
+                ? route.params.challengeInfo.estimatedSavings
+                : 0
+            }
             handleDuration={handleDuration}
             handleSaveTarget={handleSaveTarget}
           />

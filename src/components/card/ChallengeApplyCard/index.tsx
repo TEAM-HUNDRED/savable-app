@@ -9,6 +9,7 @@ type PropsType = {
   durationList: string[];
   duration: string;
   target: string;
+  estimatedSavings: number;
   handleDuration: (currentDuration: string) => void;
   handleSaveTarget: (currentDuration: string) => void;
 };
@@ -17,6 +18,7 @@ function ChallengeApplyCard({
   durationList,
   duration,
   target,
+  estimatedSavings,
   handleDuration,
   handleSaveTarget,
 }: PropsType): React.ReactElement {
@@ -83,7 +85,7 @@ function ChallengeApplyCard({
       </View>
       <View style={styles.horizontalBar}>
         <SVText body04>{'1회 인증 시 절약 금액'}</SVText>
-        <SVText body04>{'4,000원'}</SVText>
+        <SVText body04>{`${estimatedSavings.toLocaleString()}원`}</SVText>
       </View>
     </View>
   );
