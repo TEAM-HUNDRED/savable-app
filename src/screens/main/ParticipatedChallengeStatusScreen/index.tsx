@@ -83,8 +83,6 @@ function ParticipatedChallengeStatusScreen({
 
   if (!challengeInfo || !verificationInfo) return <></>;
 
-  console.log(verificationInfo.verificationList);
-
   return (
     <ScrollView
       style={styles.container}

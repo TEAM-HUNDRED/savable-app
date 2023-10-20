@@ -28,7 +28,7 @@ function ParticipationChallengeInfoCard({
         ? date.getMonth() + 1
         : `0${date.getMonth() + 1}`;
     const currentDate =
-      date.getDate() + 1 >= 10 ? date.getDate() + 1 : `0${date.getDate() + 1}`;
+      date.getDate() + 1 >= 10 ? date.getDate() : `0${date.getDate()}`;
 
     return `${month}.${currentDate}`;
   };

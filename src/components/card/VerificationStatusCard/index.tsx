@@ -30,7 +30,8 @@ function VerificationStatusCard({
     const month = new Date(item.createAt).getMonth();
     const day = new Date(item.createAt).getDate();
 
-    const date = `${month}/${day}`;
+    const date = `${month + 1}/${day}`;
+
     const stateComponent = (state: string) => {
       switch (state) {
         case 'SUCCESS':
