@@ -119,20 +119,22 @@ function ProfileTabScreen({}: PropsType) {
     },
   ];
 
-  const userChallengeInfoList = [
-    {
-      index: '진행중',
-      value: `${userInfo.challengeInfo.currentParticipationCount}`,
-    },
-    {
-      index: '성공',
-      value: `${userInfo.challengeInfo.successChallengeCount}`,
-    },
-    {
-      index: '완료',
-      value: `${userInfo.challengeInfo.completeChallengeCount}`,
-    },
-  ];
+  const userChallengeInfoList = userInfo.challengeInfo
+    ? [
+        {
+          index: '진행중',
+          value: `${userInfo.challengeInfo.currentParticipationCount}`,
+        },
+        {
+          index: '성공',
+          value: `${userInfo.challengeInfo.successChallengeCount}`,
+        },
+        {
+          index: '완료',
+          value: `${userInfo.challengeInfo.completeChallengeCount}`,
+        },
+      ]
+    : [];
 
   const linkToKakaoChat = () => {
     Linking.openURL('http://pf.kakao.com/_xcVxmCG/chat');
