@@ -83,7 +83,7 @@ function ParticipationChallengeContainer({
         <View style={styles.emptyContainer}>
           <SVText body05 center style={styles.emptyText}>
             {hasParticipationChallenge && toggleIndex
-              ? '참여 완료한 챌린지가 없어요!\n챌린지 참여하러 가실래요?'
+              ? '인증 완료한 챌린지가 없어요!\n챌린지 인증하러 가실래요?'
               : '참여할 챌린지가 없어요\n챌린지를 신청하고 돌아와주세요!'}
           </SVText>
           <TouchableOpacity
@@ -96,7 +96,7 @@ function ParticipationChallengeContainer({
             style={styles.emptyButton}>
             <SVText center body07 style={styles.emptyButtonText}>
               {hasParticipationChallenge && toggleIndex
-                ? '챌린지 참여하러 가기'
+                ? '챌린지 인증하러 가기'
                 : '챌린지 신청하러 가기'}
             </SVText>
           </TouchableOpacity>
