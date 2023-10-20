@@ -27,7 +27,7 @@ function VerificationGuideCard({
           </SVText>
         ) : (
           <SVText body07 color={'#E43E3E'} style={styles.imageText}>
-            {'인증 거부'}
+            {'인증 반려'}
           </SVText>
         )}
         <SVText body07>{item.explanation}</SVText>

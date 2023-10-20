@@ -52,13 +52,6 @@ function ParticipationChallengeContainer({
     handleToggleIndex(0);
   }, [handleToggleIndex]);
 
-  const userChallengeStatus = hasParticipationChallenge ? '' : '';
-  // hasParticipationChallenge && beforeVerifiedList==0 "오늘 인증을 모두 마쳤어요!"
-  // hasParticipationChallenge && afterVerifiedList==0 "챌린지 인증하러 가세여!"
-  // !hasParticipationChallenge "챌린지 신청하러 가세여!"
-
-  console.log(toggleIndex, hasParticipationChallenge);
-
   return (
     <View style={styles.container}>
       <SVText body01>참여 중인 챌린지</SVText>
