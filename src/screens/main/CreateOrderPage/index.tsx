@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import GiftCard from '../../../components/card/GiftCard';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
@@ -11,6 +11,7 @@ import {useToastProvider} from '../../../lib/context/ToastContext';
 import SVButton from '../../../components/common/SVButton';
 import Api from '../../../lib/api/Api';
 import {RootState} from '../../../modules/redux/RootReducer';
+import {handleUserInfo} from '../../../modules/redux/slice/userInfoSlice';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CREATE_ORDER_PAGE>;
@@ -27,6 +28,7 @@ function CreateOrderPage({route}: PropsType) {
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
   const {showToast} = useToastProvider();
+  const dispatch = useDispatch();
   const userInfo = useSelector((state: RootState) => state.userInfo.value);
 
   const [inputData, setInputData] = useState<InputPropsType>({
@@ -70,6 +72,26 @@ function CreateOrderPage({route}: PropsType) {
     [userInfo, route, showToast],
   );
 
+  const getUserInfo = useCallback(async () => {
+    try {
+      const response = await Api.shared.getUserInfo();
+
+      dispatch(
+        handleUserInfo({
+          value: {
+            userName: response.username,
+            userPhoneNumber: response.username,
+            userProfileImageUrl: response.profileImage,
+            userTotalReward: response.totalReward,
+          },
+        }),
+      );
+    } catch (error) {
+      console.log('[Error: Failed to get user Info', error);
+      await Api.shared.setSessionKeyOnStorage('');
+    }
+  }, [dispatch]);
+
   const createOrder = useCallback(async () => {
     try {
       const response = await Api.shared.createOrder({
@@ -81,14 +103,14 @@ function CreateOrderPage({route}: PropsType) {
           ? inputData.challengeOpinion
           : '',
       });
+      await getUserInfo();
 
       navigateToPurchaseSuccessScreen();
-
       return response;
     } catch (error) {
       console.log('[Error: Failed to create order', error);
     }
-  }, [route, inputData, navigateToPurchaseSuccessScreen]);
+  }, [route, inputData, navigateToPurchaseSuccessScreen, getUserInfo]);
 
   const onPressPurchaseButton = useCallback(() => {
     if (!validationInputData()) return;
