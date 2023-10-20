@@ -13,10 +13,15 @@ type InputPropsType = {
 
 type PropsType = {
   inputData: InputPropsType;
+  validateReward: (amount: number) => boolean;
   handleInputData: (currentInputData: InputPropsType) => void;
 };
 
-function CreateOrderContainer({inputData, handleInputData}: PropsType) {
+function CreateOrderContainer({
+  inputData,
+  validateReward,
+  handleInputData,
+}: PropsType) {
   const textInputList = [
     {
       index: '좋았던 점',
@@ -50,6 +55,15 @@ function CreateOrderContainer({inputData, handleInputData}: PropsType) {
     },
   ];
 
+  const onPressAmountButton = (isIncrease: boolean) => {
+    if (isIncrease)
+      validateReward(inputData.amount + 1) &&
+        handleInputData({...inputData, amount: inputData.amount + 1});
+    else
+      inputData.amount > 1 &&
+        handleInputData({...inputData, amount: inputData.amount - 1});
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.horizontalBar}>
@@ -58,20 +72,16 @@ function CreateOrderContainer({inputData, handleInputData}: PropsType) {
           <TouchableOpacity
             style={styles.numberInputButton}
             onPress={() => {
-              handleInputData({...inputData, amount: inputData.amount - 1});
+              onPressAmountButton(false);
             }}
             activeOpacity={0.5}>
             <SVText body07>{'-'}</SVText>
           </TouchableOpacity>
-          <TextInput
-            style={styles.numberInput}
-            defaultValue={`${inputData.amount}`}
-            keyboardType="number-pad"
-          />
+          <SVText style={styles.numberInput}>{inputData.amount}</SVText>
           <TouchableOpacity
             style={styles.numberInputButton}
             onPress={() => {
-              handleInputData({...inputData, amount: inputData.amount + 1});
+              onPressAmountButton(true);
             }}
             activeOpacity={0.8}>
             <SVText body07>{'+'}</SVText>
