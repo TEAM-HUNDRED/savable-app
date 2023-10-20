@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {
@@ -9,13 +9,14 @@ import {
   useCameraPermission,
 } from 'react-native-vision-camera';
 
-import {LeftArrowIcon} from '../../../assets/icons';
+import {CameraIcon, LeftArrowIcon} from '../../../assets/icons';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
 
 import SVText from '../../../components/common/SVText';
 import VerificationGuideContainer from '../../../container/VerificationGuideContainer';
 import {ChallengeInfoViewType} from '../../../types/view';
 import Api from '../../../lib/api/Api';
+import SVButton from '../../../components/common/SVButton';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.VERIFICATION_SCREEN>;
@@ -40,6 +41,10 @@ function VerificationScreen({route}: PropsType) {
     });
   };
 
+  const navigateToSetting = () => {
+    Linking.openSettings();
+  };
+
   const takePhoto = async () => {
     const formData = new FormData();
 
@@ -50,7 +55,7 @@ function VerificationScreen({route}: PropsType) {
         formData.append('image', {
           uri: `file://${result.path}`,
           type: 'multipart/form-data',
-          name: '아몰랑',
+          name: 'verification_image',
         });
       } catch (error) {
         console.log(error);
@@ -112,7 +117,30 @@ function VerificationScreen({route}: PropsType) {
   }, []);
 
   if (device == null) return <View />;
-  // <NoCameraErrorView />;
+  if (!hasPermission)
+    return (
+      <View style={styles.cameraErrorContainer}>
+        <CameraIcon
+          style={styles.cameraIcon}
+          color={AppStyles.color.mint01}
+          width={AppStyles.scaleWidth(96)}
+          height={AppStyles.scaleWidth(96)}
+        />
+        <SVText center header01 style={styles.textStyle}>
+          {'카메라 권한을 승인해주세요'}
+        </SVText>
+        <SVText center body03 style={styles.textStyle}>
+          {'권한 승인을 하지 않을 경우\n 챌린지 인증이 불가합니다.'}
+        </SVText>
+        <View style={styles.permissionButtonContainer}>
+          <SVButton
+            borderRadius={AppStyles.scaleWidth(8)}
+            onPress={navigateToSetting}>
+            {'설정으로 이동'}
+          </SVButton>
+        </View>
+      </View>
+    );
 
   return (
     <View style={styles.container}>
@@ -191,6 +219,25 @@ const styles = StyleSheet.create({
     width: AppStyles.scaleWidth(70),
     height: AppStyles.scaleWidth(70),
     borderRadius: AppStyles.scaleWidth(35),
+  },
+  cameraErrorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textStyle: {
+    marginBottom: AppStyles.scaleWidth(12),
+  },
+  permissionButtonContainer: {
+    width: '100%',
+    height: AppStyles.scaleWidth(40),
+    marginTop: AppStyles.scaleWidth(12),
+    paddingHorizontal: AppStyles.scaleWidth(40),
+  },
+  cameraIcon: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginBottom: AppStyles.scaleWidth(12),
   },
 });
 
