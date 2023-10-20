@@ -28,6 +28,8 @@ function OrderHistoryScreen({}: PropsType) {
     [] as OrderHistoryPropsType[],
   );
 
+  console.log(orderList);
+
   const getOrderHistoryList = async () => {
     try {
       const response = await Api.shared.getOrderHistoryList();
@@ -93,7 +95,7 @@ function OrderHistoryScreen({}: PropsType) {
                 <SVText
                   body07
                   style={
-                    item.sendState === '발송완료'
+                    item.sendState === '발송 완료'
                       ? styles.highlightStatusText
                       : styles.statusText
                   }>
