@@ -65,6 +65,9 @@ function OrderSuccessScreen({route}: PropsType) {
           brandName={route.params.brandName}
           amount={route.params.amount}
           phoneNumber={phoneNumberText}
+          remainReward={
+            userInfo.userTotalReward - route.params.amount * route.params.price
+          }
         />
         <View style={styles.noticeContainer}>
           <SVText caption01 style={styles.titleText}>

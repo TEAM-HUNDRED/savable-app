@@ -10,6 +10,7 @@ import {AppStyles} from '../../../config';
 type PropsType = GiftCardPropsType & {
   amount: number;
   phoneNumber: string;
+  remainReward: number;
 };
 
 function OrderHistoryCard({
@@ -20,6 +21,7 @@ function OrderHistoryCard({
   brandName,
   amount,
   phoneNumber,
+  remainReward,
 }: PropsType) {
   return (
     <View style={styles.container}>
@@ -38,12 +40,21 @@ function OrderHistoryCard({
           <SVText body04>{'사용 포인트'}</SVText>
           <View style={styles.valueContainer}>
             <Image source={Icons.point} style={styles.icon} />
-            <SVText body04>{`${(price * amount).toLocaleString()}원`}</SVText>
+            <SVText body04>{`${(
+              price * amount
+            ).toLocaleString()}포인트`}</SVText>
           </View>
         </View>
         <View style={styles.barContainer}>
           <SVText body04>{'휴대폰 번호'}</SVText>
           <SVText body04>{phoneNumber}</SVText>
+        </View>
+        <View style={styles.barContainer}>
+          <SVText body04>{'잔여 포인트'}</SVText>
+          <View style={styles.valueContainer}>
+            <Image source={Icons.point} style={styles.icon} />
+            <SVText body04>{`${remainReward.toLocaleString()}포인트`}</SVText>
+          </View>
         </View>
       </View>
     </View>
