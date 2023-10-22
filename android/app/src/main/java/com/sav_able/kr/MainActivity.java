@@ -5,15 +5,50 @@ import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
+
 import org.devio.rn.splashscreen.SplashScreen;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+
 public class MainActivity extends ReactActivity {
+
+
+  private void getHashKey(){
+    PackageInfo packageInfo = null;
+    try {
+      packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+    } catch (PackageManager.NameNotFoundException e) {
+      e.printStackTrace();
+    }
+    if (packageInfo == null)
+      Log.e("KeyHash", "KeyHash:null");
+
+    for (Signature signature : packageInfo.signatures) {
+      try {
+        MessageDigest md = MessageDigest.getInstance("SHA");
+        md.update(signature.toByteArray());
+        Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+      } catch (NoSuchAlgorithmException e) {
+        Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
+      }
+    }
+  }
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     SplashScreen.show(this);
     super.onCreate(savedInstanceState);
+
+    getHashKey();
   }
 
   /**
@@ -22,7 +57,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "savable";
+    return "sav_able.kr";
   }
 
   /**
