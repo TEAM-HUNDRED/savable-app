@@ -1,5 +1,6 @@
-import React, {useContext, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {BackHandler, StyleSheet, View} from 'react-native';
 
 import PopUpCard from '../../../components/card/PopUpCard';
 import {AppStyles} from '../../../config';
@@ -58,14 +59,34 @@ const PopUpProvider: React.FC<{children: React.ReactNode}> = ({
   >(<></>);
   const [isVisible, setIsVisible] = useState(false);
 
+  const handleClosePopUp = useCallback(() => {
+    setTitle('');
+    setSubButtonText('');
+    setButtonText('');
+    setOnPressButton(() => {});
+    setCardChildren(<></>);
+    setIsVisible(false);
+
+    setOnPressLeftButton(() => {});
+    setLeftButtonText('');
+  }, []);
+
+  const onBackPress = useCallback(() => {
+    if (isVisible) {
+      handleClosePopUp();
+    }
+
+    return isVisible;
+  }, [isVisible, handleClosePopUp]);
+
   const handleOnPress = () => {
     onPressButton();
-    setIsVisible(false);
+    handleClosePopUp();
   };
 
   const handleOnPressLeftButton = () => {
     onPressLeftButton();
-    setIsVisible(false);
+    handleClosePopUp();
   };
 
   const showPopUp = ({
@@ -87,6 +108,13 @@ const PopUpProvider: React.FC<{children: React.ReactNode}> = ({
     onPressLeftButton && setOnPressLeftButton(() => onPressLeftButton);
     leftButtonText && setLeftButtonText(leftButtonText);
   };
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    };
+  }, [onBackPress]);
 
   return (
     <PopUpContext.Provider value={{showPopUp}}>
