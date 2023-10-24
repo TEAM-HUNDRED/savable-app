@@ -4,6 +4,7 @@ import {useDispatch} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 import Api from '../../../lib/api/Api';
 import {MainScreenStackPropsList, ROUTER} from '../../../config/router';
@@ -22,6 +23,20 @@ import StoreTabScreen from './StoreTabScreen';
 import ProfileTabScreen from './ProfileTabScreen';
 
 const BottomTabNavigation = createBottomTabNavigator();
+
+async function onSignIn(user) {
+  crashlytics().log('User signed in.');
+  await Promise.all([
+    crashlytics().setUserId(user.uid),
+    crashlytics().setAttribute('credits', String(user.credits)),
+    crashlytics().setAttributes({
+      role: 'saver',
+      followers: '13',
+      email: user.email,
+      username: user.username,
+    }),
+  ]);
+}
 
 function HomeScreen(): React.ReactElement {
   const dispatch = useDispatch();
