@@ -110,11 +110,11 @@ function VerificationScreen({route}: PropsType) {
 
   useEffect(() => {
     requestPermission();
-  }, []);
+  }, [requestPermission]);
 
   useEffect(() => {
     navigation.setOptions({headerShown: false});
-  }, []);
+  }, [navigation]);
 
   if (device == null) return <View />;
   if (!hasPermission)
@@ -163,7 +163,9 @@ function VerificationScreen({route}: PropsType) {
         isActive={isActive}
         photo
       />
-      <TouchableOpacity style={styles.takeButton} onPress={onPressTakeButton}>
+      <TouchableOpacity
+        style={styles.takeButton}
+        onPress={isActive ? onPressTakeButton : () => {}}>
         <View style={styles.circle} />
       </TouchableOpacity>
       <VerificationGuideContainer
