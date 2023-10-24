@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {
   Image,
+  KeyboardAvoidingView,
   Linking,
+  ScrollView,
   StyleSheet,
   TextInput,
   TouchableOpacity,
@@ -162,168 +164,170 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
   if (!profileData) return <></>;
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={{uri: profileData.profileImageUrl}}
-            style={styles.image}
-          />
-        </View>
-        <View style={styles.inputCardContainer}>
-          <SVText body03>{'닉네임'}</SVText>
-          <TextInput
-            placeholder={'닉네임을 입력해주세요'}
-            style={styles.input}
-            onChangeText={setNickName}
-            onBlur={validateNickName}
-            value={nickName}
-          />
-          {isValidatedNickName ? (
-            <SVText body06 style={styles.description}>
-              {'닉네임을 2~10자로 입력해주세요'}
-            </SVText>
-          ) : (
-            <SVText body06 style={styles.errorText}>
-              {'닉네임을 한글, 영문, 숫자로 2~10자 입력해주세요'}
-            </SVText>
-          )}
-        </View>
-        <View style={styles.inputCardContainer}>
-          <SVText body03>{'휴대폰 번호'}</SVText>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder={'휴대폰 번호를 입력해주세요'}
-              style={[styles.input, styles.phoneInput]}
-              inputMode={'tel'}
-              onChangeText={handlePhoneNumber}
-              onBlur={validatePhoneNumber}
-              value={phoneNumber}
+    <KeyboardAvoidingView style={{flex: 1}}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.contentContainer}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={{uri: profileData.profileImageUrl}}
+              style={styles.image}
             />
-            {sentMessage ? (
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={[
-                  styles.buttonContainer,
-                  {backgroundColor: AppStyles.color.lightGray02},
-                ]}
-                onPress={sendSMS}>
-                <SVText
-                  body03
-                  style={[
-                    styles.buttonText,
-                    {color: AppStyles.color.deepGray},
-                  ]}>
-                  {'재발송'}
-                </SVText>
-              </TouchableOpacity>
+          </View>
+          <View style={styles.inputCardContainer}>
+            <SVText body03>{'닉네임'}</SVText>
+            <TextInput
+              placeholder={'닉네임을 입력해주세요'}
+              style={styles.input}
+              onChangeText={setNickName}
+              onBlur={validateNickName}
+              value={nickName}
+            />
+            {isValidatedNickName ? (
+              <SVText body06 style={styles.description}>
+                {'닉네임을 2~10자로 입력해주세요'}
+              </SVText>
             ) : (
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.buttonContainer}
-                onPress={sendSMS}>
-                <SVText body03 style={styles.buttonText}>
-                  {'발송'}
-                </SVText>
-              </TouchableOpacity>
+              <SVText body06 style={styles.errorText}>
+                {'닉네임을 한글, 영문, 숫자로 2~10자 입력해주세요'}
+              </SVText>
             )}
           </View>
-          {duplicatedPhoneNumber ? (
-            <SVText body06 style={styles.errorText}>
-              {'이미 가입이 되어 있는 휴대폰 번호입니다.'}
-            </SVText>
-          ) : (
-            <SVText
-              body06
-              style={
-                isValidatedPhoneNumber ? styles.description : styles.errorText
-              }>
-              {"'-' 없이 휴대폰 번호 11자를 입력해주세요"}
+          <View style={styles.inputCardContainer}>
+            <SVText body03>{'휴대폰 번호'}</SVText>
+            <View style={styles.inputContainer}>
+              <TextInput
+                placeholder={'휴대폰 번호를 입력해주세요'}
+                style={[styles.input, styles.phoneInput]}
+                inputMode={'tel'}
+                onChangeText={handlePhoneNumber}
+                onBlur={validatePhoneNumber}
+                value={phoneNumber}
+              />
+              {sentMessage ? (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={[
+                    styles.buttonContainer,
+                    {backgroundColor: AppStyles.color.lightGray02},
+                  ]}
+                  onPress={sendSMS}>
+                  <SVText
+                    body03
+                    style={[
+                      styles.buttonText,
+                      {color: AppStyles.color.deepGray},
+                    ]}>
+                    {'재발송'}
+                  </SVText>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.buttonContainer}
+                  onPress={sendSMS}>
+                  <SVText body03 style={styles.buttonText}>
+                    {'발송'}
+                  </SVText>
+                </TouchableOpacity>
+              )}
+            </View>
+            {duplicatedPhoneNumber ? (
+              <SVText body06 style={styles.errorText}>
+                {'이미 가입이 되어 있는 휴대폰 번호입니다.'}
+              </SVText>
+            ) : (
+              <SVText
+                body06
+                style={
+                  isValidatedPhoneNumber ? styles.description : styles.errorText
+                }>
+                {"'-' 없이 휴대폰 번호 11자를 입력해주세요"}
+              </SVText>
+            )}
+          </View>
+          <View style={styles.inputCardContainer}>
+            <SVText body03>{'인증번호'}</SVText>
+            <TextInput
+              placeholder={'인증 번호를 입력해주세요'}
+              style={styles.input}
+              onChangeText={setVerificationNumber}
+              value={verificationNumber}
+              inputMode={'numeric'}
+            />
+            {!isValidatedNumber && (
+              <SVText body06 style={styles.errorText}>
+                {'인증번호가 올바르지 않습니다.'}
+              </SVText>
+            )}
+          </View>
+        </View>
+        <View style={styles.bottomContainer}>
+          <View style={styles.barContainer}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
+              onPress={() => {
+                navigateToOutLink(consentUri);
+              }}>
+              <SVText
+                body05
+                style={
+                  isTermChecked ? styles.highlightCheckText : styles.checkText
+                }>
+                {'[필수] 개인 정보 활용 동의서 '}
+              </SVText>
+            </TouchableOpacity>
+            <SquareCheckIcon
+              style={isTermChecked ? styles.highlightIcon : styles.icon}
+              hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
+              onPress={() => setIsTermChecked(prev => !prev)}
+            />
+          </View>
+          <View style={styles.barContainer}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
+              onPress={() => {
+                navigateToOutLink(privacyUri);
+              }}>
+              <SVText
+                body05
+                style={
+                  isPrivacyChecked
+                    ? styles.highlightCheckText
+                    : styles.checkText
+                }>
+                {'[필수] 개인정보 처리 방침 '}
+              </SVText>
+            </TouchableOpacity>
+            <SquareCheckIcon
+              style={isPrivacyChecked ? styles.highlightIcon : styles.icon}
+              hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
+              onPress={() => setIsPrivacyChecked(prev => !prev)}
+            />
+          </View>
+          {!checked && (
+            <SVText body05 style={styles.errorText}>
+              {'해당 사항에 모두 동의하셔야 합니다. '}
             </SVText>
           )}
-        </View>
-        <View style={styles.inputCardContainer}>
-          <SVText body03>{'인증번호'}</SVText>
-          <TextInput
-            placeholder={'인증 번호를 입력해주세요'}
-            style={styles.input}
-            onChangeText={setVerificationNumber}
-            value={verificationNumber}
-            inputMode={'numeric'}
-          />
-          {!isValidatedNumber && (
-            <SVText body06 style={styles.errorText}>
-              {'인증번호가 올바르지 않습니다.'}
-            </SVText>
-          )}
-        </View>
-      </View>
-      <View style={styles.bottomContainer}>
-        <View style={styles.barContainer}>
           <TouchableOpacity
             activeOpacity={0.8}
-            hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
-            onPress={() => {
-              navigateToOutLink(consentUri);
-            }}>
-            <SVText
-              body05
-              style={
-                isTermChecked ? styles.highlightCheckText : styles.checkText
-              }>
-              {'[필수] 개인 정보 활용 동의서 '}
+            style={styles.finishButtonContainer}
+            onPress={onPressFinishButton}>
+            <SVText body03 style={styles.buttonText}>
+              {'완료'}
             </SVText>
           </TouchableOpacity>
-          <SquareCheckIcon
-            style={isTermChecked ? styles.highlightIcon : styles.icon}
-            hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
-            onPress={() => setIsTermChecked(prev => !prev)}
-          />
         </View>
-        <View style={styles.barContainer}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
-            onPress={() => {
-              navigateToOutLink(privacyUri);
-            }}>
-            <SVText
-              body05
-              style={
-                isPrivacyChecked ? styles.highlightCheckText : styles.checkText
-              }>
-              {'[필수] 개인정보 처리 방침 '}
-            </SVText>
-          </TouchableOpacity>
-          <SquareCheckIcon
-            style={isPrivacyChecked ? styles.highlightIcon : styles.icon}
-            hitSlop={{top: 5, bottom: 5, left: 5, right: 5}}
-            onPress={() => setIsPrivacyChecked(prev => !prev)}
-          />
-        </View>
-        {!checked && (
-          <SVText body05 style={styles.errorText}>
-            {'해당 사항에 모두 동의하셔야 합니다. '}
-          </SVText>
-        )}
-        <TouchableOpacity
-          activeOpacity={0.8}
-          style={styles.finishButtonContainer}
-          onPress={onPressFinishButton}>
-          <SVText body03 style={styles.buttonText}>
-            {'완료'}
-          </SVText>
-        </TouchableOpacity>
-      </View>
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between',
     backgroundColor: AppStyles.color.white,
     paddingHorizontal: AppStyles.scaleWidth(24),
   },
