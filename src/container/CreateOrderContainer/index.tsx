@@ -95,7 +95,11 @@ function CreateOrderContainer({
             key={`${item.index} - ${idx}`}>
             <SVText body04>{item.index}</SVText>
             <View style={styles.stringInputBox}>
-              <TextInput value={item.value} onChangeText={item.onChangeText} />
+              <TextInput
+                value={item.value}
+                onChangeText={item.onChangeText}
+                style={styles.textInput}
+              />
             </View>
           </View>
         );
@@ -149,6 +153,9 @@ const styles = StyleSheet.create({
     borderWidth: AppStyles.scaleWidth(1),
     borderRadius: AppStyles.scaleWidth(8),
     paddingHorizontal: AppStyles.scaleWidth(8),
+  },
+  textInput: {
+    color: AppStyles.color.black,
   },
 });
 

@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     maxHeight: AppStyles.scaleWidth(24),
     paddingVertical: AppStyles.scaleWidth(0),
+    color: AppStyles.color.black,
   },
   horizontalBar: {
     display: 'flex',

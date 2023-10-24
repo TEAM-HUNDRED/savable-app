@@ -366,6 +366,7 @@ const styles = StyleSheet.create({
     borderWidth: AppStyles.scaleWidth(1),
     borderColor: AppStyles.color.lightGray02,
     marginVertical: AppStyles.scaleWidth(6),
+    color: AppStyles.color.black,
   },
   description: {
     color: AppStyles.color.gray,
