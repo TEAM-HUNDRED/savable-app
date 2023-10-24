@@ -1,5 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 
 import {
@@ -155,7 +162,9 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
   if (!challengeInfo) return <></>;
 
   return (
-    <>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={styles.container}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
@@ -185,15 +194,15 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
             onBlurKeyboard={onBlurKeyboard}
           />
         </View>
+        <View style={styles.buttonContainer}>
+          <SVButton
+            borderRadius={AppStyles.scaleWidth(8)}
+            onPress={onPressApplyButton}>
+            {'참여하기'}
+          </SVButton>
+        </View>
       </ScrollView>
-      <View style={styles.buttonContainer}>
-        <SVButton
-          borderRadius={AppStyles.scaleWidth(8)}
-          onPress={onPressApplyButton}>
-          {'참여하기'}
-        </SVButton>
-      </View>
-    </>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -226,9 +235,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonContainer: {
-    position: 'absolute',
     width: '100%',
-    bottom: AppStyles.scaleWidth(20),
     height: AppStyles.scaleWidth(50),
     paddingHorizontal: AppStyles.scaleWidth(24),
   },

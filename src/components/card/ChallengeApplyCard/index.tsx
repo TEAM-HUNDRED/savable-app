@@ -26,7 +26,6 @@ function ChallengeApplyCard({
   handleKeyboardInput,
   onBlurKeyboard,
 }: PropsType): React.ReactElement {
-  console.log(target, 'target');
   return (
     <View style={styles.container}>
       <View style={styles.barContainer}>
