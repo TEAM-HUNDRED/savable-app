@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
+import * as Sentry from '@sentry/react-native';
 
 import Api from '../../../../lib/api/Api';
 import type {RootState} from '../../../../modules/redux/Store';
@@ -28,6 +29,10 @@ function ParticipationTabScreen(): React.ReactElement {
       setParticipationList(response);
     } catch (err) {
       console.log(err);
+      Sentry.captureException(err);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in getParticipationList Method',
+      );
     }
   };
 

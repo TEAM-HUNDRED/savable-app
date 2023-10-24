@@ -3,6 +3,7 @@ import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useDispatch, useSelector} from 'react-redux';
+import * as Sentry from '@sentry/react-native';
 
 import GiftCard from '../../../components/card/GiftCard';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
@@ -90,6 +91,10 @@ function CreateOrderScreen({route}: PropsType) {
       );
     } catch (error) {
       console.log('[Error: Failed to get user Info', error);
+      Sentry.captureException(error);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in getUserInfo Method on Create Order Screen',
+      );
       await Api.shared.setSessionKeyOnStorage('');
     }
   }, [dispatch]);
@@ -111,6 +116,10 @@ function CreateOrderScreen({route}: PropsType) {
       return response;
     } catch (error) {
       console.log('[Error: Failed to create order', error);
+      Sentry.captureException(error);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in createOrder Method',
+      );
     }
   }, [route, inputData, navigateToPurchaseSuccessScreen, getUserInfo]);
 

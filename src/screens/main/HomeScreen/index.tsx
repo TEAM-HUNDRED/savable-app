@@ -5,6 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import crashlytics from '@react-native-firebase/crashlytics';
+import * as Sentry from '@sentry/react-native';
 
 import Api from '../../../lib/api/Api';
 import {MainScreenStackPropsList, ROUTER} from '../../../config/router';
@@ -59,6 +60,11 @@ function HomeScreen(): React.ReactElement {
       );
     } catch (error) {
       console.log('[Error: Failed to get user Info', error);
+      Sentry.captureException(error);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in getUserInfo Method on Home Screen',
+      );
+
       await Api.shared.setSessionKeyOnStorage('');
       navigation.navigate(ROUTER.LOGIN_SCREEN);
     }

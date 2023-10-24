@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
+import * as Sentry from '@sentry/react-native';
 
 import {
   AppStyles,
@@ -120,6 +121,10 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
       return data;
     } catch (error) {
       console.log('[Error: Failed to apply challenge', error);
+      Sentry.captureException(error);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in applyChallenge Method',
+      );
     }
   };
 

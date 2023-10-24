@@ -14,6 +14,7 @@ import {
   useCameraDevice,
   useCameraPermission,
 } from 'react-native-vision-camera';
+import * as Sentry from '@sentry/react-native';
 
 import {CameraIcon, LeftArrowIcon} from '../../../assets/icons';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
@@ -70,6 +71,10 @@ function VerificationScreen({route}: PropsType) {
         });
       } catch (error) {
         console.log(error);
+        Sentry.captureException(error);
+        Sentry.captureMessage(
+          '[ERROR]: Something went wrong in take photo Method',
+        );
         setIsActive(true);
       }
     }

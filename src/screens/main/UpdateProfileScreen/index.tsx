@@ -12,6 +12,7 @@ import {
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import KakaoLogins, {getProfile} from '@react-native-seoul/kakao-login';
+import * as Sentry from '@sentry/react-native';
 
 import Api from '../../../lib/api/Api';
 import {SquareCheckIcon} from '../../../assets/icons';
@@ -100,6 +101,8 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
       } else return new Error('전화번호가 잘못되었어요');
     } catch (error) {
       console.log('[Error: Failed to send sms]', error);
+      Sentry.captureException(error);
+      Sentry.captureMessage('[ERROR]: Something went wrong in sendSMS Method');
 
       if (error === 'WRONG_NUMBER') setDuplicatedPhoneNumber(true);
     }
@@ -128,6 +131,10 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
         navigateToHomeScreen();
       } catch (error) {
         console.log('[Error: Set Storage error]', error);
+        Sentry.captureException(error);
+        Sentry.captureMessage(
+          '[ERROR]: Something went wrong in onPressFinishButton Method',
+        );
       }
     }
   };
@@ -141,6 +148,10 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
       await Api.shared.updateMemberURLProfile(payload);
     } catch (error) {
       console.log('updateProfile', error);
+      Sentry.captureException(error);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in updateProfile Method',
+      );
     }
   };
 

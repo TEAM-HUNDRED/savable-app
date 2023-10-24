@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import * as Sentry from '@sentry/react-native';
 
 import {AppStyles, MainScreenStackPropsList} from '../../../config';
 import Icons from '../../../assets/icons';
@@ -37,6 +38,10 @@ function OrderHistoryScreen({}: PropsType) {
       setOrderList(response);
     } catch (error) {
       console.log('[Error: Failed to get order history list', error);
+      Sentry.captureException(error);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in getOrderHistoryList Method',
+      );
     }
   };
 

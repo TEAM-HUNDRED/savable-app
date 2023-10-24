@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {useSelector} from 'react-redux';
+import * as Sentry from '@sentry/react-native';
 
 import {AppStyles} from '../../../../config';
 import Api from '../../../../lib/api/Api';
@@ -27,6 +28,10 @@ function StoreTabScreen() {
       setGiftCardList(response);
     } catch (error) {
       console.log('[Error: Failed to get gift card list', error);
+      Sentry.captureException(error);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in getGiftCardList Method',
+      );
     }
   };
 

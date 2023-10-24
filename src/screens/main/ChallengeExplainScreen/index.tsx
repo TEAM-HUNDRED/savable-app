@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import * as Sentry from '@sentry/react-native';
 
 import Api from '../../../lib/api/Api';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
@@ -49,6 +50,10 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
       });
     } catch (error) {
       console.log('[Error: Failed to get challenge details]', error);
+      Sentry.captureException(error);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in getChallengeDetail Method',
+      );
     }
   }, []);
 

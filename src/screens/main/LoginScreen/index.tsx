@@ -9,6 +9,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {login, getProfile} from '@react-native-seoul/kakao-login';
+import * as Sentry from '@sentry/react-native';
 
 import Api from '../../../lib/api/Api';
 import {useAuthentication} from '../../../lib/hook/useAuthentication';
@@ -60,6 +61,10 @@ function LoginScreen(): React.ReactElement {
       }
     } catch (error) {
       console.log(error);
+      Sentry.captureException(error);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in onPressKakaoLogin Method',
+      );
     }
   };
 

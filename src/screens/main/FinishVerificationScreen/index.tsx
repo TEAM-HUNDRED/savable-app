@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import * as Sentry from '@sentry/react-native';
 
 import Api from '../../../lib/api/Api';
 import {
@@ -43,6 +44,10 @@ function FinishVerificationScreen({route}: PropsType) {
       setVerificationDate(response);
     } catch (error) {
       console.log('[Error: Failed to get verification detail]:', error);
+      Sentry.captureException(error);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in getVerificationDetail Method',
+      );
     }
   };
 

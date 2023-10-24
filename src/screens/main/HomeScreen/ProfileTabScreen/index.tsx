@@ -10,6 +10,7 @@ import {
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {logout} from '@react-native-seoul/kakao-login';
+import * as Sentry from '@sentry/react-native';
 
 import {
   AppStyles,
@@ -50,6 +51,10 @@ function ProfileTabScreen({}: PropsType) {
       });
     } catch (error) {
       console.log('[Error: Failed to get user info', error);
+      Sentry.captureException(error);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in getUserInfo Method onProfileTab',
+      );
     }
   };
 
@@ -94,6 +99,10 @@ function ProfileTabScreen({}: PropsType) {
       navigation.navigate(ROUTER.LOGIN_SCREEN);
     } catch (error) {
       console.log(error);
+      Sentry.captureException(error);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in withdrawalAccount Method',
+      );
     }
   };
 

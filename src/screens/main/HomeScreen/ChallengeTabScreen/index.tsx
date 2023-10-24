@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
+import * as Sentry from '@sentry/react-native';
 
 import MainBanner from '../../../../components/banner/MainBanner';
 import LogoHeader from '../../../../components/header/LogoHeader';
@@ -10,12 +11,17 @@ import {ChallengeViewType} from '../../../../types/view/challenge';
 
 function ChallengeTabScreen(): React.ReactElement {
   const [challengeList, setChallengeList] = useState<ChallengeViewType[]>([]);
+
   const getChallengeList = async () => {
     try {
       const response = await Api.shared.getChallengeList();
       setChallengeList(response);
     } catch (err) {
       console.log(err);
+      Sentry.captureException(err);
+      Sentry.captureMessage(
+        '[ERROR]: Something went wrong in getChallengeList Method',
+      );
     }
   };
 
