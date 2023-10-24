@@ -71,6 +71,32 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
     }
   };
 
+  const handleKeyboardInput = (currentTarget: string) => {
+    const week = durationList.findIndex(item => item === duration) + 1;
+
+    setTarget(currentTarget);
+
+    if (Number(currentTarget) < week * 1) {
+      showToast({currentText: '일주일에 최소 1회 절약해야 합니다!'});
+    } else if (Number(currentTarget) > week * 7) {
+      showToast({currentText: '일주일에 최대 7회까지 절약가능 합니다!'});
+    }
+  };
+
+  const onBlurKeyboard = (currentTarget: string) => {
+    const week = durationList.findIndex(item => item === duration) + 1;
+
+    if (Number(currentTarget) < week * 1) {
+      setTarget(String(week * 1));
+      showToast({currentText: '일주일에 최소 1회 절약해야 합니다!'});
+    } else if (Number(currentTarget) > week * 7) {
+      setTarget(String(week * 7));
+      showToast({currentText: '일주일에 최대 7회까지 절약가능 합니다!'});
+    } else {
+      setTarget(currentTarget);
+    }
+  };
+
   const navigateToChallengeScreen = () => {
     homeNavigation.navigate(ROUTER.PARTICIPATION_SCREEN);
   };
@@ -155,6 +181,8 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
             }
             handleDuration={handleDuration}
             handleSaveTarget={handleSaveTarget}
+            handleKeyboardInput={handleKeyboardInput}
+            onBlurKeyboard={onBlurKeyboard}
           />
         </View>
       </ScrollView>

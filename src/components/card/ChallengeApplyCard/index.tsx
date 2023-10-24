@@ -12,6 +12,8 @@ type PropsType = {
   estimatedSavings: number;
   handleDuration: (currentDuration: string) => void;
   handleSaveTarget: (currentDuration: string) => void;
+  handleKeyboardInput: (currentDuration: string) => void;
+  onBlurKeyboard: (currentDuration: string) => void;
 };
 
 function ChallengeApplyCard({
@@ -21,7 +23,10 @@ function ChallengeApplyCard({
   estimatedSavings,
   handleDuration,
   handleSaveTarget,
+  handleKeyboardInput,
+  onBlurKeyboard,
 }: PropsType): React.ReactElement {
+  console.log(target, 'target');
   return (
     <View style={styles.container}>
       <View style={styles.barContainer}>
@@ -70,8 +75,12 @@ function ChallengeApplyCard({
           </TouchableOpacity>
           <TextInput
             style={styles.input}
-            defaultValue={`${target}`}
+            value={target}
+            onChangeText={handleKeyboardInput}
             keyboardType="number-pad"
+            onBlur={() => {
+              onBlurKeyboard(target);
+            }}
           />
           <TouchableOpacity
             style={styles.inputButton}
