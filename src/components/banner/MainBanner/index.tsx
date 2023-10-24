@@ -10,9 +10,7 @@ function MainBanner() {
         activeOpacity={0.8}
         style={styles.buttonContainer}
         onPress={() => {
-          Linking.openURL(
-            'https://superb-nannyberry-327.notion.site/APP-d0e6b7c5ac9a4186b26fe2292a97b28d?pvs=4',
-          );
+          Linking.openURL('https://bit.ly/savable-challenge-event');
         }}>
         <Image source={Images.rewardEvent} style={styles.image} />
       </TouchableOpacity>
