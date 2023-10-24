@@ -16,9 +16,12 @@ export const useAuthentication = (): {
 
   const getStorageSessionData = async () => {
     try {
-      const value = await AsyncStorage.getItem('session_key');
+      const value = JSON.parse(
+        String(await AsyncStorage.getItem('session_key')),
+      );
+      console.log(value, 'getItem');
 
-      if (value !== null) {
+      if (value !== null && value !== '') {
         await Api.shared.setAuthToken(value);
         await getUserInfo();
 
@@ -26,6 +29,7 @@ export const useAuthentication = (): {
       }
       return value;
     } catch (e: any) {
+      console.log(e);
       Api.shared.setAuthToken(String(''));
 
       if (e.response.status === 401) return;

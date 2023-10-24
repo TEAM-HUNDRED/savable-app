@@ -96,9 +96,11 @@ function ProfileTabScreen({}: PropsType) {
     }
   };
 
-  const userLogout = () => {
-    logout();
-    Api.shared.setSessionKeyOnStorage('');
+  const userLogout = async () => {
+    await logout();
+    await Api.shared.logout();
+    await Api.shared.setAuthToken('');
+    await Api.shared.setSessionKeyOnStorage('');
     mainNavigation.reset({routes: [{name: ROUTER.LOGIN_SCREEN}]});
   };
 

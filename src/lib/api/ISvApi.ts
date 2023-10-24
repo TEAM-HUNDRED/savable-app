@@ -67,4 +67,5 @@ export interface ISvApi {
   ): Promise<UpdateMemberAPIResponse>;
 
   removeMember(): Promise<RemoveMemberAPIResponse>;
+  logout(): Promise<void>;
 }
