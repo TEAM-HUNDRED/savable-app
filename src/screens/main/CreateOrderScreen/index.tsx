@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useDispatch, useSelector} from 'react-redux';
@@ -12,6 +12,8 @@ import SVButton from '../../../components/common/SVButton';
 import Api from '../../../lib/api/Api';
 import {RootState} from '../../../modules/redux/RootReducer';
 import {handleUserInfo} from '../../../modules/redux/slice/userInfoSlice';
+import SVText from '../../../components/common/SVText';
+import Icons from '../../../assets/icons';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CREATE_ORDER_PAGE>;
@@ -140,6 +142,19 @@ function CreateOrderScreen({route}: PropsType) {
           validateReward={validateReward}
           handleInputData={handleInputData}
         />
+        <View style={styles.divider} />
+        <View style={styles.remainContainer}>
+          <SVText body04>{'구매 시 남은 포인트'}</SVText>
+          <View style={styles.rewardContainer}>
+            <Image source={Icons.point} style={styles.icon} />
+            <SVText header01>
+              {(
+                userInfo.userTotalReward -
+                inputData.amount * route.params.price
+              ).toLocaleString()}
+            </SVText>
+          </View>
+        </View>
       </View>
       <View style={styles.buttonContainer}>
         <SVButton
@@ -168,6 +183,26 @@ const styles = StyleSheet.create({
     height: AppStyles.scaleWidth(50),
     marginTop: AppStyles.scaleWidth(24),
     paddingHorizontal: AppStyles.scaleWidth(24),
+  },
+  divider: {
+    width: '100%',
+    height: AppStyles.scaleWidth(1),
+    backgroundColor: AppStyles.color.gray02,
+  },
+  remainContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: AppStyles.scaleWidth(12),
+  },
+  rewardContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    height: AppStyles.scaleWidth(14),
+    width: AppStyles.scaleWidth(14),
+    marginRight: AppStyles.scaleWidth(5),
   },
 });
 
