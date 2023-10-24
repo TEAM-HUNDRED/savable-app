@@ -72,12 +72,8 @@ const PopUpProvider: React.FC<{children: React.ReactNode}> = ({
   }, []);
 
   const onBackPress = useCallback(() => {
-    if (isVisible) {
-      handleClosePopUp();
-    }
-
     return isVisible;
-  }, [isVisible, handleClosePopUp]);
+  }, [isVisible]);
 
   const handleOnPress = () => {
     onPressButton();

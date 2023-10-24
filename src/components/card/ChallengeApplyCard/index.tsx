@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    paddingVertical: AppStyles.scaleWidth(36),
+    paddingTop: AppStyles.scaleWidth(36),
   },
   barContainer: {
     marginBottom: AppStyles.scaleWidth(40),

@@ -1,5 +1,11 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Linking, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  BackHandler,
+  Linking,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {
@@ -40,6 +46,10 @@ function VerificationScreen({route}: PropsType) {
       challengeTitle: route.params.challengeTitle,
     });
   };
+
+  const onBackPress = useCallback(() => {
+    return !isActive;
+  }, [isActive]);
 
   const navigateToSetting = () => {
     Linking.openSettings();
@@ -103,6 +113,13 @@ function VerificationScreen({route}: PropsType) {
       },
     );
   };
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    };
+  }, [onBackPress]);
 
   useEffect(() => {
     getChallengeDetail(route.params.challengeId);
