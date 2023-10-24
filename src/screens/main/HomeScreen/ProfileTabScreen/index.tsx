@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {logout} from '@react-native-seoul/kakao-login';
 
@@ -34,6 +34,7 @@ function ProfileTabScreen({}: PropsType) {
   const mainNavigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
   const {showPopUp} = usePopUpProvider();
+  const isFocused = useIsFocused();
 
   const [userInfo, setUserInfo] = useState<UserInfoPropsType>(
     {} as UserInfoPropsType,
@@ -165,7 +166,7 @@ function ProfileTabScreen({}: PropsType) {
 
   useEffect(() => {
     getUserInfo();
-  }, []);
+  }, [isFocused]);
 
   return (
     <ScrollView
