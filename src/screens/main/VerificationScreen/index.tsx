@@ -61,6 +61,7 @@ function VerificationScreen({route}: PropsType) {
     if (cameraRef.current) {
       try {
         const result: PhotoFile = await cameraRef.current.takePhoto();
+        setIsActive(false);
 
         formData.append('image', {
           uri: `file://${result.path}`,
@@ -69,8 +70,8 @@ function VerificationScreen({route}: PropsType) {
         });
       } catch (error) {
         console.log(error);
+        setIsActive(true);
       }
-      setIsActive(false);
     }
     return formData;
   };
