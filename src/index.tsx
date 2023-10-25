@@ -4,10 +4,6 @@ import SplashScreen from 'react-native-splash-screen';
 import {NavigationContainer} from '@react-navigation/native';
 import crashlytics from '@react-native-firebase/crashlytics';
 import * as Sentry from '@sentry/react-native';
-// Sentry.captureException(error);
-// Sentry.captureMessage(
-//   '[ERROR]: Something went wrong in onPressKakaoLogin Method',
-// );
 
 import PopUpProvider from './lib/context/PopUpContext';
 import ToastProvider from './lib/context/ToastContext';
