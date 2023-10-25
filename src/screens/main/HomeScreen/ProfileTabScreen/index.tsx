@@ -37,6 +37,8 @@ function ProfileTabScreen({}: PropsType) {
   const {showPopUp} = usePopUpProvider();
   const isFocused = useIsFocused();
 
+  const [shouldChangeUserInfo, setShouldChangeUserInfo] = useState(true);
+
   const [userInfo, setUserInfo] = useState<UserInfoPropsType>(
     {} as UserInfoPropsType,
   );
@@ -50,7 +52,10 @@ function ProfileTabScreen({}: PropsType) {
         challengeInfo: response.challengeInfoResponseDto,
       });
     } catch (error) {
-      console.log('[Error: Failed to get user info', error);
+      console.log(
+        '[Error: Failed to get user inf in Profile Tab screen',
+        error,
+      );
       Sentry.captureException(error);
       Sentry.captureMessage(
         '[ERROR]: Something went wrong in getUserInfo Method onProfileTab',
@@ -91,12 +96,13 @@ function ProfileTabScreen({}: PropsType) {
 
   const withdrawalAccount = async () => {
     try {
+      setShouldChangeUserInfo(false);
       await Api.shared.removeMember();
       await Api.shared.setAuthToken('');
       await Api.shared.setSessionKeyOnStorage('');
       await logout();
 
-      navigation.navigate(ROUTER.LOGIN_SCREEN);
+      mainNavigation.reset({routes: [{name: ROUTER.LOGIN_SCREEN}]});
     } catch (error) {
       console.log(error);
       Sentry.captureException(error);
@@ -108,10 +114,12 @@ function ProfileTabScreen({}: PropsType) {
 
   const userLogout = async () => {
     try {
+      setShouldChangeUserInfo(false);
       await logout();
       await Api.shared.logout();
       await Api.shared.setAuthToken('');
       await Api.shared.setSessionKeyOnStorage('');
+
       mainNavigation.reset({routes: [{name: ROUTER.LOGIN_SCREEN}]});
     } catch (error) {
       console.log(error);
@@ -182,8 +190,8 @@ function ProfileTabScreen({}: PropsType) {
   ];
 
   useEffect(() => {
-    getUserInfo();
-  }, [isFocused]);
+    shouldChangeUserInfo && getUserInfo();
+  }, [isFocused, shouldChangeUserInfo]);
 
   return (
     <ScrollView

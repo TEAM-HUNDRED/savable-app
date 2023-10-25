@@ -19,14 +19,17 @@ export const useAuthentication = (): {
       const value = JSON.parse(
         String(await AsyncStorage.getItem('session_key')),
       );
-      console.log(value, 'getItem');
+      console.log(value, 'getItem', value !== null && value !== '');
 
       if (value !== null && value !== '') {
         await Api.shared.setAuthToken(value);
         await getUserInfo();
 
         setIsAuthentication(true);
+      } else {
+        await Api.shared.setAuthToken('');
       }
+
       return value;
     } catch (e: any) {
       console.log(e);
@@ -56,7 +59,10 @@ export const useAuthentication = (): {
         }),
       );
     } catch (error) {
-      console.log('[Error: Failed to get user Info', error);
+      console.log(
+        '[Error: Failed to get user Info in useAuthentication',
+        error,
+      );
       await Api.shared.setSessionKeyOnStorage('');
     }
   };

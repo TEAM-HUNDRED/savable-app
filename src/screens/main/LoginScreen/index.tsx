@@ -53,6 +53,8 @@ function LoginScreen(): React.ReactElement {
         profile as SignUpPayload,
       );
 
+      console.log(currentSessionKey, data, 'kakaoLogin');
+
       if (data.isRegistered) {
         await Api.shared.setSessionKeyOnStorage(currentSessionKey);
         navigateToHomeScreen();

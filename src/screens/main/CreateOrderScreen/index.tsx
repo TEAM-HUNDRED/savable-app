@@ -90,7 +90,10 @@ function CreateOrderScreen({route}: PropsType) {
         }),
       );
     } catch (error) {
-      console.log('[Error: Failed to get user Info', error);
+      console.log(
+        '[Error: Failed to get user Info in create order screen',
+        error,
+      );
       Sentry.captureException(error);
       Sentry.captureMessage(
         '[ERROR]: Something went wrong in getUserInfo Method on Create Order Screen',
