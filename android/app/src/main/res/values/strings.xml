@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">savable</string>
+    <string name="app_name">세이버블</string>
     <string name="kakao_app_key">c935fc6537620e8bf17157ca37b8020a</string>
     <string name="facebook_app_id">6743527892367068</string>
     <string name="facebook_client_token">c56f3b73ef65481bd7e86b6a89a16545</string>
