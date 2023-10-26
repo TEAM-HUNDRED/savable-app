@@ -8,6 +8,7 @@ package com.sav_able.kr;
 
 import android.content.Context;
 import com.facebook.react.ReactInstanceManager;
+import com.facebook.FacebookSdk;
 
 /**
  * Class responsible of loading Flipper inside your React Native application. This is the release
