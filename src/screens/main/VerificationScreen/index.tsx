@@ -139,7 +139,7 @@ function VerificationScreen({route}: PropsType) {
     navigation.setOptions({headerShown: false});
   }, [navigation]);
 
-  if (device == null) return <View />;
+  // if (device == null) return <View />;
   if (!hasPermission)
     return (
       <View style={styles.cameraErrorContainer}>
@@ -179,13 +179,16 @@ function VerificationScreen({route}: PropsType) {
         </SVText>
         <View style={styles.icon} />
       </View>
-      <Camera
-        ref={cameraRef}
-        style={StyleSheet.absoluteFill}
-        device={device}
-        isActive={isActive}
-        photo
-      />
+      {device && (
+        <Camera
+          ref={cameraRef}
+          orientation={'portrait'}
+          style={StyleSheet.absoluteFill}
+          device={device}
+          isActive={isActive}
+          photo
+        />
+      )}
       <TouchableOpacity
         style={styles.takeButton}
         onPress={isActive ? onPressTakeButton : () => {}}>
