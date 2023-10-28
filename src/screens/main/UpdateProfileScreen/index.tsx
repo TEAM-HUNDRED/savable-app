@@ -176,7 +176,9 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
 
   return (
     <KeyboardAvoidingView style={{flex: 1}}>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps="handled">
         <View style={styles.contentContainer}>
           <View style={styles.imageContainer}>
             <Image
@@ -199,7 +201,7 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
               </SVText>
             ) : (
               <SVText body06 style={styles.errorText}>
-                {'닉네임을 한글, 영문, 숫자로 2~10자 입력해주세요'}
+                {'닉네임을 한글, 영어 소문자, 숫자로 2~10자 입력해주세요'}
               </SVText>
             )}
           </View>
