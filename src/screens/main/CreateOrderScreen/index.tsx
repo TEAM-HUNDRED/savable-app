@@ -15,6 +15,7 @@ import {RootState} from '../../../modules/redux/RootReducer';
 import {handleUserInfo} from '../../../modules/redux/slice/userInfoSlice';
 import SVText from '../../../components/common/SVText';
 import Icons from '../../../assets/icons';
+import {useAmplitude} from '../../../lib/hook/useAmplitude';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CREATE_ORDER_PAGE>;
@@ -30,7 +31,9 @@ type InputPropsType = {
 function CreateOrderScreen({route}: PropsType) {
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+
   const {showToast} = useToastProvider();
+  const {trackEvent} = useAmplitude();
   const dispatch = useDispatch();
   const userInfo = useSelector((state: RootState) => state.userInfo.value);
 
@@ -43,12 +46,14 @@ function CreateOrderScreen({route}: PropsType) {
 
   const validationInputData = useCallback(() => {
     if (!inputData.negativePoint || !inputData.positivePoint) {
+      trackEvent('VALIDATION_ERROR_IN_CREATE_ORDER');
       showToast({currentText: '필수 항목을 입력해주세요'});
       return false;
     } else return true;
-  }, [inputData, showToast]);
+  }, [inputData, showToast, trackEvent]);
 
   const handleInputData = useCallback((currentInputData: InputPropsType) => {
+    trackEvent('HANDLE_INPUT_DATA_IN_CREATE_ORDER');
     setInputData(currentInputData);
   }, []);
 
@@ -114,7 +119,7 @@ function CreateOrderScreen({route}: PropsType) {
           : '',
       });
       await getUserInfo();
-
+      trackEvent('CLICK_CREATE_ORDER');
       navigateToPurchaseSuccessScreen();
       return response;
     } catch (error) {
@@ -124,18 +129,26 @@ function CreateOrderScreen({route}: PropsType) {
         '[ERROR]: Something went wrong in createOrder Method',
       );
     }
-  }, [route, inputData, navigateToPurchaseSuccessScreen, getUserInfo]);
+  }, [
+    route,
+    inputData,
+    navigateToPurchaseSuccessScreen,
+    getUserInfo,
+    trackEvent,
+  ]);
 
   const onPressPurchaseButton = useCallback(() => {
+    trackEvent('CLICK_PURCHASE_BUTTON');
     if (!validationInputData()) return;
     else {
       createOrder();
     }
-  }, [validationInputData, createOrder]);
+  }, [validationInputData, createOrder, trackEvent]);
 
   useEffect(() => {
     navigation.setOptions({title: '기프티콘 구매'});
-  }, [navigation]);
+    trackEvent('CREATE_ORDER_SCREEN_VIEW');
+  }, [navigation, trackEvent]);
 
   return (
     <ScrollView

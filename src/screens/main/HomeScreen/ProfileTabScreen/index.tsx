@@ -26,6 +26,7 @@ import {UserInfoPropsType} from '../../../../types/view';
 import SVText from '../../../../components/common/SVText';
 import SVDivider from '../../../../components/common/SVDivider';
 import {usePopUpProvider} from '../../../../lib/context/PopUpContext';
+import {useAmplitude} from '../../../../lib/hook/useAmplitude';
 
 type PropsType = {};
 
@@ -34,6 +35,8 @@ function ProfileTabScreen({}: PropsType) {
     useNavigation<StackNavigationProp<HomeScreenStackPropsList>>();
   const mainNavigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+
+  const {trackEvent} = useAmplitude();
   const {showPopUp} = usePopUpProvider();
   const isFocused = useIsFocused();
 
@@ -70,7 +73,9 @@ function ProfileTabScreen({}: PropsType) {
       buttonText: '아니오',
       leftButtonText: '네',
       onPressLeftButton: userLogout,
-      onPressButton: () => {},
+      onPressButton: () => {
+        trackEvent('CLICK_NOT_LOGOUT_IN_PROFILE_SCREEN');
+      },
       cardChildren: (
         <SVText body04 style={styles.cardText}>
           {'로그아웃 하시겠습니까?'}
@@ -85,7 +90,9 @@ function ProfileTabScreen({}: PropsType) {
       buttonText: '아니오',
       leftButtonText: '네',
       onPressLeftButton: withdrawalAccount,
-      onPressButton: () => {},
+      onPressButton: () => {
+        trackEvent('CLICK_NOT_WITHDRAWAL_IN_PROFILE_SCREEN');
+      },
       cardChildren: (
         <SVText body04 style={styles.cardText}>
           {'정말로 탈퇴하시겠습니까?'}
@@ -102,6 +109,7 @@ function ProfileTabScreen({}: PropsType) {
       await Api.shared.setSessionKeyOnStorage('');
       await logout();
 
+      trackEvent('CLICK_WITHDRAWAL_IN_PROFILE_SCREEN');
       mainNavigation.reset({routes: [{name: ROUTER.LOGIN_SCREEN}]});
     } catch (error) {
       console.log(error);
@@ -119,6 +127,7 @@ function ProfileTabScreen({}: PropsType) {
       await Api.shared.logout();
       await Api.shared.setAuthToken('');
       await Api.shared.setSessionKeyOnStorage('');
+      trackEvent('CLICK_LOGOUT_IN_PROFILE_SCREEN');
 
       mainNavigation.reset({routes: [{name: ROUTER.LOGIN_SCREEN}]});
     } catch (error) {
@@ -165,6 +174,7 @@ function ProfileTabScreen({}: PropsType) {
     : [];
 
   const linkToKakaoChat = () => {
+    trackEvent('CLICK_INQUIRY_IN_PROFILE_SCREEN');
     Linking.openURL('https://bit.ly/kakao-channel-for-app');
   };
 
@@ -172,6 +182,7 @@ function ProfileTabScreen({}: PropsType) {
     {
       title: '기프티콘 구매 내역',
       onPress: () => {
+        trackEvent('CLICK_ORDER_HISTORY_IN_PROFILE_SCREEN');
         navigation.navigate(ROUTER.ORDER_HISTORY_SCREEN);
       },
     },
@@ -191,7 +202,8 @@ function ProfileTabScreen({}: PropsType) {
 
   useEffect(() => {
     shouldChangeUserInfo && getUserInfo();
-  }, [isFocused, shouldChangeUserInfo]);
+    trackEvent('PROFILE_VIEW');
+  }, [isFocused, shouldChangeUserInfo, trackEvent]);
 
   return (
     <ScrollView

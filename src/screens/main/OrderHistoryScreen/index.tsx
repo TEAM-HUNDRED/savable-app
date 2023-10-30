@@ -18,6 +18,7 @@ import Api from '../../../lib/api/Api';
 import {OrderHistoryPropsType} from '../../../types/view';
 
 import SVText from '../../../components/common/SVText';
+import {useAmplitude} from '../../../lib/hook/useAmplitude';
 
 type PropsType = {};
 
@@ -29,12 +30,12 @@ function OrderHistoryScreen({}: PropsType) {
     [] as OrderHistoryPropsType[],
   );
 
-  console.log(orderList);
+  const {trackEvent} = useAmplitude();
 
   const getOrderHistoryList = async () => {
     try {
       const response = await Api.shared.getOrderHistoryList();
-
+      trackEvent('ORDER_HISTORY_VIEW');
       setOrderList(response);
     } catch (error) {
       console.log('[Error: Failed to get order history list', error);
@@ -46,6 +47,7 @@ function OrderHistoryScreen({}: PropsType) {
   };
 
   const linkToKakaoChat = () => {
+    trackEvent('CLICK_NAVIGATE_TO_INQUIRY');
     Linking.openURL('https://bit.ly/kakao-channel-for-app');
   };
 

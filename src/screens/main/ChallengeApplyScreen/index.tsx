@@ -26,6 +26,7 @@ import {useToastProvider} from '../../../lib/context/ToastContext';
 import {usePopUpProvider} from '../../../lib/context/PopUpContext';
 import {StackNavigationProp} from '@react-navigation/stack';
 import Api from '../../../lib/api/Api';
+import {useAmplitude} from '../../../lib/hook/useAmplitude';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CHALLENGE_APPLY_SCREEN>;
@@ -36,6 +37,8 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
   const homeNavigation =
     useNavigation<StackNavigationProp<HomeScreenStackPropsList>>();
+
+  const {trackEvent} = useAmplitude();
 
   const {showToast} = useToastProvider();
   const {showPopUp} = usePopUpProvider();
@@ -118,6 +121,12 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
       });
       navigateToChallengeScreen();
 
+      trackEvent('CLICK_APPLY_CHALLENGE_IN_APPLY_SCREEN', {
+        challengeId: challengeInfo ? challengeInfo.id : 0,
+        duration: (durationList.findIndex(item => item === duration) + 1) * 7,
+        verificationGoal: Number(target),
+      });
+
       return data;
     } catch (error) {
       console.log('[Error: Failed to apply challenge', error);
@@ -162,7 +171,8 @@ function ChallengeApplyScreen({route}: PropsType): React.ReactElement {
 
   useEffect(() => {
     handleNavigationHeader();
-  }, [handleNavigationHeader]);
+    trackEvent('CHALLENGE_APPLY_VIEW');
+  }, [handleNavigationHeader, trackEvent]);
 
   if (!challengeInfo) return <></>;
 

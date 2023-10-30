@@ -21,6 +21,7 @@ import {VerificationDetailPropsType} from '../../../types/view';
 import SVText from '../../../components/common/SVText';
 import Icons from '../../../assets/icons';
 import SVButton from '../../../components/common/SVButton';
+import {useAmplitude} from '../../../lib/hook/useAmplitude';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.FINISH_VERIFICATION_SCREEN>;
@@ -35,6 +36,8 @@ function FinishVerificationScreen({route}: PropsType) {
   const [verificationData, setVerificationDate] =
     useState<VerificationDetailPropsType>();
 
+  const {trackEvent} = useAmplitude();
+
   const getVerificationDetail = async () => {
     try {
       const response = await Api.shared.getVerificationDetail(
@@ -42,6 +45,7 @@ function FinishVerificationScreen({route}: PropsType) {
       );
 
       setVerificationDate(response);
+      trackEvent('FINISH_VERIFICATION_SCREEN_VIEW');
     } catch (error) {
       console.log('[Error: Failed to get verification detail]:', error);
       Sentry.captureException(error);
@@ -52,6 +56,9 @@ function FinishVerificationScreen({route}: PropsType) {
   };
 
   const navigateToChallengeScreen = () => {
+    trackEvent('CLICK_NAVIGATE_TO_PARTICIPATION_SCREEN', {
+      currentPage: ROUTER.FINISH_VERIFICATION_SCREEN,
+    });
     homeNavigation.navigate(ROUTER.PARTICIPATION_SCREEN);
   };
 

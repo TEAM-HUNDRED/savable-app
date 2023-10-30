@@ -26,6 +26,7 @@ import {ChallengeInfoViewType} from '../../../types/view';
 import Api from '../../../lib/api/Api';
 import SVButton from '../../../components/common/SVButton';
 import {usePopUpProvider} from '../../../lib/context/PopUpContext';
+import {useAmplitude} from '../../../lib/hook/useAmplitude';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.VERIFICATION_SCREEN>;
@@ -36,6 +37,8 @@ function VerificationScreen({route}: PropsType) {
 
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+
+  const {trackEvent} = useAmplitude();
 
   const device = useCameraDevice('back');
   const {showPopUp} = usePopUpProvider();
@@ -56,6 +59,7 @@ function VerificationScreen({route}: PropsType) {
   }, [isActive]);
 
   const navigateToSetting = () => {
+    trackEvent('CLICK_TO_SETTINGS');
     Linking.openSettings();
   };
 
@@ -66,10 +70,12 @@ function VerificationScreen({route}: PropsType) {
       buttonText: '예',
       onPressButton: () => {
         createVerification(route.params.participationId, formData).then(() => {
+          trackEvent('SUBMIT_VERIFICATION_PHOTO');
           navigateToFinishScreen();
         });
       },
       onPressLeftButton: () => {
+        trackEvent('NOT_SUBMIT_VERIFICATION_PHOTO');
         setIsActive(true);
       },
       leftButtonText: '아니오',
@@ -88,18 +94,18 @@ function VerificationScreen({route}: PropsType) {
 
   const takePhoto = async () => {
     const formData = new FormData();
+    setIsActive(false);
 
     if (cameraRef.current) {
       try {
         const result: PhotoFile = await cameraRef.current.takePhoto();
-        setIsActive(false);
 
         await formData.append('image', {
           uri: `file://${result.path}`,
           type: 'multipart/form-data',
           name: 'verification_image',
         });
-        console.log(formData);
+        trackEvent('CLICK_TAKE_PHOTO');
         showValidationPopUp(`file://${result.path}`, formData);
       } catch (error) {
         console.log(error);
@@ -113,19 +119,23 @@ function VerificationScreen({route}: PropsType) {
     return formData;
   };
 
-  const getChallengeDetail = useCallback(async (challengeId: number) => {
-    try {
-      const response = await Api.shared.getChallengeDetail(challengeId);
+  const getChallengeDetail = useCallback(
+    async (challengeId: number) => {
+      try {
+        const response = await Api.shared.getChallengeDetail(challengeId);
 
-      setChallengeInfo({
-        ...response.challenge,
-        guide: response.verificationGuide,
-        isParticipatable: response.isParticipatable,
-      });
-    } catch (error) {
-      console.log('[Error: Failed to get challenge detail]', error);
-    }
-  }, []);
+        setChallengeInfo({
+          ...response.challenge,
+          guide: response.verificationGuide,
+          isParticipatable: response.isParticipatable,
+        });
+        trackEvent('VERIFICATION_SCREEN_VIEW');
+      } catch (error) {
+        console.log('[Error: Failed to get challenge detail]', error);
+      }
+    },
+    [trackEvent],
+  );
 
   const createVerification = async (
     participationId: number,

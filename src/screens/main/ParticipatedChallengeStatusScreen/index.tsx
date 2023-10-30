@@ -16,6 +16,7 @@ import SVButton from '../../../components/common/SVButton';
 import ParticipationChallengeInfoCard from '../../../components/card/ParticipationChallengeInfoCard';
 import SVDivider from '../../../components/common/SVDivider';
 import VerificationStatusCard from '../../../components/card/VerificationStatusCard';
+import {useAmplitude} from '../../../lib/hook/useAmplitude';
 
 type PropsType = {
   route: RouteProp<
@@ -38,6 +39,8 @@ function ParticipatedChallengeStatusScreen({
     useState<ChallengeVerificationInfoPropsType>(
       {} as ChallengeVerificationInfoPropsType,
     );
+
+  const {trackEvent} = useAmplitude();
 
   const getParticipationChallengeStatus = useCallback(
     async (challengeId: number) => {
@@ -74,6 +77,7 @@ function ParticipatedChallengeStatusScreen({
   );
 
   const navigateToVerificationScreen = () => {
+    trackEvent('CLICK_NAVIGATE_TO_VERIFICATION');
     navigation.navigate(ROUTER.VERIFICATION_SCREEN, {
       challengeId: challengeInfo.challengeId,
       participationId: route.params.challengeId,
@@ -84,7 +88,13 @@ function ParticipatedChallengeStatusScreen({
   useEffect(() => {
     handleNavigationHeader(route.params.challengeTitle);
     getParticipationChallengeStatus(route.params.challengeId);
-  }, [handleNavigationHeader, getParticipationChallengeStatus, route]);
+    trackEvent('CHALLENGE_STATUS_SCREEN_VIEW');
+  }, [
+    handleNavigationHeader,
+    getParticipationChallengeStatus,
+    trackEvent,
+    route,
+  ]);
 
   if (!challengeInfo || !verificationInfo) return <></>;
 

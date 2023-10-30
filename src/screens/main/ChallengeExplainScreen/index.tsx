@@ -15,6 +15,7 @@ import PointGuideCard from '../../../components/card/PointGuideCard';
 import ChallengeGuideCard from '../../../components/card/ChallengeGuideCard';
 import SVButton from '../../../components/common/SVButton';
 import VerificationGuideCard from '../../../components/card/VerificationGuideCard';
+import {useAmplitude} from '../../../lib/hook/useAmplitude';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.CHALLENGE_EXPLAIN_SCREEN>;
@@ -23,14 +24,16 @@ type PropsType = {
 function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
+  const {trackEvent} = useAmplitude();
 
   const [challengeInfo, setChallengeInfo] = useState<ChallengeInfoViewType>();
 
   const navigateToApplyScreen = useCallback(() => {
+    trackEvent('CLICK_NAVIGATE_TO_APPLY_IN_EXPLAIN_SCREEN');
     navigation.navigate(ROUTER.CHALLENGE_APPLY_SCREEN, {
       challengeInfo: challengeInfo,
     });
-  }, [navigation, challengeInfo]);
+  }, [navigation, challengeInfo, trackEvent]);
 
   const handleNavigationHeader = useCallback(
     (title: string) => {
@@ -48,6 +51,7 @@ function ChallengeExplainScreen({route}: PropsType): React.ReactElement {
         guide: response.verificationGuide,
         isParticipatable: response.isParticipatable,
       });
+      trackEvent('CHALLENGE_EXPLAIN_SCREEN_VIEW');
     } catch (error) {
       console.log('[Error: Failed to get challenge details]', error);
       Sentry.captureException(error);

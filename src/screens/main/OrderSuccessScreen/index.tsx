@@ -17,6 +17,7 @@ import SVText from '../../../components/common/SVText';
 import SVDivider from '../../../components/common/SVDivider';
 import OrderHistoryCard from '../../../components/card/OrderHistoryCard';
 import SVButton from '../../../components/common/SVButton';
+import {useAmplitude} from '../../../lib/hook/useAmplitude';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.ORDER_SUCCESS_SCREEN>;
@@ -24,6 +25,7 @@ type PropsType = {
 
 function OrderSuccessScreen({route}: PropsType) {
   const userInfo = useSelector((state: RootState) => state.userInfo.value);
+  const {trackEvent} = useAmplitude();
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
@@ -32,15 +34,22 @@ function OrderSuccessScreen({route}: PropsType) {
 
   useEffect(() => {
     navigation.setOptions({title: '구매 완료'});
-  }, [navigation]);
+    trackEvent('ORDER_SUCCESS_SCREEN_VIEW');
+  }, [navigation, trackEvent]);
 
   const navigateToStore = useCallback(() => {
     homeNavigation.navigate(ROUTER.STORE_SCREEN);
-  }, [homeNavigation]);
+    trackEvent('CLICK_NAVIGATE_TO_STORE_SCREEN', {
+      currentPage: ROUTER.ORDER_SUCCESS_SCREEN,
+    });
+  }, [homeNavigation, trackEvent]);
 
   const navigateToHistory = useCallback(() => {
     navigation.replace(ROUTER.ORDER_HISTORY_SCREEN);
-  }, [navigation]);
+    trackEvent('CLICK_NAVIGATE_TO_ORDER_HISTORY_SCREEN', {
+      currentPage: ROUTER.ORDER_SUCCESS_SCREEN,
+    });
+  }, [navigation, trackEvent]);
 
   const phoneNumberText = `${userInfo.userPhoneNumber.slice(
     0,
