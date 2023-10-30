@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Linking, StyleSheet, View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icons from '../../../assets/icons';
 
 import {AppStyles} from '../../../config';
@@ -22,12 +23,15 @@ function ChallengeInfoCard({
   hasDeadline,
   startDate,
   endDate,
+  explanation,
 }: PropsType): React.ReactElement {
+  console.log(explanation);
   return (
     <View style={styles.container}>
       <SVText body06 style={styles.titleText}>
         {title}
       </SVText>
+      <SVText color={AppStyles.color.deepGray}>{explanation}</SVText>
       <View style={styles.infoContainer}>
         <ChallengeInfoBar
           title={'1회 인증 시'}
@@ -57,6 +61,27 @@ const styles = StyleSheet.create({
   },
   titleText: {
     marginVertical: AppStyles.scaleWidth(4),
+  },
+  explanationContainer: {
+    flexDirection: 'column',
+    borderRadius: AppStyles.scaleWidth(8),
+    padding: AppStyles.scaleWidth(8),
+    paddingHorizontal: AppStyles.scaleWidth(12),
+    marginTop: AppStyles.scaleWidth(12),
+    width: '100%',
+    backgroundColor: AppStyles.color.lightGray02,
+  },
+  textContainer: {
+    flexDirection: 'row',
+  },
+  buttonContainer: {
+    width: '100%',
+    alignItems: 'center',
+    borderRadius: AppStyles.scaleWidth(8),
+    borderWidth: AppStyles.scaleWidth(1),
+    borderColor: AppStyles.color.gray03,
+    paddingBottom: AppStyles.scaleWidth(4),
+    marginTop: AppStyles.scaleWidth(12),
   },
 });
 
