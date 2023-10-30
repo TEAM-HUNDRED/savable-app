@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   BackHandler,
+  Image,
   Linking,
   StyleSheet,
   TouchableOpacity,
@@ -24,6 +25,7 @@ import VerificationGuideContainer from '../../../container/VerificationGuideCont
 import {ChallengeInfoViewType} from '../../../types/view';
 import Api from '../../../lib/api/Api';
 import SVButton from '../../../components/common/SVButton';
+import {usePopUpProvider} from '../../../lib/context/PopUpContext';
 
 type PropsType = {
   route: RouteProp<MainScreenStackPropsList, ROUTER.VERIFICATION_SCREEN>;
@@ -36,6 +38,7 @@ function VerificationScreen({route}: PropsType) {
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
   const device = useCameraDevice('back');
+  const {showPopUp} = usePopUpProvider();
   const {hasPermission, requestPermission} = useCameraPermission();
 
   const [challengeInfo, setChallengeInfo] = useState<ChallengeInfoViewType>();
@@ -56,6 +59,33 @@ function VerificationScreen({route}: PropsType) {
     Linking.openSettings();
   };
 
+  const showValidationPopUp = (imageURL: string, formData: FormData) => {
+    showPopUp({
+      title: '챌린지 인증',
+      subButtonText: `인증 규정은 '인증 방법'에서 확인해주세요`,
+      buttonText: '예',
+      onPressButton: () => {
+        createVerification(route.params.participationId, formData).then(() => {
+          navigateToFinishScreen();
+        });
+      },
+      onPressLeftButton: () => {
+        setIsActive(true);
+      },
+      leftButtonText: '아니오',
+      cardChildren: (
+        <View style={styles.validationContainer}>
+          <SVText center body06>
+            {
+              '아래의 사진으로 제출하시겠습니까?\n한 번 제출 시에 수정이 어렵습니다'
+            }
+          </SVText>
+          <Image source={{uri: imageURL}} style={styles.verificationImage} />
+        </View>
+      ),
+    });
+  };
+
   const takePhoto = async () => {
     const formData = new FormData();
 
@@ -64,11 +94,13 @@ function VerificationScreen({route}: PropsType) {
         const result: PhotoFile = await cameraRef.current.takePhoto();
         setIsActive(false);
 
-        formData.append('image', {
+        await formData.append('image', {
           uri: `file://${result.path}`,
           type: 'multipart/form-data',
           name: 'verification_image',
         });
+        console.log(formData);
+        showValidationPopUp(`file://${result.path}`, formData);
       } catch (error) {
         console.log(error);
         Sentry.captureException(error);
@@ -113,11 +145,6 @@ function VerificationScreen({route}: PropsType) {
 
   const onPressTakeButton = async () => {
     const response = await takePhoto();
-    await createVerification(route.params.participationId, response).then(
-      () => {
-        navigateToFinishScreen();
-      },
-    );
   };
 
   useEffect(() => {
@@ -139,7 +166,6 @@ function VerificationScreen({route}: PropsType) {
     navigation.setOptions({headerShown: false});
   }, [navigation]);
 
-  // if (device == null) return <View />;
   if (!hasPermission)
     return (
       <View style={styles.cameraErrorContainer}>
@@ -191,7 +217,7 @@ function VerificationScreen({route}: PropsType) {
       )}
       <TouchableOpacity
         style={styles.takeButton}
-        onPress={isActive ? onPressTakeButton : () => {}}>
+        onPress={isActive ? takePhoto : () => {}}>
         <View style={styles.circle} />
       </TouchableOpacity>
       <VerificationGuideContainer
@@ -266,6 +292,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     marginBottom: AppStyles.scaleWidth(12),
+  },
+  validationContainer: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  verificationImage: {
+    width: AppStyles.scaleWidth(160),
+    height: AppStyles.scaleWidth(160),
+    marginVertical: AppStyles.scaleWidth(12),
   },
 });
 
