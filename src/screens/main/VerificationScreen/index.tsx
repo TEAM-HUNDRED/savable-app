@@ -143,10 +143,6 @@ function VerificationScreen({route}: PropsType) {
     }
   };
 
-  const onPressTakeButton = async () => {
-    const response = await takePhoto();
-  };
-
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', onBackPress);
     return () => {
