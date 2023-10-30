@@ -46,7 +46,7 @@ function OrderHistoryScreen({}: PropsType) {
   };
 
   const linkToKakaoChat = () => {
-    Linking.openURL('http://pf.kakao.com/_xcVxmCG/chat');
+    Linking.openURL('https://bit.ly/kakao-channel-for-app');
   };
 
   useEffect(() => {
