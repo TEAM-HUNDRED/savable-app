@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import * as Sentry from '@sentry/react-native';
+import {track} from '@amplitude/analytics-react-native';
 
 import {AppStyles} from '../../../../config';
 import Api from '../../../../lib/api/Api';
@@ -12,6 +13,7 @@ import GiftCard from '../../../../components/card/GiftCard';
 import ShopCategoryCard from '../../../../components/card/ShopCategoryCard';
 import Icons from '../../../../assets/icons';
 import SVText from '../../../../components/common/SVText';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 function StoreTabScreen() {
   const userInfo = useSelector((state: RootState) => state.userInfo.value);
@@ -26,6 +28,10 @@ function StoreTabScreen() {
       const response = await Api.shared.getGiftCardList(currentPrice);
 
       setGiftCardList(response);
+      track('STORE_TAB_VIEW', {
+        userName: userInfo.userName,
+        phoneNumber: userInfo.userPhoneNumber,
+      });
     } catch (error) {
       console.log('[Error: Failed to get gift card list', error);
       Sentry.captureException(error);
@@ -41,7 +47,15 @@ function StoreTabScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.profileContainer}>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={styles.profileContainer}
+        onPress={() => {
+          track('CLICK_PROFILE_IN_STORE', {
+            userName: userInfo.userName,
+            phoneNumber: userInfo.userPhoneNumber,
+          });
+        }}>
         <SVText body03 style={styles.text}>
           {`${userInfo.userName}님, 절약을 통해`}
         </SVText>
@@ -54,7 +68,7 @@ function StoreTabScreen() {
             {' 모았어요!'}
           </SVText>
         </View>
-      </View>
+      </TouchableOpacity>
       <View style={styles.paddingContainer}>
         <ShopCategoryCard setPrice={setPrice} price={price} />
       </View>

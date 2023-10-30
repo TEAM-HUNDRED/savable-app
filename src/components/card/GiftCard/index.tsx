@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useNavigation} from '@react-navigation/native';
+import {track} from '@amplitude/analytics-react-native';
 
 import Icons from '../../../assets/icons';
 import {AppStyles, MainScreenStackPropsList, ROUTER} from '../../../config';
@@ -9,6 +10,8 @@ import {useToastProvider} from '../../../lib/context/ToastContext';
 import {GiftCardPropsType} from '../../../types/view/shop';
 
 import SVText from '../../common/SVText';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../../modules/redux/Store';
 
 type PropsType = GiftCardPropsType & {
   totalReward?: number;
@@ -25,10 +28,15 @@ function GiftCard({
   disabled = false,
 }: PropsType) {
   const {showToast} = useToastProvider();
+  const userInfo = useSelector((state: RootState) => state.userInfo.value);
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
   const navigateToOrder = () => {
+    track('CLICK_GIFT_CARD_CAN_PURCHASE', {
+      userName: userInfo.userName,
+      phoneNumber: userInfo.userPhoneNumber,
+    });
     navigation.navigate(ROUTER.CREATE_ORDER_PAGE, {
       id: id,
       image: image,
@@ -41,6 +49,10 @@ function GiftCard({
   const canPurchase = totalReward ? totalReward > price : false;
 
   const disableButton = () => {
+    track('CLICK_GIFT_CARD_CANT_PURCHASE', {
+      userName: userInfo.userName,
+      phoneNumber: userInfo.userPhoneNumber,
+    });
     showToast({currentText: '리워드가 부족합니다'});
   };
   const onPressCard = disabled
