@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import crashlytics from '@react-native-firebase/crashlytics';
 import * as Sentry from '@sentry/react-native';
+import {track} from '@amplitude/analytics-react-native';
 
 import Api from '../../../lib/api/Api';
 import {MainScreenStackPropsList, ROUTER} from '../../../config/router';
@@ -58,6 +59,10 @@ function HomeScreen(): React.ReactElement {
           },
         }),
       );
+      track('HOME_SCREEN_VIEW', {
+        userName: response.username,
+        phoneNumber: response.phoneNumber,
+      });
     } catch (error) {
       console.log('[Error: Failed to get user Info', error);
       Sentry.captureException(error);

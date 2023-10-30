@@ -13,6 +13,7 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import KakaoLogins, {getProfile} from '@react-native-seoul/kakao-login';
 import * as Sentry from '@sentry/react-native';
+import {track} from '@amplitude/analytics-react-native';
 
 import Api from '../../../lib/api/Api';
 import {SquareCheckIcon} from '../../../assets/icons';
@@ -160,6 +161,12 @@ function UpdateProfileScreen({route}: IProps): React.ReactElement {
       .then(result => {
         setProfileData(result);
         setNickName(result.nickname);
+
+        track('UPDATE_PROFILE_VIEW', {
+          userName: result.nickname,
+          age: result.ageRange,
+          gender: result.gender,
+        });
 
         return result;
       })

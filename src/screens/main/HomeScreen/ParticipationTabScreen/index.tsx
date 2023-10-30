@@ -3,6 +3,7 @@ import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
+import {track} from '@amplitude/analytics-react-native';
 
 import Api from '../../../../lib/api/Api';
 import type {RootState} from '../../../../modules/redux/Store';
@@ -25,6 +26,11 @@ function ParticipationTabScreen(): React.ReactElement {
   const getParticipationList = async () => {
     try {
       const response = await Api.shared.getParticipationChallengeList();
+
+      track('PARTICIPATION_TAB_SCREEN_VIEW', {
+        userName: userInfo.userName,
+        phoneNumber: userInfo.userPhoneNumber,
+      });
 
       setParticipationList(response);
     } catch (err) {

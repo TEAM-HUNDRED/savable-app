@@ -2,10 +2,13 @@ import React, {useCallback} from 'react';
 import {Image, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {useSelector} from 'react-redux';
+import {track} from '@amplitude/analytics-react-native';
 
 import {AppStyles, ROUTER, MainScreenStackPropsList} from '../../../config';
 import {ChallengeViewType} from '../../../types/view/challenge';
 import SVText from '../../common/SVText';
+import {RootState} from '../../../modules/redux/RootReducer';
 
 type PropsType = ChallengeViewType & {};
 
@@ -15,6 +18,7 @@ function ChallengeCard({
   title,
   hasDeadline,
 }: PropsType): React.ReactElement {
+  const userInfo = useSelector((state: RootState) => state.userInfo.value);
   const navigation =
     useNavigation<StackNavigationProp<MainScreenStackPropsList>>();
 
@@ -23,7 +27,12 @@ function ChallengeCard({
       challengeId: id,
       challengeTitle: title,
     });
-  }, [id, title, navigation]);
+
+    track('CLICK_CHALLENGE_CARD', {
+      userName: userInfo.userName,
+      phoneNumber: userInfo.userPhoneNumber,
+    });
+  }, [id, title, navigation, userInfo]);
 
   return (
     <TouchableOpacity

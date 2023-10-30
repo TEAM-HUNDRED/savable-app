@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import * as Sentry from '@sentry/react-native';
+import {useSelector} from 'react-redux';
+import {track} from '@amplitude/analytics-react-native';
 
 import MainBanner from '../../../../components/banner/MainBanner';
 import LogoHeader from '../../../../components/header/LogoHeader';
@@ -8,9 +10,11 @@ import {AppStyles} from '../../../../config';
 import ChallengeContainer from '../../../../container/ChallengeContainer';
 import Api from '../../../../lib/api/Api';
 import {ChallengeViewType} from '../../../../types/view/challenge';
+import {RootState} from '../../../../modules/redux/RootReducer';
 
 function ChallengeTabScreen(): React.ReactElement {
   const [challengeList, setChallengeList] = useState<ChallengeViewType[]>([]);
+  const userInfo = useSelector((state: RootState) => state.userInfo.value);
 
   const getChallengeList = async () => {
     try {
@@ -27,7 +31,11 @@ function ChallengeTabScreen(): React.ReactElement {
 
   useEffect(() => {
     getChallengeList();
-  }, []);
+    track('CHALLENGE_TAB_SCREEN_VIEW', {
+      userName: userInfo.userName,
+      phoneNumber: userInfo.userPhoneNumber,
+    });
+  }, [userInfo]);
 
   if (challengeList.length === 0) return <></>;
 

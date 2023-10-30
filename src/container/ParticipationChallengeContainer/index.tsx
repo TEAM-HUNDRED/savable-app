@@ -2,12 +2,15 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {track} from '@amplitude/analytics-react-native';
+import {useSelector} from 'react-redux';
 
 import {AppStyles, HomeScreenStackPropsList, ROUTER} from '../../config';
 import {ParticipationViewPropsType} from '../../types/view';
 
 import SVText from '../../components/common/SVText';
 import ParticipationChallengeCard from '../../components/card/ParticipationChallengeCard';
+import {RootState} from '../../modules/redux/RootReducer';
 
 type PropsType = {
   participationList: Array<ParticipationViewPropsType>;
@@ -19,6 +22,7 @@ function ParticipationChallengeContainer({
   const navigation =
     useNavigation<StackNavigationProp<HomeScreenStackPropsList>>();
 
+  const userInfo = useSelector((state: RootState) => state.userInfo.value);
   const [toggleIndex, setToggleIndex] = useState<number>(0);
   const beforeVerifiedList = participationList.filter(
     item => item.isVerifiedToday === false,
@@ -41,12 +45,24 @@ function ParticipationChallengeContainer({
   const hasParticipationChallenge = !(participationList.length === 0);
 
   const navigateToChallengeScreen = useCallback(() => {
+    track('CLICK_GO_TO_APPLY_IN_PARTICIPATION_CHALLENGE_SCREEN', {
+      userName: userInfo.userName,
+      phoneNumber: userInfo.userPhoneNumber,
+    });
     navigation.navigate(ROUTER.CHALLENGE_SCREEN);
-  }, [navigation]);
+  }, [navigation, userInfo]);
 
-  const handleToggleIndex = useCallback((currentIndex: number) => {
-    setToggleIndex(currentIndex);
-  }, []);
+  const handleToggleIndex = useCallback(
+    (currentIndex: number) => {
+      setToggleIndex(currentIndex);
+      track('CLICK_TOGGLE_BUTTON_IN_PARTICIPATION_CHALLENGE_SCREEN', {
+        userName: userInfo.userName,
+        phoneNumber: userInfo.userPhoneNumber,
+        currentToggleIndex: currentIndex,
+      });
+    },
+    [userInfo],
+  );
 
   const goToParticipation = useCallback(() => {
     handleToggleIndex(0);
