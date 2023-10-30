@@ -10,7 +10,7 @@ function MainBanner() {
         activeOpacity={0.8}
         style={styles.buttonContainer}
         onPress={() => {
-          Linking.openURL('https://bit.ly/savable-challenge-event');
+          Linking.openURL('https://bit.ly/savable-event-oopy');
         }}>
         <Image source={Images.rewardEvent} style={styles.image} />
       </TouchableOpacity>
