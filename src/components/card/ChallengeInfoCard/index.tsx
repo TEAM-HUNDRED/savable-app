@@ -1,6 +1,5 @@
 import React from 'react';
-import {Linking, StyleSheet, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {StyleSheet, View} from 'react-native';
 import Icons from '../../../assets/icons';
 
 import {AppStyles} from '../../../config';
@@ -18,20 +17,25 @@ type PropsType = {
 };
 
 function ChallengeInfoCard({
-  title,
   reward,
   hasDeadline,
   startDate,
   endDate,
   explanation,
 }: PropsType): React.ReactElement {
-  console.log(explanation);
   return (
     <View style={styles.container}>
-      <SVText body06 style={styles.titleText}>
-        {title}
-      </SVText>
       <SVText color={AppStyles.color.deepGray}>{explanation}</SVText>
+      <View style={styles.explanationContainer}>
+        <View style={styles.textContainer}>
+          <SVText color={AppStyles.color.black}>{'📌 '}</SVText>
+          <SVText color={AppStyles.color.deepGray}>
+            {
+              '기프티콘 100% 지급 EVENT 진행중!\n목표 3회 이상 설정 후 챌린지 성공하면 완료 🤗\n자세한 사항은 홈페이지 배너를 클릭해주세요'
+            }
+          </SVText>
+        </View>
+      </View>
       <View style={styles.infoContainer}>
         <ChallengeInfoBar
           title={'1회 인증 시'}
