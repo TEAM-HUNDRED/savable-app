@@ -10,6 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {login, getProfile} from '@react-native-seoul/kakao-login';
 import * as Sentry from '@sentry/react-native';
+import {track} from '@amplitude/analytics-react-native';
 
 import Api from '../../../lib/api/Api';
 import {useAuthentication} from '../../../lib/hook/useAuthentication';
@@ -61,18 +62,28 @@ function LoginScreen(): React.ReactElement {
       } else {
         navigateToUpdateProfileScreen(currentSessionKey);
       }
+      track('SUCCESS_KAKAO_LOGIN', {
+        userName: profile.nickname,
+        age: profile.ageRange,
+        gender: profile.gender,
+      });
     } catch (error) {
       console.log(error);
       Sentry.captureException(error);
       Sentry.captureMessage(
         '[ERROR]: Something went wrong in onPressKakaoLogin Method',
       );
+      track('FAILURE_KAKAO_LOGIN');
     }
   };
 
   useEffect(() => {
     if (isAuthentication) navigateToHomeScreen();
   }, [isAuthentication, loading, navigateToHomeScreen]);
+
+  useEffect(() => {
+    track('LOGIN_SCREEN_VIEW');
+  }, []);
 
   console.log(loading, isAuthentication);
 
