@@ -13,7 +13,7 @@ Sentry.init({
   dsn: SENTRY_URI,
 });
 
-init(AMPLITUDE_ID, {
+init(AMPLITUDE_ID, undefined, {
   flushQueueSize: 50,
   flushIntervalMillis: 20000,
 });
