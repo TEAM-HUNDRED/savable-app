@@ -94,11 +94,11 @@ function VerificationScreen({route}: PropsType) {
 
   const takePhoto = async () => {
     const formData = new FormData();
-    setIsActive(false);
 
     if (cameraRef.current) {
       try {
         const result: PhotoFile = await cameraRef.current.takePhoto();
+        setIsActive(false);
 
         await formData.append('image', {
           uri: `file://${result.path}`,

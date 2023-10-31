@@ -13,6 +13,9 @@ Sentry.init({
   dsn: SENTRY_URI,
 });
 
-init(AMPLITUDE_ID);
+init(AMPLITUDE_ID, {
+  flushQueueSize: 50,
+  flushIntervalMillis: 20000,
+});
 
 AppRegistry.registerComponent(appName, () => App);
