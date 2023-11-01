@@ -89,12 +89,7 @@ function ParticipatedChallengeStatusScreen({
     handleNavigationHeader(route.params.challengeTitle);
     getParticipationChallengeStatus(route.params.challengeId);
     trackEvent('CHALLENGE_STATUS_SCREEN_VIEW');
-  }, [
-    handleNavigationHeader,
-    getParticipationChallengeStatus,
-    trackEvent,
-    route,
-  ]);
+  }, []);
 
   if (!challengeInfo || !verificationInfo) return <></>;
 

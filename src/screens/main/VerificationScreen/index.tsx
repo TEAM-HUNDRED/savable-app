@@ -46,6 +46,7 @@ function VerificationScreen({route}: PropsType) {
 
   const [challengeInfo, setChallengeInfo] = useState<ChallengeInfoViewType>();
   const [isActive, setIsActive] = useState<boolean>(true);
+  const [canTakePhoto, setCanTakePhoto] = useState<boolean>(true);
 
   const navigateToFinishScreen = () => {
     navigation.replace(ROUTER.FINISH_VERIFICATION_SCREEN, {
@@ -69,12 +70,14 @@ function VerificationScreen({route}: PropsType) {
       subButtonText: `인증 규정은 '인증 방법'에서 확인해주세요`,
       buttonText: '예',
       onPressButton: () => {
+        setCanTakePhoto(true);
         createVerification(route.params.participationId, formData).then(() => {
           trackEvent('SUBMIT_VERIFICATION_PHOTO');
           navigateToFinishScreen();
         });
       },
       onPressLeftButton: () => {
+        setCanTakePhoto(true);
         trackEvent('NOT_SUBMIT_VERIFICATION_PHOTO');
         setIsActive(true);
       },
@@ -93,6 +96,7 @@ function VerificationScreen({route}: PropsType) {
   };
 
   const takePhoto = async () => {
+    await setCanTakePhoto(false);
     const formData = new FormData();
 
     if (cameraRef.current) {
@@ -114,8 +118,10 @@ function VerificationScreen({route}: PropsType) {
           '[ERROR]: Something went wrong in take photo Method',
         );
         setIsActive(true);
+        await setCanTakePhoto(true);
       }
     }
+
     return formData;
   };
 
@@ -223,7 +229,7 @@ function VerificationScreen({route}: PropsType) {
       )}
       <TouchableOpacity
         style={styles.takeButton}
-        onPress={isActive ? takePhoto : () => {}}>
+        onPress={canTakePhoto ? takePhoto : () => {}}>
         <View style={styles.circle} />
       </TouchableOpacity>
       <VerificationGuideContainer
