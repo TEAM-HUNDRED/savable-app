@@ -101,7 +101,11 @@ function VerificationScreen({route}: PropsType) {
 
     if (cameraRef.current) {
       try {
-        const result: PhotoFile = await cameraRef.current.takePhoto();
+        const result: PhotoFile = await cameraRef.current.takePhoto({
+          qualityPrioritization: 'speed',
+          flash: 'off',
+          enableShutterSound: false,
+        });
         setIsActive(false);
 
         await formData.append('image', {
