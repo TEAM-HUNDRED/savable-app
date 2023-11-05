@@ -11,6 +11,7 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {
   Camera,
+  CameraRuntimeError,
   PhotoFile,
   useCameraDevice,
   useCameraPermission,
@@ -94,6 +95,12 @@ function VerificationScreen({route}: PropsType) {
       ),
     });
   };
+
+  const onError = useCallback((error: CameraRuntimeError) => {
+    console.error(error);
+    Sentry.captureException(error);
+    Sentry.captureMessage('[ERROR]: Something went wrong in Rendering Camera');
+  }, []);
 
   const takePhoto = async () => {
     await setCanTakePhoto(false);
@@ -228,6 +235,7 @@ function VerificationScreen({route}: PropsType) {
           style={StyleSheet.absoluteFill}
           device={device}
           isActive={isActive}
+          onError={onError}
           photo
         />
       )}
