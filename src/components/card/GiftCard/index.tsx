@@ -46,7 +46,7 @@ function GiftCard({
     });
   };
 
-  const canPurchase = totalReward ? totalReward > price : false;
+  const canPurchase = totalReward ? totalReward >= price : false;
 
   const disableButton = () => {
     track('CLICK_GIFT_CARD_CANT_PURCHASE', {
