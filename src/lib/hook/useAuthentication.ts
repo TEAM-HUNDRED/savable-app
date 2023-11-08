@@ -40,16 +40,23 @@ export const useAuthentication = (): {
   const validateAuth = useCallback(async () => {
     try {
       const storedSession = await getStorageSessionData();
-
-      // 저장된 세션 값이 없을 경우에는 AUTH가 False값으로 변경되면서 RETURN
-      if (storedSession === null && storedSession === '') {
-        setIsAuthentication(false);
-        return;
-      }
+      console.log(
+        '실행',
+        storedSession,
+        storedSession === null && storedSession === '',
+      );
 
       await Api.shared.setCookie(storedSession);
       const userInfo = await Api.shared.getUserInfo();
       const hasUserinfo = userInfo && userInfo.username;
+
+      // 저장된 세션 값이 없는데, USER INFO를 불러올 수 있는 경우, 로그아웃 처리를 해줌.
+      if (storedSession === null && storedSession === '') {
+        console.log('실행');
+        await Api.shared.logout();
+        setIsAuthentication(false);
+        return;
+      }
 
       // 사용자 데이터가 없을 경우, 회원가입이 이루어지지 않았으므로 AUTH가 False값으로 변경되면서 RETURN
       if (!hasUserinfo) {
@@ -60,7 +67,8 @@ export const useAuthentication = (): {
       dispatchUserData(userInfo);
       setIsAuthentication(true);
     } catch (error) {
-      console.log('[ERROR] ERROR IN VALIDATE AUTH', error);
+      console.log('[FAILURE] FAIL AUTHENTICATION', error);
+      setIsAuthentication(false);
     } finally {
       setLoading(false);
     }

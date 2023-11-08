@@ -43,26 +43,28 @@ function LoginScreen(): React.ReactElement {
         kakaoProfile as SignUpPayload,
       );
 
+      await Api.shared.setCookie(currentSessionKey);
+      await Api.shared.setSessionKeyOnStorage(currentSessionKey);
+
       console.log(currentSessionKey, data, 'kakaoLogin');
 
       if (data.isRegistered) {
-        await Api.shared.setCookie(currentSessionKey);
-        await Api.shared.setSessionKeyOnStorage(currentSessionKey);
         navigateToHomeScreen();
       } else {
         navigateToUpdateProfileScreen(currentSessionKey);
       }
+
       track('SUCCESS_KAKAO_LOGIN', {
         userName: kakaoProfile.nickname,
         age: kakaoProfile.ageRange,
         gender: kakaoProfile.gender,
       });
     } catch (error) {
-      console.log(error);
       Sentry.captureException(error);
       Sentry.captureMessage(
         '[ERROR]: Something went wrong in onPressKakaoLogin Method',
       );
+
       track('FAILURE_KAKAO_LOGIN');
     }
   };

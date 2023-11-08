@@ -25,6 +25,7 @@ export interface ISvApi {
   setCookie(accessToken: string): void;
   setBaseUrl(baseURL: string): void;
   setSessionKeyOnStorage(value: string): Promise<void>;
+  deleteSessionKeyOnStorage(): Promise<void>;
 
   getChallengeList(): Promise<ChallengeListAPIResponse>;
   getChallengeDetail(challengeId: number): Promise<ChallengeDetailAPIResponse>;

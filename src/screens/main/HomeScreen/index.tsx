@@ -70,7 +70,7 @@ function HomeScreen(): React.ReactElement {
         '[ERROR]: Something went wrong in getUserInfo Method on Home Screen',
       );
 
-      await Api.shared.setSessionKeyOnStorage('');
+      await Api.shared.deleteSessionKeyOnStorage();
       navigation.navigate(ROUTER.LOGIN_SCREEN);
     }
   };

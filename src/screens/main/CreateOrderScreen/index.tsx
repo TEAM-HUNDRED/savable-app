@@ -103,7 +103,6 @@ function CreateOrderScreen({route}: PropsType) {
       Sentry.captureMessage(
         '[ERROR]: Something went wrong in getUserInfo Method on Create Order Screen',
       );
-      await Api.shared.setSessionKeyOnStorage('');
     }
   }, [dispatch]);
 

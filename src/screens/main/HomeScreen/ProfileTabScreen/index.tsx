@@ -126,7 +126,7 @@ function ProfileTabScreen({}: PropsType) {
       await logout();
       await Api.shared.logout();
       await Api.shared.setCookie('');
-      await Api.shared.setSessionKeyOnStorage('');
+      await Api.shared.deleteSessionKeyOnStorage();
       trackEvent('CLICK_LOGOUT_IN_PROFILE_SCREEN');
 
       mainNavigation.reset({routes: [{name: ROUTER.LOGIN_SCREEN}]});

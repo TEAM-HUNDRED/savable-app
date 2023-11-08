@@ -53,6 +53,10 @@ export default class ProductionApi implements ISvApi {
     await AsyncStorage.setItem('session_key', JSON.stringify(value));
   };
 
+  deleteSessionKeyOnStorage = async () => {
+    await AsyncStorage.removeItem('session_key');
+  };
+
   public logout = async (): Promise<void> => {
     const {data} = await this.axios.get('member/logout');
 
