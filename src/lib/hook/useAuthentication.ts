@@ -1,9 +1,10 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Api from '../api/Api';
 import {handleUserInfo} from '../../modules/redux/slice/userInfoSlice';
+import {UserInfoAPIResponse} from '../../types/api';
 
 export const useAuthentication = (): {
   isAuthentication: boolean;
@@ -15,61 +16,59 @@ export const useAuthentication = (): {
   const dispatch = useDispatch();
 
   const getStorageSessionData = async () => {
-    try {
-      const value = JSON.parse(
-        String(await AsyncStorage.getItem('session_key')),
-      );
-      console.log(value, 'getItem', value !== null && value !== '');
+    const value = JSON.parse(String(await AsyncStorage.getItem('session_key')));
 
-      if (value !== null && value !== '') {
-        await Api.shared.setAuthToken(value);
-        await getUserInfo();
-
-        setIsAuthentication(true);
-      } else {
-        await Api.shared.setAuthToken('');
-      }
-
-      return value;
-    } catch (e: any) {
-      console.log(e);
-      Api.shared.setAuthToken(String(''));
-
-      if (e.response.status === 401) return;
-      else {
-        console.log('[Get Session Error]', e);
-      }
-    } finally {
-      setLoading(false);
-    }
+    return value;
   };
 
-  const getUserInfo = async () => {
-    try {
-      const response = await Api.shared.getUserInfo();
-
+  const dispatchUserData = useCallback(
+    (data: UserInfoAPIResponse) => {
       dispatch(
         handleUserInfo({
           value: {
-            userName: response.username,
-            userPhoneNumber: response.phoneNumber,
-            userProfileImageUrl: response.profileImage,
-            userTotalReward: response.totalReward,
+            userName: data.username,
+            userPhoneNumber: data.phoneNumber,
+            userProfileImageUrl: data.profileImage,
+            userTotalReward: data.totalReward,
           },
         }),
       );
+    },
+    [dispatch],
+  );
+
+  const validateAuth = useCallback(async () => {
+    try {
+      const storedSession = await getStorageSessionData();
+
+      // 저장된 세션 값이 없을 경우에는 AUTH가 False값으로 변경되면서 RETURN
+      if (storedSession === null && storedSession === '') {
+        setIsAuthentication(false);
+        return;
+      }
+
+      await Api.shared.setAuthToken(storedSession);
+      const userInfo = await Api.shared.getUserInfo();
+      const hasUserinfo = userInfo && userInfo.username;
+
+      // 사용자 데이터가 없을 경우, 회원가입이 이루어지지 않았으므로 AUTH가 False값으로 변경되면서 RETURN
+      if (!hasUserinfo) {
+        setIsAuthentication(false);
+        return;
+      }
+
+      dispatchUserData(userInfo);
+      setIsAuthentication(true);
     } catch (error) {
-      console.log(
-        '[Error: Failed to get user Info in useAuthentication',
-        error,
-      );
-      await Api.shared.setSessionKeyOnStorage('');
+      console.log('[ERROR] ERROR IN VALIDATE AUTH', error);
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [dispatchUserData]);
 
   useEffect(() => {
-    getStorageSessionData();
-  }, []);
+    validateAuth();
+  }, [validateAuth]);
 
   return {isAuthentication, loading};
 };

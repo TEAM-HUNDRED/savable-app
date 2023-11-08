@@ -50,12 +50,7 @@ export default class ProductionApi implements ISvApi {
   }
 
   setSessionKeyOnStorage = async (value: string) => {
-    try {
-      await AsyncStorage.setItem('session_key', JSON.stringify(value));
-      await this.setAuthToken(value);
-    } catch (error) {
-      console.log('[Session Storage Error]', error);
-    }
+    await AsyncStorage.setItem('session_key', JSON.stringify(value));
   };
 
   public logout = async (): Promise<void> => {
