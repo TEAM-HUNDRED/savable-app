@@ -41,7 +41,7 @@ export default class ProductionApi implements ISvApi {
     return ProductionApi.instance;
   }
 
-  setAuthToken(accessToken: string) {
+  setCookie(accessToken: string) {
     this.axios.defaults.headers['Cookie'] = accessToken;
   }
 
@@ -189,7 +189,7 @@ export default class ProductionApi implements ISvApi {
             const sessionValue = match[1];
 
             currentKey = `SESSION=${sessionValue}`;
-            this.setAuthToken(`SESSION=${sessionValue}`);
+            this.setCookie(`SESSION=${sessionValue}`);
           }
         }
 

@@ -34,38 +34,28 @@ function LoginScreen(): React.ReactElement {
     navigation.replace(ROUTER.HOME_SCREEN);
   }, [navigation]);
 
-  const signUp = async (payload: SignUpPayload) => {
-    return await Api.shared
-      .signUp(payload)
-      .then(result => {
-        return result;
-      })
-      .catch(error => {
-        throw error;
-      });
-  };
-
   const onPressKakaoLogin = async () => {
     try {
       await login();
-      const profile = await getProfile();
+      const kakaoProfile = await getProfile();
 
-      const {sessionKey: currentSessionKey, data} = await signUp(
-        profile as SignUpPayload,
+      const {sessionKey: currentSessionKey, data} = await Api.shared.signUp(
+        kakaoProfile as SignUpPayload,
       );
 
       console.log(currentSessionKey, data, 'kakaoLogin');
 
       if (data.isRegistered) {
+        await Api.shared.setCookie(currentSessionKey);
         await Api.shared.setSessionKeyOnStorage(currentSessionKey);
         navigateToHomeScreen();
       } else {
         navigateToUpdateProfileScreen(currentSessionKey);
       }
       track('SUCCESS_KAKAO_LOGIN', {
-        userName: profile.nickname,
-        age: profile.ageRange,
-        gender: profile.gender,
+        userName: kakaoProfile.nickname,
+        age: kakaoProfile.ageRange,
+        gender: kakaoProfile.gender,
       });
     } catch (error) {
       console.log(error);
@@ -84,8 +74,6 @@ function LoginScreen(): React.ReactElement {
   useEffect(() => {
     track('LOGIN_SCREEN_VIEW');
   }, []);
-
-  console.log(loading, isAuthentication);
 
   if (loading || isAuthentication)
     return <ImageBackground source={Images.splash} style={styles.container} />;

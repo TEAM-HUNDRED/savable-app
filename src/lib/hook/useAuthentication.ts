@@ -47,7 +47,7 @@ export const useAuthentication = (): {
         return;
       }
 
-      await Api.shared.setAuthToken(storedSession);
+      await Api.shared.setCookie(storedSession);
       const userInfo = await Api.shared.getUserInfo();
       const hasUserinfo = userInfo && userInfo.username;
 

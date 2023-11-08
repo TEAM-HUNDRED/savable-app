@@ -105,7 +105,7 @@ function ProfileTabScreen({}: PropsType) {
     try {
       setShouldChangeUserInfo(false);
       await Api.shared.removeMember();
-      await Api.shared.setAuthToken('');
+      await Api.shared.setCookie('');
       await Api.shared.setSessionKeyOnStorage('');
       await logout();
 
@@ -125,7 +125,7 @@ function ProfileTabScreen({}: PropsType) {
       setShouldChangeUserInfo(false);
       await logout();
       await Api.shared.logout();
-      await Api.shared.setAuthToken('');
+      await Api.shared.setCookie('');
       await Api.shared.setSessionKeyOnStorage('');
       trackEvent('CLICK_LOGOUT_IN_PROFILE_SCREEN');
 

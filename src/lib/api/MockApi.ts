@@ -47,7 +47,7 @@ export default class MockApi implements ISvApi {
     return MockApi.instance;
   }
 
-  setAuthToken(accessToken: string) {
+  setCookie(accessToken: string) {
     this.axios.defaults.headers['Authorization'] = accessToken;
   }
 
