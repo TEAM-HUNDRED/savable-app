@@ -70,6 +70,16 @@ function ParticipationTabScreen(): React.ReactElement {
           </SVText>
         </View>
       </View>
+      <View style={styles.explanationContainer}>
+        <View style={styles.textContainer}>
+          <SVText color={AppStyles.color.black}>{'📌 '}</SVText>
+          <SVText color={AppStyles.color.deepGray}>
+            {
+              '이벤트 공지에 따라 제공된 이벤트 리워드 1,000 포인트는 11/15(수) 자정에 소멸될 예정입니다.\n\n빠르게 사용해주세요:D'
+            }
+          </SVText>
+        </View>
+      </View>
       <ParticipationChallengeContainer participationList={participationList} />
     </ScrollView>
   );
@@ -110,6 +120,17 @@ const styles = StyleSheet.create({
     color: AppStyles.color.gray,
     fontWeight: 'bold',
     lineHeight: AppStyles.scaleFont(24),
+  },
+  explanationContainer: {
+    flexDirection: 'column',
+    borderRadius: AppStyles.scaleWidth(8),
+    padding: AppStyles.scaleWidth(8),
+    marginHorizontal: AppStyles.scaleWidth(24),
+    marginBottom: AppStyles.scaleWidth(24),
+    backgroundColor: AppStyles.color.lightGray02,
+  },
+  textContainer: {
+    flexDirection: 'row',
   },
 });
 

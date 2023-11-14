@@ -46,8 +46,6 @@ function LoginScreen(): React.ReactElement {
       await Api.shared.setCookie(currentSessionKey);
       await Api.shared.setSessionKeyOnStorage(currentSessionKey);
 
-      console.log(currentSessionKey, data, 'kakaoLogin');
-
       if (data.isRegistered) {
         navigateToHomeScreen();
       } else {
