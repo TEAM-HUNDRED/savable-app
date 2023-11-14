@@ -40,8 +40,6 @@ function ProfileTabScreen({}: PropsType) {
   const {showPopUp} = usePopUpProvider();
   const isFocused = useIsFocused();
 
-  const [shouldChangeUserInfo, setShouldChangeUserInfo] = useState(true);
-
   const [userInfo, setUserInfo] = useState<UserInfoPropsType>(
     {} as UserInfoPropsType,
   );
@@ -103,10 +101,9 @@ function ProfileTabScreen({}: PropsType) {
 
   const withdrawalAccount = async () => {
     try {
-      setShouldChangeUserInfo(false);
       await Api.shared.removeMember();
-      await Api.shared.setCookie('');
-      await Api.shared.setSessionKeyOnStorage('');
+      await Api.shared.deleteCookie();
+      await Api.shared.deleteSessionKeyOnStorage();
       await logout();
 
       trackEvent('CLICK_WITHDRAWAL_IN_PROFILE_SCREEN');
@@ -122,10 +119,9 @@ function ProfileTabScreen({}: PropsType) {
 
   const userLogout = async () => {
     try {
-      setShouldChangeUserInfo(false);
       await logout();
       await Api.shared.logout();
-      await Api.shared.setCookie('');
+      await Api.shared.deleteCookie();
       await Api.shared.deleteSessionKeyOnStorage();
       trackEvent('CLICK_LOGOUT_IN_PROFILE_SCREEN');
 
@@ -201,9 +197,9 @@ function ProfileTabScreen({}: PropsType) {
   ];
 
   useEffect(() => {
-    shouldChangeUserInfo && getUserInfo();
+    getUserInfo();
     trackEvent('PROFILE_VIEW');
-  }, [isFocused, shouldChangeUserInfo, trackEvent]);
+  }, [isFocused]);
 
   return (
     <ScrollView

@@ -40,19 +40,19 @@ export const useAuthentication = (): {
   const validateAuth = useCallback(async () => {
     try {
       const storedSession = await getStorageSessionData();
-      console.log(
-        '실행',
-        storedSession,
-        storedSession === null && storedSession === '',
-      );
+
+      if (storedSession === null || storedSession === '') {
+        await Api.shared.logout();
+        setIsAuthentication(false);
+        return;
+      }
 
       await Api.shared.setCookie(storedSession);
       const userInfo = await Api.shared.getUserInfo();
       const hasUserinfo = userInfo && userInfo.username;
 
       // 저장된 세션 값이 없는데, USER INFO를 불러올 수 있는 경우, 로그아웃 처리를 해줌.
-      if (storedSession === null && storedSession === '') {
-        console.log('실행');
+      if (storedSession === null || storedSession === '') {
         await Api.shared.logout();
         setIsAuthentication(false);
         return;

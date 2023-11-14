@@ -33,6 +33,7 @@ export default class ProductionApi implements ISvApi {
   private constructor() {
     this.axios = axios.create({
       baseURL: API_URL,
+      withCredentials: true,
     });
   }
 
@@ -41,8 +42,12 @@ export default class ProductionApi implements ISvApi {
     return ProductionApi.instance;
   }
 
+  deleteCookie() {
+    delete this.axios.defaults.headers['cookie'];
+  }
+
   setCookie(accessToken: string) {
-    this.axios.defaults.headers['Cookie'] = accessToken;
+    this.axios.defaults.headers['cookie'] = accessToken;
   }
 
   setBaseUrl(baseURL: string) {

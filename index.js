@@ -18,4 +18,24 @@ init(AMPLITUDE_ID, undefined, {
   flushIntervalMillis: 20000,
 });
 
+// import('./reactotron.config').then(() => {
+//   console.log('Reactotron Configured');
+// });
+
+// require('axios-debug-log')({
+//   request: function (debug, config) {
+//     debug('Request with ' + config.headers['content-type']);
+//   },
+//   response: function (debug, response) {
+//     debug(
+//       'Response with ' + response.headers['content-type'],
+//       'from ' + response.config.url,
+//     );
+//   },
+//   error: function (debug, error) {
+//     // Read https://www.npmjs.com/package/axios#handling-errors for more info
+//     debug('Boom', error);
+//   },
+// });
+
 AppRegistry.registerComponent(appName, () => App);

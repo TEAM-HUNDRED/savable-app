@@ -22,6 +22,7 @@ import {
 } from '../../types/api';
 
 export interface ISvApi {
+  deleteCookie(): void;
   setCookie(accessToken: string): void;
   setBaseUrl(baseURL: string): void;
   setSessionKeyOnStorage(value: string): Promise<void>;
