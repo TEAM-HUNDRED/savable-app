@@ -20,9 +20,9 @@ function MainBanner() {
             userName: userInfo.userName,
             phoneNumber: userInfo.userPhoneNumber,
           });
-          Linking.openURL('https://bit.ly/savable-event-oopy');
+          Linking.openURL('https://savable100.oopy.io/app-guide');
         }}>
-        <Image source={Images.rewardEvent} style={styles.image} />
+        <Image source={Images.challenge} style={styles.image} />
       </TouchableOpacity>
     </View>
   );
