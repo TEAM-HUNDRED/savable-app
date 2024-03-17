@@ -66,7 +66,7 @@
   <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/b5f44a34-f0c7-4c7a-aac0-d56bce495a71">
   <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/aa08460d-5956-466c-ad28-35ec5e1ded20">
   <br />
-  <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/81ed4d4a-b8a7-4bd8-b88d-28b082004f17">
+  <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/2c68d6fb-4bab-4e69-aaa6-ec935ed08659">
   <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/ec1b550f-55a3-4e6c-b155-d783259f63f9">
 </div>
 
