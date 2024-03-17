@@ -2,7 +2,7 @@
 # 🙌🏻 제품 소개
 고물가 시대에 현명한 소비습관 형성을 위한 저지출 챌린지 플랫폼, Savable 입니다.
 
-### 성과
+### 서비스 성과
 - DAU 200, 설치수 4,000의 성과를 달성하였습니다.
 - SW 마에스트로 14기 우수프로젝트에 선정되었습니다.
 - 주 7일이내 4회 이상 인증자 비율이 69.75%로 습관 형성을 성공적으로 이뤄졌습니다.
@@ -11,12 +11,27 @@
   - 다음의 예시와 같이 수많은 사람들의 절약을 도울 수 있었습니다.
   - 포장하기 챌린지를 수행하기 위해, 집에 안쓰던 자전거를 꺼내서 사용하신 분
   - 스틱 커피 타먹기를 수행하며 월 15만원 이상의 저축을 이뤄내신 분
+- 5개의 블로그에서 바이럴이 일어났고, 3.5만 유튜버의 앱 홍보를 통해 450여명의 사용자가 유입되었습니다.
 
 <div align="center">
   <img height="250" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/9df7bd55-98bf-4524-8efd-4e92bb74ea51">
   <img height="250" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/274ef405-2831-48d6-984e-b02c0cb0f634">
   <img height="250" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/37be6c25-e912-4630-a823-9d6056cb8709">
   <img height="250" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/20eff36d-81a8-455b-9e41-820233490cdb">
+</div>
+
+  - 5개의 블로그에서 바이럴이 일어났고, 3.5만 유튜버의 앱 홍보를 통해 450여명의 사용자가 유입되었습니다.
+<div align="center">
+  <img height="250" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/e7055232-4d3d-4419-b11c-6d310f0f525e">
+  <img height="250" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/dbe4e9a0-98da-4b92-b478-82e07043cb01">
+  <img height="250" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/9cf0d0f9-8126-42b8-b5e4-426199c31b94">
+</div>
+
+### 인증 자동화 성과
+
+<div align="center">
+  <img height="250" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/eb7dcba4-5c5f-4257-aacb-3ad66f0063ba">  
+  <img height="250" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/0e6a7d41-7c17-4c88-9ec6-31a90bfe81fb">
 </div>
 
 
@@ -51,7 +66,14 @@
   <img height="300" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/b5f44a34-f0c7-4c7a-aac0-d56bce495a71">
   <img height="300" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/aa08460d-5956-466c-ad28-35ec5e1ded20">
   <br />
-  <img height="300" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/ec1b550f-55a3-4e6c-b155-d783259f63f9">
+  <img height="250" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/81ed4d4a-b8a7-4bd8-b88d-28b082504f17">
+  <img height="250" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/ec1b550f-55a3-4e6c-b155-d783259f63f9">
+</div>
+
+### 서비스 아키텍처 & AI 인증 자동화 구성도
+<div align="center">
+  <img height="250" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/63533d57-f7da-40c5-80eb-f60345fa91b6">
+  <img height="250" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/4da4c0a6-b3b6-44c3-acb9-4188f4947a15">
 </div>
 
 
