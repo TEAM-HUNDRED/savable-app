@@ -7,7 +7,7 @@
 - SW 마에스트로 14기 우수프로젝트에 선정되었습니다.
 - 주 7일이내 4회 이상 인증자 비율이 69.75%로 습관 형성을 성공적으로 이뤄졌습니다.
 - 챌린지 평균 성공률이 68.92%, 재신청 비율 34.45%로 리텐션을 잡았습니다.
-- 사용자의 VOC를 수집하는 파이프라인을 구축함에 따라 약 300여개의 정성적인 피드백을 얻을 수 있었습니다.
+- 사용자의 VOC를 수집하는 파이프라인을 구축함에 따라 약 200여개의 정성적인 피드백을 얻을 수 있었습니다.
   - 다음의 예시와 같이 수많은 사람들의 절약을 도울 수 있었습니다.
   - 포장하기 챌린지를 수행하기 위해, 집에 안쓰던 자전거를 꺼내서 사용하신 분
   - 스틱 커피 타먹기를 수행하며 월 15만원 이상의 저축을 이뤄내신 분
@@ -45,8 +45,8 @@
 현명한 소비습관 형성을 위해서는 "편의성"과 "보상시스템"이 필요하다 판단하였고, 그 결과 앱테크와 챌린지가 결합된, 세이버블이 탄생하게 되었습니다.
 
 <div align="center">
-  <img height="300" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/6d41fa63-c527-4041-8c4f-7f2cec40741e">
-  <img height="300" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/88b6e00a-e354-4039-bb6c-1ce333d52da2">
+  <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/6d41fa63-c527-4041-8c4f-7f2cec40741e">
+  <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/88b6e00a-e354-4039-bb6c-1ce333d52da2">
 </div>
 
 ### 서비스 주요 기능
@@ -58,13 +58,13 @@
 - 챗봇과 웹을 연동시켜 카카오톡에서도 손쉽게 챌린지에 접근할 수 있었습니다
 
 <div align="center">
-  <img height="300" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/8eeb57c1-8d9c-4c92-b80e-377ff3ff34a7">
+  <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/8eeb57c1-8d9c-4c92-b80e-377ff3ff34a7">
   <br />
-  <img height="300" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/5645e58a-38d1-4cdb-98b2-74b07956c4de">
-  <img height="300" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/12cb5133-7789-4b22-9ace-e8bc2b4a9f1d">
-  <img height="300" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/bfa913ed-648a-491a-ba67-4b3be60a2e11">
-  <img height="300" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/b5f44a34-f0c7-4c7a-aac0-d56bce495a71">
-  <img height="300" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/aa08460d-5956-466c-ad28-35ec5e1ded20">
+  <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/5645e58a-38d1-4cdb-98b2-74b07956c4de">
+  <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/12cb5133-7789-4b22-9ace-e8bc2b4a9f1d">
+  <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/bfa913ed-648a-491a-ba67-4b3be60a2e11">
+  <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/b5f44a34-f0c7-4c7a-aac0-d56bce495a71">
+  <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/aa08460d-5956-466c-ad28-35ec5e1ded20">
   <br />
   <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/81ed4d4a-b8a7-4bd8-b88d-28b082004f17">
   <img height="200" alt="image" src="https://github.com/TEAM-HUNDRED/savable-app/assets/53961747/ec1b550f-55a3-4e6c-b155-d783259f63f9">
